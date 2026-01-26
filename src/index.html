@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prefeitura de Quebrangulo</title>
+</head>
+<body>
+    <script>
+        // Verificar autenticação e redirecionar
+        const usuarioAtual = JSON.parse(localStorage.getItem('prefeitura_usuario_atual'));
+        
+        if (usuarioAtual) {
+            // Já autenticado, ir para dashboard
+            window.location.href = '/dashboard.html';
+        } else {
+            // Não autenticado, ir para login
+            window.location.href = '/login.html';
+        }
+    </script>
+</body>
+</html>

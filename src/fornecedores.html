@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fornecedores - Prefeitura de Quebrangulo</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 text-slate-900">
+    <div class="min-h-screen flex">
+        <!-- Sidebar -->
+        <aside class="w-72 bg-gradient-to-b from-slate-900 to-slate-800 text-white p-6 shadow-lg fixed h-screen overflow-y-auto">
+            <div class="mb-8">
+                <h1 class="text-2xl font-bold mb-1">Prefeitura de Quebrangulo</h1>
+                <p class="text-slate-400 text-sm">Controle de Pagamentos</p>
+            </div>
+
+            <nav class="space-y-2 mb-8">
+                <a href="dashboard.html" class="nav-btn w-full text-left px-4 py-3 rounded-lg transition-all hover:bg-slate-700 block">
+                    <span class="text-lg mr-2">📊</span>Dashboard
+                </a>
+            </nav>
+
+            <hr class="border-slate-700 my-6">
+
+            <div>
+                <div class="text-sm font-semibold text-slate-300 mb-3">Administração</div>
+                <a href="fornecedores.html" class="nav-btn w-full text-left px-4 py-2 rounded-lg transition-all bg-slate-700 text-sm block">
+                    <span class="mr-2">🏢</span>Fornecedores
+                </a>
+                <a href="secretarias.html" class="nav-btn w-full text-left px-4 py-2 rounded-lg transition-all hover:bg-slate-700 text-sm block">
+                    <span class="mr-2">🏛️</span>Secretarias
+                </a>
+                <a href="usuarios.html" class="nav-btn w-full text-left px-4 py-2 rounded-lg transition-all hover:bg-slate-700 text-sm block">
+                    <span class="mr-2">👥</span>Usuários
+                </a>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-slate-700 text-xs text-slate-500">
+                v1.0 • Sistema Profissional
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 ml-72 p-8 overflow-y-auto">
+            <!-- Top Header with User Info -->
+            <div class="bg-gradient-to-r from-blue-900 to-blue-800 text-white rounded-xl shadow-md p-6 mb-8 flex justify-between items-center">
+                <div>
+                    <p class="text-sm text-blue-100">Bem-vindo</p>
+                    <h2 class="text-2xl font-bold" id="usuarioNome">Carregando...</h2>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="text-right text-sm">
+                        <p class="text-blue-100">Papel:</p>
+                        <p class="font-semibold" id="usuarioRole">-</p>
+                    </div>
+                    <button id="btnLogout" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg font-semibold transition-all">
+                        Sair
+                    </button>
+                </div>
+            </div>
+
+            <!-- Page Header -->
+            <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-sm text-slate-500 font-semibold">ADMINISTRAÇÃO</p>
+                        <h2 class="text-3xl font-bold mt-1">Gestão de Fornecedores</h2>
+                        <p class="text-slate-600 text-sm mt-2">Cadastro e controle de fornecedores/empresas da prefeitura</p>
+                    </div>
+                    <button id="btnNovoFornecedor" class="bg-green-600 hover:bg-green-700 px-6 py-3 rounded-lg text-white font-semibold shadow-md transition-all">
+                        + Novo Fornecedor
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="bg-white rounded-xl shadow-md p-4 mb-6 flex gap-3 items-center">
+                <input type="text" id="searchFornecedor" placeholder="Buscar por nome, CNPJ ou email..." class="flex-1 px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                <button id="btnRefreshFornecedores" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold">
+                    Atualizar
+                </button>
+            </div>
+
+            <!-- Table -->
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-slate-100">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-slate-900">Nome</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-slate-900">CNPJ</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-slate-900">Email</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-slate-900">Telefone</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-slate-900">Status</th>
+                                <th class="px-6 py-3 text-center text-sm font-semibold text-slate-900">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyFornecedores" class="divide-y divide-slate-200">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal - Novo/Editar Fornecedor -->
+    <div id="modalFornecedor" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-xl shadow-xl p-8 max-w-2xl w-full mx-4">
+            <h3 class="text-2xl font-bold mb-6" id="modalTitulo">Novo Fornecedor</h3>
+            
+            <form id="formFornecedor" class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">Nome *</label>
+                        <input type="text" id="fnome" required class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">CNPJ *</label>
+                        <input type="text" id="fcnpj" required class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">Email *</label>
+                        <input type="email" id="femail" required class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">Telefone *</label>
+                        <input type="text" id="ftelefone" required class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Endereço *</label>
+                    <input type="text" id="fendereco" required class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+
+                <div class="grid grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">Banco *</label>
+                        <input type="text" id="fbanco" required class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">Agência *</label>
+                        <input type="text" id="fagencia" required class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">Conta *</label>
+                        <input type="text" id="fconta" required class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                </div>
+
+                <div id="mensagemFornecedor" class="hidden p-4 rounded-lg"></div>
+
+                <div class="flex gap-3 justify-end mt-6 pt-4 border-t border-slate-200">
+                    <button type="button" id="btnCancelarFornecedor" class="px-6 py-2 rounded-lg border border-slate-300 text-slate-900 hover:bg-slate-50 font-semibold transition-all">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 font-semibold transition-all">
+                        Salvar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/crypto.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/fornecedores.js"></script>
+    <script>
+        let fornecedorEditId = null;
+
+        // Check authentication
+        window.addEventListener('load', () => {
+            if (!estaAutenticado()) {
+                window.location.href = '/login.html';
+                return;
+            }
+
+            const usuario = getUsuarioAtual();
+            document.getElementById('usuarioNome').textContent = usuario.nome;
+            document.getElementById('usuarioRole').textContent = usuario.role.toUpperCase();
+
+            renderFornecedoresTable();
+        });
+
+        // Logout
+        document.getElementById('btnLogout').addEventListener('click', () => {
+            logout();
+            window.location.href = '/index.html';
+        });
+
+        // Novo Fornecedor
+        document.getElementById('btnNovoFornecedor').addEventListener('click', () => {
+            fornecedorEditId = null;
+            document.getElementById('modalTitulo').textContent = 'Novo Fornecedor';
+            document.getElementById('formFornecedor').reset();
+            document.getElementById('mensagemFornecedor').classList.add('hidden');
+            document.getElementById('modalFornecedor').classList.remove('hidden');
+        });
+
+        // Fechar Modal
+        document.getElementById('btnCancelarFornecedor').addEventListener('click', () => {
+            document.getElementById('modalFornecedor').classList.add('hidden');
+        });
+
+        // Form Submit
+        document.getElementById('formFornecedor').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            if (!temPermissao('criar')) {
+                showMensagem('Você não tem permissão para criar fornecedores', false);
+                return;
+            }
+
+            const dados = {
+                nome: document.getElementById('fnome').value,
+                cnpj: document.getElementById('fcnpj').value,
+                email: document.getElementById('femail').value,
+                telefone: document.getElementById('ftelefone').value,
+                endereco: document.getElementById('fendereco').value,
+                banco: document.getElementById('fbanco').value,
+                agencia: document.getElementById('fagencia').value,
+                conta: document.getElementById('fconta').value
+            };
+
+            if (fornecedorEditId) {
+                atualizarFornecedor(fornecedorEditId, dados);
+            } else {
+                criarFornecedor(dados);
+            }
+
+            showMensagem('Fornecedor salvo com sucesso!', true);
+            setTimeout(() => {
+                document.getElementById('modalFornecedor').classList.add('hidden');
+                renderFornecedoresTable();
+            }, 1000);
+        });
+
+        // Search
+        document.getElementById('searchFornecedor').addEventListener('input', renderFornecedoresTable);
+
+        // Refresh
+        document.getElementById('btnRefreshFornecedores').addEventListener('click', renderFornecedoresTable);
+
+        function renderFornecedoresTable() {
+            const search = document.getElementById('searchFornecedor').value.toLowerCase();
+            const fornecedores = buscarFornecedores(search);
+            const tbody = document.getElementById('tbodyFornecedores');
+            tbody.innerHTML = '';
+
+            if (fornecedores.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="px-6 py-4 text-center text-slate-500">Nenhum fornecedor encontrado</td></tr>';
+                return;
+            }
+
+            fornecedores.forEach(f => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="px-6 py-4 text-sm font-semibold text-slate-900">${f.nome}</td>
+                    <td class="px-6 py-4 text-sm text-slate-600">${f.cnpj}</td>
+                    <td class="px-6 py-4 text-sm text-slate-600">${f.email}</td>
+                    <td class="px-6 py-4 text-sm text-slate-600">${f.telefone}</td>
+                    <td class="px-6 py-4">
+                        <span class="px-3 py-1 rounded-full text-xs font-semibold ${f.ativo ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                            ${f.ativo ? 'Ativo' : 'Inativo'}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        <div class="flex gap-2 justify-center">
+                            ${temPermissao('editar') ? `<button onclick="editarFornecedor(${f.id})" class="text-blue-600 hover:text-blue-800 font-semibold">Editar</button>` : ''}
+                            ${temPermissao('deletar') ? `<button onclick="deletarFornecedor(${f.id})" class="text-red-600 hover:text-red-800 font-semibold">Deletar</button>` : ''}
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function editarFornecedor(id) {
+            const fornecedor = obterFornecedor(id);
+            if (!fornecedor) return;
+
+            fornecedorEditId = id;
+            document.getElementById('modalTitulo').textContent = 'Editar Fornecedor';
+            document.getElementById('fnome').value = fornecedor.nome;
+            document.getElementById('fcnpj').value = fornecedor.cnpj;
+            document.getElementById('femail').value = fornecedor.email;
+            document.getElementById('ftelefone').value = fornecedor.telefone;
+            document.getElementById('fendereco').value = fornecedor.endereco;
+            document.getElementById('fbanco').value = fornecedor.banco;
+            document.getElementById('fagencia').value = fornecedor.agencia;
+            document.getElementById('fconta').value = fornecedor.conta;
+            document.getElementById('modalFornecedor').classList.remove('hidden');
+        }
+
+        function deletarFornecedor(id) {
+            if (confirm('Tem certeza que deseja deletar este fornecedor?')) {
+                desativarFornecedor(id);
+                renderFornecedoresTable();
+            }
+        }
+
+        function showMensagem(texto, sucesso) {
+            const div = document.getElementById('mensagemFornecedor');
+            div.textContent = texto;
+            div.className = sucesso ? 'p-4 rounded-lg bg-green-100 text-green-800' : 'p-4 rounded-lg bg-red-100 text-red-800';
+            div.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

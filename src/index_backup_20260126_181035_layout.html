@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prefeitura de Quebrangulo - Sistema de Controle de Pagamentos</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    
+    <!-- SheetJS (Excel) -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+</head>
+<body class="bg-slate-100 text-slate-900">
+    <div class="min-h-screen flex">
+        <!-- Sidebar -->
+        <aside class="w-72 bg-gradient-to-b from-slate-900 to-slate-800 text-white p-6 shadow-lg fixed h-screen overflow-y-auto">
+            <div class="mb-8">
+                <h1 class="text-2xl font-bold mb-1">Prefeitura de Quebrangulo</h1>
+                <p class="text-slate-400 text-sm">Controle de Pagamentos</p>
+            </div>
+
+            <nav class="space-y-2 mb-8">
+                <button class="nav-btn w-full text-left px-4 py-3 rounded-lg transition-all bg-slate-700" data-page="dashboard">
+                    <span class="text-lg mr-2">📊</span>Dashboard
+                </button>
+                <button class="nav-btn w-full text-left px-4 py-3 rounded-lg transition-all hover:bg-slate-700" data-page="import">
+                    <span class="text-lg mr-2">📥</span>Importação
+                </button>
+                <button class="nav-btn w-full text-left px-4 py-3 rounded-lg transition-all hover:bg-slate-700" data-page="data">
+                    <span class="text-lg mr-2">📋</span>Dados
+                </button>
+            </nav>
+
+            <hr class="border-slate-700 my-6">
+
+            <div>
+                <div class="text-sm font-semibold text-slate-300 mb-3">Secretarias</div>
+                <div class="space-y-1" id="secretariaList"></div>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-slate-700 text-xs text-slate-500">
+                v1.0 • Sistema Profissional
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 ml-72 p-8 overflow-y-auto">
+            <!-- Header -->
+            <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    <div>
+                        <p class="text-sm text-slate-500 font-semibold">SISTEMA DE CONTROLE</p>
+                        <h2 class="text-3xl font-bold mt-1">Prefeitura de Quebrangulo</h2>
+                        <p class="text-slate-600 text-sm mt-2 max-w-2xl">
+                            Sistema integrado para controle de pagamentos de fornecedores, com visão geral e por secretaria.
+                        </p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-xs text-slate-500">Versão</p>
+                        <p class="text-2xl font-bold">1.0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Views Container -->
+            <div id="viewsContainer">
+                <!-- Dashboard View -->
+                <div id="viewDashboard" class="space-y-6">
+                    <!-- Controls Bar -->
+                    <div class="bg-white rounded-xl shadow-md p-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                        <div>
+                            <h3 class="text-2xl font-bold">Dashboard</h3>
+                            <p class="text-slate-600 text-sm mt-1">Visão geral e análise por secretaria</p>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <select id="secretariaFilter" class="px-4 py-2 rounded-lg border border-slate-300 bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="__geral__">Geral (todas as secretarias)</option>
+                            </select>
+                            <select id="periodoFilter" class="px-4 py-2 rounded-lg border border-slate-300 bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="2026-01">Jan/2026</option>
+                                <option value="2025-12">Dez/2025</option>
+                                <option value="2025-11">Nov/2025</option>
+                            </select>
+                            <button id="btnRefresh" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold shadow-md">
+                                Atualizar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- KPI Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-blue-500">
+                            <p class="text-sm text-slate-600 font-semibold">Total Pago</p>
+                            <p class="text-3xl font-bold mt-2" id="kpiTotalPago">R$ 0,00</p>
+                            <p class="text-xs text-slate-500 mt-2">Somatório dos pagamentos</p>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-emerald-500">
+                            <p class="text-sm text-slate-600 font-semibold">Maior Fornecedor</p>
+                            <p class="text-lg font-bold mt-2" id="kpiMaiorFornecedor">—</p>
+                            <p class="text-xs text-slate-500 mt-2" id="kpiMaiorFornecedorValor">R$ 0,00</p>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-purple-500">
+                            <p class="text-sm text-slate-600 font-semibold">Verba Recebida</p>
+                            <p class="text-3xl font-bold mt-2" id="kpiVerbaRecebida">R$ 0,00</p>
+                            <p class="text-xs text-slate-500 mt-2">Total de repasses</p>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-orange-500">
+                            <p class="text-sm text-slate-600 font-semibold">Disparidade</p>
+                            <p class="text-3xl font-bold mt-2" id="kpiDisparidade">R$ 0,00</p>
+                            <p class="text-xs text-slate-500 mt-2">Recebida - Aplicada</p>
+                        </div>
+                    </div>
+
+                    <!-- Charts Grid - Pizza à Esquerda -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                        <!-- Pizza Chart (Left) -->
+                        <div class="bg-white rounded-xl shadow-md p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="font-bold text-lg">Gastos por Secretaria</h3>
+                                <span class="text-xs bg-slate-200 px-2 py-1 rounded">Pizza</span>
+                            </div>
+                            <canvas id="chartGastosPizza"></canvas>
+                            <p class="text-xs text-slate-500 mt-4 text-center">💡 Clique na pizza para filtrar</p>
+                        </div>
+
+                        <!-- Right Column - Stacked Charts -->
+                        <div class="lg:col-span-2 space-y-4">
+                            <!-- Top Fornecedores -->
+                            <div class="bg-white rounded-xl shadow-md p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="font-bold text-lg">Top Fornecedores</h3>
+                                    <span class="text-xs bg-slate-200 px-2 py-1 rounded">Top 8</span>
+                                </div>
+                                <canvas id="chartTopFornecedores"></canvas>
+                            </div>
+
+                            <!-- Verba Comparativo -->
+                            <div class="bg-white rounded-xl shadow-md p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="font-bold text-lg">Verba: Recebida vs Aplicada</h3>
+                                    <span class="text-xs bg-slate-200 px-2 py-1 rounded">Comparativo</span>
+                                </div>
+                                <canvas id="chartVerbas"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hidden Chart for Secretaria View -->
+                    <div id="boxTopFornecedoresSecretaria" class="hidden bg-white rounded-xl shadow-md p-6 mt-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-bold text-lg" id="titlePizzaSecretaria">Top Fornecedores da Secretaria</h3>
+                            <span class="text-xs bg-slate-200 px-2 py-1 rounded">Top 6</span>
+                        </div>
+                        <canvas id="chartFornecedoresSecretariaPizza"></canvas>
+                    </div>
+
+                    <!-- Disparidade Table -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                        <div class="p-6 border-b border-slate-200 flex items-center justify-between">
+                            <h3 class="font-bold text-lg">Disparidade por Secretaria</h3>
+                            <span class="text-xs text-slate-500" id="labelPeriodoDisparidade">Período: —</span>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm">
+                                <thead class="bg-slate-50 text-slate-700 font-semibold">
+                                    <tr>
+                                        <th class="text-left p-4">Secretaria</th>
+                                        <th class="text-right p-4">Recebida</th>
+                                        <th class="text-right p-4">Aplicada</th>
+                                        <th class="text-right p-4">Disparidade</th>
+                                        <th class="text-right p-4">% Aplicada</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tblDisparidade" class="divide-y divide-slate-200"></tbody>
+                            </table>
+                        </div>
+                        <div class="p-4 bg-slate-50 text-xs text-slate-600" id="tblDisparidadeFooter">0 secretarias</div>
+                    </div>
+
+                    <!-- Pagamentos Table -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                        <div class="p-6 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                            <h3 class="font-bold text-lg">Pagamentos (Detalhe)</h3>
+                            <input id="searchFornecedor" class="px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm w-full sm:w-64" 
+                                placeholder="Buscar fornecedor...">
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm">
+                                <thead class="bg-slate-50 text-slate-700 font-semibold">
+                                    <tr>
+                                        <th class="text-left p-4">Data</th>
+                                        <th class="text-left p-4">Secretaria</th>
+                                        <th class="text-left p-4">Fornecedor</th>
+                                        <th class="text-left p-4">Documento</th>
+                                        <th class="text-right p-4">Valor</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tblPagamentos" class="divide-y divide-slate-200"></tbody>
+                            </table>
+                        </div>
+                        <div class="p-4 bg-slate-50 text-xs text-slate-600" id="tblFooter">0 registros</div>
+                    </div>
+                </div>
+
+                <!-- Import View -->
+                <div id="viewImport" class="hidden space-y-6">
+                    <div class="bg-white rounded-xl shadow-md p-6">
+                        <h3 class="text-2xl font-bold mb-4">Importação de Dados</h3>
+                        <p class="text-slate-600 mb-6">Importe dados de pagamentos e verbas via Excel ou API.</p>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div class="border-2 border-slate-200 rounded-lg p-6">
+                                <h4 class="font-bold text-lg mb-2">📊 Importar Excel</h4>
+                                <p class="text-slate-600 text-sm mb-4">Esperamos 2 abas: <span class="font-semibold">Pagamentos</span> e <span class="font-semibold">Verbas</span></p>
+                                <input type="file" id="excelFile" accept=".xlsx,.xls" class="mb-4 w-full">
+                                <button id="btnImportExcel" class="w-full px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors font-semibold">
+                                    Importar Excel
+                                </button>
+                                <p class="text-xs text-slate-500 mt-3">Máximo 10MB • Formatos: .xlsx, .xls</p>
+                            </div>
+
+                            <div class="border-2 border-slate-200 rounded-lg p-6">
+                                <h4 class="font-bold text-lg mb-2">🔌 Conectar API</h4>
+                                <p class="text-slate-600 text-sm mb-4">Busque dados através de endpoints configurados.</p>
+                                <input id="apiBaseUrl" class="w-full px-4 py-2 rounded-lg border border-slate-300 mb-3 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+                                    placeholder="Ex: https://api.prefeitura.gov.br">
+                                <button id="btnFetchApi" class="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold">
+                                    Buscar via API
+                                </button>
+                                <p class="text-xs text-slate-500 mt-3">Modo: simulação (protótipo)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-md p-6">
+                        <h3 class="font-bold text-lg mb-4">📋 Modelo de Excel</h3>
+                        <p class="text-slate-600 text-sm mb-4">Crie um arquivo com as seguintes estruturas:</p>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                            <div class="bg-slate-50 rounded-lg p-4">
+                                <p class="font-semibold text-slate-900 mb-3">Aba: Pagamentos</p>
+                                <ul class="text-sm text-slate-700 space-y-1">
+                                    <li>• <span class="font-mono">data_pagamento</span> (YYYY-MM-DD)</li>
+                                    <li>• <span class="font-mono">periodo</span> (ex: 2026-01)</li>
+                                    <li>• <span class="font-mono">secretaria</span></li>
+                                    <li>• <span class="font-mono">fornecedor</span></li>
+                                    <li>• <span class="font-mono">documento</span> (NF/Empenho)</li>
+                                    <li>• <span class="font-mono">valor</span> (número)</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-slate-50 rounded-lg p-4">
+                                <p class="font-semibold text-slate-900 mb-3">Aba: Verbas</p>
+                                <ul class="text-sm text-slate-700 space-y-1">
+                                    <li>• <span class="font-mono">periodo</span> (ex: 2026-01)</li>
+                                    <li>• <span class="font-mono">secretaria</span></li>
+                                    <li>• <span class="font-mono">verba_recebida</span> (número)</li>
+                                    <li>• <span class="font-mono">verba_destinada_especifica</span></li>
+                                    <li>• <span class="font-mono">verba_aplicada</span> (número)</li>
+                                    <li>• <span class="font-mono">observacao</span> (opcional)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data View -->
+                <div id="viewData" class="hidden space-y-6">
+                    <div class="bg-white rounded-xl shadow-md p-6">
+                        <h3 class="text-2xl font-bold mb-2">Dados Carregados</h3>
+                        <p class="text-slate-600 mb-6">Resumo e validações dos dados importados.</p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 border-l-4 border-blue-500">
+                                <p class="text-sm text-slate-600 font-semibold">Pagamentos</p>
+                                <p class="text-4xl font-bold mt-2 text-blue-600" id="countPagamentos">0</p>
+                            </div>
+                            <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-6 border-l-4 border-purple-500">
+                                <p class="text-sm text-slate-600 font-semibold">Verbas</p>
+                                <p class="text-4xl font-bold mt-2 text-purple-600" id="countVerbas">0</p>
+                            </div>
+                            <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-lg p-6 border-l-4 border-emerald-500">
+                                <p class="text-sm text-slate-600 font-semibold">Secretarias</p>
+                                <p class="text-4xl font-bold mt-2 text-emerald-600" id="countSecretarias">0</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                            <p class="text-sm text-blue-900">
+                                <span class="font-semibold">💡 Dica:</span> Quando este sistema for produzido, incluiremos 
+                                validações avançadas, logs de importação e trilha de auditoria.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

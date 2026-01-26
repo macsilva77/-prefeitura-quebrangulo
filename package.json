@@ -1,0 +1,55 @@
+{
+  "name": "expense-tracker-prefeitura",
+  "version": "1.0.0",
+  "description": "Sistema de Controle de Gastos - Prefeitura de Quebrangulo",
+  "main": "src/js/app.js",
+  "type": "module",
+  "scripts": {
+    "start": "cd src && python -m http.server 8000",
+    "start:node": "cd src && npx serve . -p 8000",
+    "test": "node --experimental-modules tests/runner.js",
+    "test:watch": "nodemon --exec npm test",
+    "test:coverage": "nyc npm test",
+    "lint": "eslint src/js --fix",
+    "lint:check": "eslint src/js",
+    "format": "prettier --write 'src/**/*.{js,html,css}'",
+    "build": "echo 'Build script placeholder'",
+    "security": "snyk test",
+    "security:fix": "snyk fix",
+    "docs": "jsdoc -c jsdoc.json",
+    "clean": "rm -rf node_modules dist coverage *.log"
+  },
+  "keywords": [
+    "prefeitura",
+    "gastos",
+    "pagamentos",
+    "fornecedores",
+    "dashboard",
+    "expense-tracker"
+  ],
+  "author": "Prefeitura de Quebrangulo",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seu-repo/expense-tracker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/seu-repo/expense-tracker/issues"
+  },
+  "homepage": "https://github.com/seu-repo/expense-tracker#readme",
+  "devDependencies": {
+    "eslint": "^8.54.0",
+    "prettier": "^3.0.0",
+    "jest": "^29.7.0",
+    "cypress": "^13.6.0",
+    "nodemon": "^3.0.1",
+    "jsdoc": "^4.0.2",
+    "nyc": "^15.1.0",
+    "snyk": "^1.1275.0"
+  },
+  "dependencies": {
+    "chart.js": "^4.4.1",
+    "xlsx": "^0.18.5",
+    "tailwindcss": "^3.3.0"
+  }
+}
