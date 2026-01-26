@@ -66,45 +66,64 @@ function initSidebarToggle() {
 // ===== MENU SEARCH =====
 function initMenuSearch() {
     const searchInput = document.getElementById('menuSearch');
+    console.log('initMenuSearch - searchInput encontrado?', !!searchInput);
     
-    if (!searchInput) return;
+    if (!searchInput) {
+        console.warn('❌ Campo de pesquisa não encontrado');
+        return;
+    }
+    
+    console.log('✓ Menu search inicializado');
     
     searchInput.addEventListener('input', (e) => {
-        const searchTerm = e.target.value.toLowerCase();
+        const searchTerm = e.target.value.toLowerCase().trim();
+        console.log('🔍 Pesquisa:', searchTerm);
         
-        // Pega todos os elementos de navegação e links
-        const navItems = document.querySelectorAll('#sidebar nav a, #sidebar nav button, #sidebar > div:has(> .text-sm)');
+        // Todos os itens do menu: botões de navegação e links de administração
+        const allItems = document.querySelectorAll('#sidebar nav button, #sidebar nav a, #sidebar a[href]');
         
-        navItems.forEach(item => {
+        console.log('📋 Total de itens encontrados:', allItems.length);
+        
+        allItems.forEach(item => {
             const text = item.textContent.toLowerCase();
-            const parent = item.parentElement;
+            const parent = item.closest('div') || item.parentElement;
             
-            // Mostrar/esconder item
-            if (text.includes(searchTerm) || searchTerm === '') {
-                item.style.display = 'block';
-                if (parent && parent.style) parent.style.display = 'block';
+            // Se não há termo de busca, mostrar tudo
+            if (!searchTerm) {
+                item.style.display = '';
+                if (parent && parent.style) parent.style.display = '';
             } else {
-                item.style.display = 'none';
+                // Se o texto contém o termo, mostrar
+                if (text.includes(searchTerm)) {
+                    item.style.display = '';
+                    if (parent && parent.style) parent.style.display = '';
+                    console.log('  ✓ Mostrando:', item.textContent.trim());
+                } else {
+                    item.style.display = 'none';
+                }
             }
         });
         
-        // Mostrar/esconder seções de administração
-        const adminSection = Array.from(document.querySelectorAll('#sidebar div')).find(div => 
-            div.textContent.includes('Administração')
+        // Mostrar/esconder seção de administração
+        const adminLabels = Array.from(document.querySelectorAll('#sidebar .text-sm')).filter(el => 
+            el.textContent.includes('Administração')
         );
         
-        if (adminSection) {
-            if (searchTerm === '') {
-                adminSection.style.display = 'block';
+        console.log('🏢 Seções Admin encontradas:', adminLabels.length);
+        
+        adminLabels.forEach(label => {
+            if (!searchTerm) {
+                label.style.display = '';
             } else {
-                // Verificar se algum item da administração corresponde
-                const adminItems = adminSection.querySelectorAll('a');
-                const hasMatch = Array.from(adminItems).some(item => 
-                    item.textContent.toLowerCase().includes(searchTerm)
+                // Verificar se algum link da admin contém o termo
+                const adminDiv = label.parentElement;
+                const adminLinks = adminDiv ? adminDiv.querySelectorAll('a') : [];
+                const hasMatch = Array.from(adminLinks).some(link => 
+                    link.textContent.toLowerCase().includes(searchTerm)
                 );
-                adminSection.style.display = hasMatch ? 'block' : 'none';
+                label.style.display = hasMatch ? '' : 'none';
             }
-        }
+        });
     });
 }
 
