@@ -91,7 +91,7 @@ function createFloatingMenuButton() {
     
     const button = document.createElement('button');
     button.id = 'toggleSidebarFloat';
-    button.className = 'hidden fixed left-4 top-4 z-50 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg shadow-lg transition-all';
+    button.className = 'hidden fixed left-6 top-6 z-50 bg-slate-900/80 hover:bg-slate-800 text-slate-300 hover:text-white transition p-2 rounded-lg';
     button.title = 'Mostrar menu';
     button.innerHTML = '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>';
     
