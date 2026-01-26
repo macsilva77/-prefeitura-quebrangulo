@@ -6,6 +6,7 @@ let chartTop = null;
 let chartVerbas = null;
 let chartPizza = null;
 let chartPizzaSecretaria = null;
+let chartVerbasPorSecretaria = null;
 
 /**
  * Renderiza todos os gráficos
@@ -15,6 +16,7 @@ function renderCharts() {
     renderVerbaChart();
     renderPizzaChart();
     renderPizzaSecretariaChart();
+    renderVerbasPorSecretariaChart();
 }
 
 /**
@@ -225,6 +227,72 @@ function renderPizzaSecretariaChart() {
                 tooltip: {
                     callbacks: {
                         label: (ctx) => ` ${ctx.label}: ${money(ctx.raw)}`
+                    }
+                }
+            }
+        }
+    });
+}
+
+/**
+ * Renderiza gráfico de Verba Recebida x Verba Paga por Secretaria (Stacked)
+ */
+function renderVerbasPorSecretariaChart() {
+    const { periodo } = getCurrentFilters();
+    const ctx = document.getElementById("chartVerbasPorSecretaria");
+    if (!ctx) return;
+
+    if (chartVerbasPorSecretaria) chartVerbasPorSecretaria.destroy();
+
+    // Obter dados de verbas por secretaria
+    const verbas_secretaria = SECRETARIAS.map(sec => {
+        const v = window.verbas.find(x => x.periodo === periodo && x.secretaria === sec);
+        return {
+            secretaria: sec,
+            recebida: v?.verba_recebida || 0,
+            aplicada: v?.verba_aplicada || 0
+        };
+    }).filter(x => x.recebida > 0 || x.aplicada > 0);
+
+    chartVerbasPorSecretaria = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: verbas_secretaria.map(x => x.secretaria),
+            datasets: [
+                {
+                    label: "Verba Recebida",
+                    data: verbas_secretaria.map(x => x.recebida),
+                    backgroundColor: "#10b981",
+                    stack: 'Stack 0'
+                },
+                {
+                    label: "Verba Paga",
+                    data: verbas_secretaria.map(x => x.aplicada),
+                    backgroundColor: "#ef4444",
+                    stack: 'Stack 0'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            aspectRatio: 2,
+            indexAxis: 'x',
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: (ctx) => ` ${ctx.dataset.label}: ${money(ctx.raw)}`
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    stacked: true,
+                    ticks: {
+                        callback: (v) => money(v)
                     }
                 }
             }
