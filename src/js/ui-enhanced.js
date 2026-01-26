@@ -24,6 +24,12 @@ function initSidebarToggle() {
             sidebar.classList.add('w-20');
             mainContent.classList.remove('ml-72');
             mainContent.classList.add('ml-20');
+            
+            // Mostrar botão flutuante
+            const floatingBtn = document.getElementById('toggleSidebarFloat');
+            if (floatingBtn) floatingBtn.classList.remove('hidden');
+            
+            // Esconder elementos do sidebar
             document.querySelectorAll('#sidebar > div:not(.flex), nav, hr, div').forEach(el => {
                 if (el !== toggleBtn && el.closest('#sidebar')) {
                     el.classList.add('hidden');
@@ -34,6 +40,12 @@ function initSidebarToggle() {
             sidebar.classList.remove('w-20');
             mainContent.classList.add('ml-72');
             mainContent.classList.remove('ml-20');
+            
+            // Esconder botão flutuante
+            const floatingBtn = document.getElementById('toggleSidebarFloat');
+            if (floatingBtn) floatingBtn.classList.add('hidden');
+            
+            // Mostrar elementos do sidebar
             document.querySelectorAll('#sidebar > div:not(.flex), nav, hr, div').forEach(el => {
                 if (el !== toggleBtn && el.closest('#sidebar')) {
                     el.classList.remove('hidden');
@@ -70,6 +82,25 @@ function initMenuSearch() {
             }
         });
     });
+}
+
+// ===== CREATE FLOATING BUTTON =====
+function createFloatingMenuButton() {
+    // Verificar se já existe
+    if (document.getElementById('toggleSidebarFloat')) return;
+    
+    const button = document.createElement('button');
+    button.id = 'toggleSidebarFloat';
+    button.className = 'hidden fixed left-4 top-4 z-50 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg shadow-lg transition-all';
+    button.title = 'Mostrar menu';
+    button.innerHTML = '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>';
+    
+    button.addEventListener('click', () => {
+        const toggleBtn = document.getElementById('toggleSidebar');
+        if (toggleBtn) toggleBtn.click();
+    });
+    
+    document.body.appendChild(button);
 }
 
 // ===== DISPLAY USER INFO =====
@@ -263,6 +294,7 @@ function generateRandomToken(length = 32) {
 // ===== INITIALIZE =====
 document.addEventListener('DOMContentLoaded', () => {
     console.log('🔄 DOMContentLoaded - iniciando ui-enhanced');
+    createFloatingMenuButton();
     initSidebarToggle();
     initMenuSearch();
     
