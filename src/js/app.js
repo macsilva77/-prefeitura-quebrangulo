@@ -12,11 +12,10 @@ function checkAuthentication() {
         return false;
     }
     
-    // Exibe informações do usuário
+    // Exibe informações do usuário (será complementado pelo ui-enhanced.js)
     const usuario = getUsuarioAtual();
     if (usuario) {
-        document.getElementById("usuarioNome").textContent = usuario.nome;
-        document.getElementById("usuarioRole").textContent = getRoleName(usuario.role);
+        document.getElementById("usuarioNome").textContent = usuario.nome.split(' ')[0];
     }
     
     return true;

@@ -74,24 +74,28 @@ function initMenuSearch() {
 
 // ===== DISPLAY USER INFO =====
 function displayUserInfo() {
-    const usuarioAtual = getUsuarioAtual();
-    
-    if (usuarioAtual) {
-        // Separar nome e sobrenome
-        const nomePartes = usuarioAtual.nome.split(' ');
-        const nome = nomePartes[0];
-        const sobrenome = nomePartes.slice(1).join(' ') || '';
+    try {
+        const usuarioAtual = getUsuarioAtual();
         
-        const nomeCompleto = sobrenome ? `${nome} ${sobrenome}` : nome;
-        
-        // Atualizar elementos
-        const usuarioNomeEl = document.getElementById('usuarioNome');
-        const usuarioNomeCompletoEl = document.getElementById('usuarioNomeCompleto');
-        const usuarioEmailEl = document.getElementById('usuarioEmail');
-        
-        if (usuarioNomeEl) usuarioNomeEl.textContent = nome;
-        if (usuarioNomeCompletoEl) usuarioNomeCompletoEl.textContent = nomeCompleto;
-        if (usuarioEmailEl) usuarioEmailEl.textContent = usuarioAtual.email;
+        if (usuarioAtual) {
+            // Separar nome e sobrenome
+            const nomePartes = usuarioAtual.nome.split(' ');
+            const nome = nomePartes[0];
+            const sobrenome = nomePartes.slice(1).join(' ') || '';
+            
+            const nomeCompleto = sobrenome ? `${nome} ${sobrenome}` : nome;
+            
+            // Atualizar elementos
+            const usuarioNomeEl = document.getElementById('usuarioNome');
+            const usuarioNomeCompletoEl = document.getElementById('usuarioNomeCompleto');
+            const usuarioEmailEl = document.getElementById('usuarioEmail');
+            
+            if (usuarioNomeEl) usuarioNomeEl.textContent = nome;
+            if (usuarioNomeCompletoEl) usuarioNomeCompletoEl.textContent = nomeCompleto;
+            if (usuarioEmailEl) usuarioEmailEl.textContent = usuarioAtual.email;
+        }
+    } catch (error) {
+        console.warn('Erro ao exibir info do usuário:', error);
     }
 }
 
@@ -251,5 +255,9 @@ function generateRandomToken(length = 32) {
 document.addEventListener('DOMContentLoaded', () => {
     initSidebarToggle();
     initMenuSearch();
-    displayUserInfo();
+    
+    // Pequeno delay para garantir que os elementos estão prontos
+    setTimeout(() => {
+        displayUserInfo();
+    }, 100);
 });
