@@ -37,6 +37,7 @@ function getRoleName(role) {
  * Inicializa a aplicação
  */
 function init() {
+    console.log('🚀 init() chamado');
     // Verifica autenticação
     if (!checkAuthentication()) return;
 

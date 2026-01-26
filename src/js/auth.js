@@ -9,7 +9,7 @@ let users = JSON.parse(localStorage.getItem('prefeitura_users')) || [
         id: 1,
         nome: "Administrador",
         email: "admin@prefeitura.gov.br",
-        senhaHash: hashPassword("Admin123"), // Senha: Admin123 (com maiúscula e número)
+        senhaHash: typeof hashPassword !== 'undefined' ? hashPassword("Admin123") : "sha256:d8e8fca2dc0f896fd7cb4cb0031ba249", // Fallback se crypto.js não carregou
         role: "admin",
         ativo: true,
         dataCriacao: new Date().toISOString()
@@ -18,6 +18,8 @@ let users = JSON.parse(localStorage.getItem('prefeitura_users')) || [
 
 // Usuário autenticado atual
 let usuarioAtual = JSON.parse(localStorage.getItem('prefeitura_usuario_atual')) || null;
+
+console.log('✓ auth.js carregado', { users, usuarioAtual });
 
 /**
  * Realiza login do usuário

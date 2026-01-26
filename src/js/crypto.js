@@ -4,6 +4,8 @@
  * Este é um fallback client-side apenas para protótipo
  */
 
+console.log('✓ crypto.js carregado');
+
 /**
  * Hash simples da senha (NÃO usar em produção!)
  * Em produção: usar bcrypt no servidor

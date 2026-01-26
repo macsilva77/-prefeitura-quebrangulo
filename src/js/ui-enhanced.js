@@ -75,7 +75,9 @@ function initMenuSearch() {
 // ===== DISPLAY USER INFO =====
 function displayUserInfo() {
     try {
+        console.log('displayUserInfo() chamado');
         const usuarioAtual = getUsuarioAtual();
+        console.log('usuarioAtual:', usuarioAtual);
         
         if (usuarioAtual) {
             // Separar nome e sobrenome
@@ -84,18 +86,25 @@ function displayUserInfo() {
             const sobrenome = nomePartes.slice(1).join(' ') || '';
             
             const nomeCompleto = sobrenome ? `${nome} ${sobrenome}` : nome;
+            console.log('Nome:', nome, 'Sobrenome:', sobrenome);
             
             // Atualizar elementos
             const usuarioNomeEl = document.getElementById('usuarioNome');
             const usuarioNomeCompletoEl = document.getElementById('usuarioNomeCompleto');
             const usuarioEmailEl = document.getElementById('usuarioEmail');
             
+            console.log('Elementos encontrados:', { usuarioNomeEl, usuarioNomeCompletoEl, usuarioEmailEl });
+            
             if (usuarioNomeEl) usuarioNomeEl.textContent = nome;
             if (usuarioNomeCompletoEl) usuarioNomeCompletoEl.textContent = nomeCompleto;
             if (usuarioEmailEl) usuarioEmailEl.textContent = usuarioAtual.email;
+            
+            console.log('✓ Elementos atualizados com sucesso');
+        } else {
+            console.warn('usuarioAtual é null');
         }
     } catch (error) {
-        console.warn('Erro ao exibir info do usuário:', error);
+        console.error('Erro ao exibir info do usuário:', error);
     }
 }
 
@@ -253,11 +262,13 @@ function generateRandomToken(length = 32) {
 
 // ===== INITIALIZE =====
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('🔄 DOMContentLoaded - iniciando ui-enhanced');
     initSidebarToggle();
     initMenuSearch();
     
     // Pequeno delay para garantir que os elementos estão prontos
     setTimeout(() => {
+        console.log('⏱️ Executando displayUserInfo após delay');
         displayUserInfo();
     }, 100);
 });
