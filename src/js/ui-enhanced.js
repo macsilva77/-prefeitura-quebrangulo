@@ -66,21 +66,45 @@ function initSidebarToggle() {
 // ===== MENU SEARCH =====
 function initMenuSearch() {
     const searchInput = document.getElementById('menuSearch');
-    const navButtons = document.querySelectorAll('.nav-btn');
     
     if (!searchInput) return;
     
     searchInput.addEventListener('input', (e) => {
         const searchTerm = e.target.value.toLowerCase();
         
-        navButtons.forEach(btn => {
-            const text = btn.textContent.toLowerCase();
-            if (text.includes(searchTerm)) {
-                btn.style.display = 'block';
+        // Pega todos os elementos de navegação e links
+        const navItems = document.querySelectorAll('#sidebar nav a, #sidebar nav button, #sidebar > div:has(> .text-sm)');
+        
+        navItems.forEach(item => {
+            const text = item.textContent.toLowerCase();
+            const parent = item.parentElement;
+            
+            // Mostrar/esconder item
+            if (text.includes(searchTerm) || searchTerm === '') {
+                item.style.display = 'block';
+                if (parent && parent.style) parent.style.display = 'block';
             } else {
-                btn.style.display = 'none';
+                item.style.display = 'none';
             }
         });
+        
+        // Mostrar/esconder seções de administração
+        const adminSection = Array.from(document.querySelectorAll('#sidebar div')).find(div => 
+            div.textContent.includes('Administração')
+        );
+        
+        if (adminSection) {
+            if (searchTerm === '') {
+                adminSection.style.display = 'block';
+            } else {
+                // Verificar se algum item da administração corresponde
+                const adminItems = adminSection.querySelectorAll('a');
+                const hasMatch = Array.from(adminItems).some(item => 
+                    item.textContent.toLowerCase().includes(searchTerm)
+                );
+                adminSection.style.display = hasMatch ? 'block' : 'none';
+            }
+        }
     });
 }
 
