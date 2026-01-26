@@ -13,7 +13,6 @@ let chartVerbasPorSecretaria = null;
  */
 function renderCharts() {
     renderTopFornecedoresChart();
-    renderVerbaChart();
     renderPizzaChart();
     renderPizzaSecretariaChart();
     renderVerbasPorSecretariaChart();
