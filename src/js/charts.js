@@ -273,43 +273,22 @@ function renderPizzaSecretariaChart() {
  * Renderiza gráfico de Verba Recebida x Verba Paga por Secretaria (Stacked)
  */
 function renderVerbasPorSecretariaChart() {
-    console.log('🚀 renderVerbasPorSecretariaChart iniciado');
-    
     const { periodo } = getCurrentFilters();
-    console.log('📅 Período:', periodo);
-    
     const ctx = document.getElementById("chartVerbasPorSecretaria");
-    console.log('🎨 Canvas encontrado?', !!ctx);
     
-    if (!ctx) {
-        console.error('❌ Canvas #chartVerbasPorSecretaria não encontrado!');
-        return;
-    }
+    if (!ctx) return;
 
     if (chartVerbasPorSecretaria) chartVerbasPorSecretaria.destroy();
 
     // Obter dados de verbas por secretaria
-    console.log('📊 SECRETARIAS disponárias:', SECRETARIAS);
-    console.log('💰 Total de verbas no array:', verbas.length);
-    console.log('📋 Todas as verbas:', verbas);
-    
     const verbas_secretaria = SECRETARIAS.map(sec => {
         const v = verbas.find(x => x.periodo === periodo && x.secretaria === sec);
-        const result = {
+        return {
             secretaria: sec,
             recebida: v?.verba_recebida || 0,
             aplicada: v?.verba_aplicada || 0
         };
-        console.log(`  ${sec}: recebida=${result.recebida}, paga=${result.aplicada}`);
-        return result;
     }).filter(x => x.recebida > 0 || x.aplicada > 0);
-
-    console.log('✅ Dados filtrados:', verbas_secretaria);
-    console.log('📈 Total de secretarias com dados:', verbas_secretaria.length);
-
-    if (verbas_secretaria.length === 0) {
-        console.warn('⚠️ Nenhuma secretaria com dados para o período:', periodo);
-    }
 
     const chartConfig = {
         type: "bar",
@@ -383,12 +362,5 @@ function renderVerbasPorSecretariaChart() {
         }
     };
 
-    console.log('⚙️ Chart config:', chartConfig);
-
-    try {
-        chartVerbasPorSecretaria = new Chart(ctx, chartConfig);
-        console.log('✨ Gráfico criado com sucesso!');
-    } catch (err) {
-        console.error('❌ Erro ao criar gráfico:', err);
-    }
+    chartVerbasPorSecretaria = new Chart(ctx, chartConfig);
 }
