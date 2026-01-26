@@ -245,13 +245,15 @@ function renderVerbasPorSecretariaChart() {
 
     // Obter dados de verbas por secretaria
     const verbas_secretaria = SECRETARIAS.map(sec => {
-        const v = window.verbas.find(x => x.periodo === periodo && x.secretaria === sec);
+        const v = verbas.find(x => x.periodo === periodo && x.secretaria === sec);
         return {
             secretaria: sec,
             recebida: v?.verba_recebida || 0,
             aplicada: v?.verba_aplicada || 0
         };
     }).filter(x => x.recebida > 0 || x.aplicada > 0);
+
+    console.log('📊 Verba por Secretaria Chart Data:', verbas_secretaria);
 
     chartVerbasPorSecretaria = new Chart(ctx, {
         type: "bar",
@@ -262,13 +264,15 @@ function renderVerbasPorSecretariaChart() {
                     label: "Verba Recebida",
                     data: verbas_secretaria.map(x => x.recebida),
                     backgroundColor: "#10b981",
-                    stack: 'Stack 0'
+                    borderColor: "#059669",
+                    borderWidth: 1
                 },
                 {
                     label: "Verba Paga",
                     data: verbas_secretaria.map(x => x.aplicada),
                     backgroundColor: "#ef4444",
-                    stack: 'Stack 0'
+                    borderColor: "#dc2626",
+                    borderWidth: 1
                 }
             ]
         },
@@ -276,7 +280,6 @@ function renderVerbasPorSecretariaChart() {
             responsive: true,
             maintainAspectRatio: true,
             aspectRatio: 2,
-            indexAxis: 'x',
             plugins: {
                 legend: {
                     position: 'bottom'
@@ -288,6 +291,9 @@ function renderVerbasPorSecretariaChart() {
                 }
             },
             scales: {
+                x: {
+                    stacked: true
+                },
                 y: {
                     stacked: true,
                     ticks: {
