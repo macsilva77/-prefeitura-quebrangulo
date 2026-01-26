@@ -37,21 +37,28 @@ function renderTopFornecedoresChart() {
             datasets: [{
                 label: "Total pago",
                 data: top.map(x => x.total),
-                backgroundColor: "#3b82f6",
-                borderColor: "#1d4ed8",
-                borderWidth: 1
+                backgroundColor: "#0ea5e9",
+                borderColor: "#0284c7",
+                borderWidth: 2,
+                borderRadius: 4,
+                barThickness: 'flex',
+                maxBarThickness: 50
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: true,
-            aspectRatio: 2,
+            aspectRatio: 2.2,
             indexAxis: 'y',
             plugins: {
                 legend: {
                     display: false
                 },
                 tooltip: {
+                    backgroundColor: 'rgba(0,0,0,0.8)',
+                    padding: 12,
+                    titleFont: { size: 13, weight: 'bold' },
+                    bodyFont: { size: 12 },
                     callbacks: {
                         label: (ctx) => " " + money(ctx.raw)
                     }
@@ -59,8 +66,22 @@ function renderTopFornecedoresChart() {
             },
             scales: {
                 x: {
+                    grid: {
+                        color: 'rgba(0,0,0,0.05)',
+                        drawBorder: false
+                    },
                     ticks: {
-                        callback: (v) => money(v)
+                        callback: (v) => money(v),
+                        font: { size: 11 }
+                    }
+                },
+                y: {
+                    grid: {
+                        display: false,
+                        drawBorder: false
+                    },
+                    ticks: {
+                        font: { size: 11 }
                     }
                 }
             }
@@ -142,17 +163,19 @@ function renderPizzaChart() {
                 label: "Gastos por secretaria",
                 data: gastos.map(x => x.total),
                 backgroundColor: [
-                    "#3b82f6", "#ef4444", "#10b981", "#f59e0b",
+                    "#0ea5e9", "#ef4444", "#10b981", "#f59e0b",
                     "#8b5cf6", "#06b6d4", "#f43f5e", "#14b8a6"
                 ],
                 borderColor: "#fff",
-                borderWidth: 2
+                borderWidth: 3,
+                hoverBorderWidth: 5,
+                hoverOffset: 10
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: true,
-            aspectRatio: 1.5,
+            aspectRatio: 1.4,
             onClick: (evt, elements) => {
                 if (elements.length > 0) {
                     const index = elements[0].index;
@@ -165,13 +188,26 @@ function renderPizzaChart() {
             },
             plugins: {
                 legend: {
-                    position: 'bottom'
+                    position: 'bottom',
+                    labels: {
+                        font: { size: 11, weight: '500' },
+                        padding: 12,
+                        usePointStyle: true
+                    }
                 },
                 tooltip: {
+                    backgroundColor: 'rgba(0,0,0,0.8)',
+                    padding: 12,
+                    titleFont: { size: 12, weight: 'bold' },
+                    bodyFont: { size: 11 },
                     callbacks: {
                         label: (ctx) => ` ${ctx.label}: ${money(ctx.raw)}`
                     }
                 }
+            }
+        }
+    });
+}
             }
         }
     });
@@ -284,27 +320,38 @@ function renderVerbasPorSecretariaChart() {
                     label: "Verba Recebida",
                     data: verbas_secretaria.map(x => x.recebida),
                     backgroundColor: "#10b981",
-                    borderColor: "#059669",
-                    borderWidth: 1
+                    borderColor: "#047857",
+                    borderWidth: 2,
+                    borderRadius: 4
                 },
                 {
                     label: "Verba Paga",
                     data: verbas_secretaria.map(x => x.aplicada),
-                    backgroundColor: "#ef4444",
-                    borderColor: "#dc2626",
-                    borderWidth: 1
+                    backgroundColor: "#f97316",
+                    borderColor: "#d97706",
+                    borderWidth: 2,
+                    borderRadius: 4
                 }
             ]
         },
         options: {
             responsive: true,
             maintainAspectRatio: true,
-            aspectRatio: 2,
+            aspectRatio: 2.2,
             plugins: {
                 legend: {
-                    position: 'bottom'
+                    position: 'bottom',
+                    labels: {
+                        font: { size: 11, weight: '500' },
+                        padding: 15,
+                        usePointStyle: true
+                    }
                 },
                 tooltip: {
+                    backgroundColor: 'rgba(0,0,0,0.8)',
+                    padding: 12,
+                    titleFont: { size: 12, weight: 'bold' },
+                    bodyFont: { size: 11 },
                     callbacks: {
                         label: (ctx) => ` ${ctx.dataset.label}: ${money(ctx.raw)}`
                     }
@@ -312,12 +359,24 @@ function renderVerbasPorSecretariaChart() {
             },
             scales: {
                 x: {
-                    stacked: true
+                    stacked: true,
+                    grid: {
+                        display: false,
+                        drawBorder: false
+                    },
+                    ticks: {
+                        font: { size: 11 }
+                    }
                 },
                 y: {
                     stacked: true,
+                    grid: {
+                        color: 'rgba(0,0,0,0.05)',
+                        drawBorder: false
+                    },
                     ticks: {
-                        callback: (v) => money(v)
+                        callback: (v) => money(v),
+                        font: { size: 11 }
                     }
                 }
             }

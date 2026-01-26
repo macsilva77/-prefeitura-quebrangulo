@@ -160,42 +160,54 @@
                         </div>
                     </div>
 
-                    <!-- Charts Grid - Pizza e Top Fornecedores lado a lado -->
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <!-- Charts Grid Section 1: Pizza e Top Fornecedores lado a lado -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <!-- Pizza Chart (Left) -->
-                        <div class="bg-white rounded-xl shadow-md p-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="font-bold text-lg">Gastos por Secretaria</h3>
-                                <span class="text-xs bg-slate-200 px-2 py-1 rounded">Pizza</span>
+                        <div class="bg-gradient-to-br from-white to-slate-50 rounded-xl shadow-lg p-6 border border-slate-100">
+                            <div class="flex items-center justify-between mb-6">
+                                <div>
+                                    <h3 class="font-bold text-xl text-slate-800">Gastos por Secretaria</h3>
+                                    <p class="text-xs text-slate-500 mt-1">Distribuição de gastos</p>
+                                </div>
+                                <span class="text-2xl">📊</span>
                             </div>
                             <canvas id="chartGastosPizza"></canvas>
-                            <p class="text-xs text-slate-500 mt-4 text-center">💡 Clique na pizza para filtrar</p>
+                            <p class="text-xs text-slate-500 mt-4 text-center bg-blue-50 py-2 rounded">💡 Clique na pizza para filtrar</p>
                         </div>
 
                         <!-- Top Fornecedores (Right) -->
-                        <div class="bg-white rounded-xl shadow-md p-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="font-bold text-lg">Top Fornecedores</h3>
-                                <span class="text-xs bg-slate-200 px-2 py-1 rounded">Top 8</span>
+                        <div class="bg-gradient-to-br from-white to-slate-50 rounded-xl shadow-lg p-6 border border-slate-100">
+                            <div class="flex items-center justify-between mb-6">
+                                <div>
+                                    <h3 class="font-bold text-xl text-slate-800">Top Fornecedores</h3>
+                                    <p class="text-xs text-slate-500 mt-1">Maiores gastos</p>
+                                </div>
+                                <span class="text-2xl">🏢</span>
                             </div>
                             <canvas id="chartTopFornecedores"></canvas>
                         </div>
                     </div>
 
-                    <!-- Verba Recebida x Verba Paga por Secretaria (Stacked) - Full Width -->
-                    <div class="bg-white rounded-xl shadow-md p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="font-bold text-lg">Verba Recebida x Verba Paga por Secretaria</h3>
-                            <span class="text-xs bg-slate-200 px-2 py-1 rounded">Empilhado</span>
+                    <!-- Charts Grid Section 2: Verba Recebida x Paga - Full Width -->
+                    <div class="bg-gradient-to-br from-white to-slate-50 rounded-xl shadow-lg p-6 border border-slate-100">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h3 class="font-bold text-xl text-slate-800">Verba Recebida x Verba Paga por Secretaria</h3>
+                                <p class="text-xs text-slate-500 mt-1">Comparação empilhada por secretaria</p>
+                            </div>
+                            <span class="text-2xl">💰</span>
                         </div>
                         <canvas id="chartVerbasPorSecretaria"></canvas>
                     </div>
 
                     <!-- Hidden Chart for Secretaria View -->
-                    <div id="boxTopFornecedoresSecretaria" class="hidden bg-white rounded-xl shadow-md p-6 mt-4">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="font-bold text-lg" id="titlePizzaSecretaria">Top Fornecedores da Secretaria</h3>
-                            <span class="text-xs bg-slate-200 px-2 py-1 rounded">Top 6</span>
+                    <div id="boxTopFornecedoresSecretaria" class="hidden bg-gradient-to-br from-white to-slate-50 rounded-xl shadow-lg p-6 border border-slate-100">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h3 class="font-bold text-xl text-slate-800" id="titlePizzaSecretaria">Top Fornecedores da Secretaria</h3>
+                                <p class="text-xs text-slate-500 mt-1">Maiores gastos nesta secretaria</p>
+                            </div>
+                            <span class="text-2xl">📈</span>
                         </div>
                         <canvas id="chartFornecedoresSecretariaPizza"></canvas>
                     </div>
