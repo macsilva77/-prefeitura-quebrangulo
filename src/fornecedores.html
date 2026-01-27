@@ -166,162 +166,14 @@
                     <div class="flex gap-2">
                         <input type="text" id="fcnpjConsulta" placeholder="00.000.000/0000-00" class="flex-1 px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <button type="button" id="btnConsultarCNPJ" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold transition-all flex items-center gap-2">
-                            <span id="btnConsultarTexto">🔍 Consultar</span>
+                            <span id="btnConsultarTexto">🔍 Consultar e Preencher</span>
                             <span id="btnConsultarLoading" class="hidden">⏳ Consultando...</span>
                         </button>
                     </div>
-                    <p class="text-xs text-slate-500 mt-2">Digite o CNPJ para buscar os dados automaticamente na Receita Federal</p>
-                </div>
-
-                <!-- Tabs para Dados Simples, Completos e JSON -->
-                <div id="cnpjResultTabs" class="hidden mb-6">
-                    <div class="flex border-b border-slate-200 mb-4">
-                        <button type="button" id="tabDadosSimples" class="px-6 py-3 font-semibold text-blue-600 border-b-2 border-blue-600 transition-all">
-                            Dados Simples
-                        </button>
-                        <button type="button" id="tabDadosCompletos" class="px-6 py-3 font-semibold text-slate-500 hover:text-slate-700 transition-all">
-                            Dados Completos
-                        </button>
-                        <button type="button" id="tabDadosJSON" class="px-6 py-3 font-semibold text-slate-500 hover:text-slate-700 transition-all">
-                            JSON Completo
-                        </button>
+                    <p class="text-xs text-slate-500 mt-2">Digite o CNPJ para buscar e preencher os dados automaticamente</p>
+                    <div id="cnpjMensagemSucesso" class="hidden mt-3 p-3 bg-green-50 border border-green-200 rounded-lg text-green-700 text-sm">
+                        ✓ Dados consultados e preenchidos com sucesso!
                     </div>
-
-                    <!-- Conteúdo Tab Dados Simples -->
-                    <div id="contentDadosSimples" class="space-y-3">
-                        <div class="grid grid-cols-2 gap-3 text-sm">
-                            <div class="bg-slate-50 p-3 rounded-lg">
-                                <span class="font-semibold text-slate-600">Razão Social:</span>
-                                <p id="cnpjRazaoSocial" class="text-slate-900 font-medium">-</p>
-                            </div>
-                            <div class="bg-slate-50 p-3 rounded-lg">
-                                <span class="font-semibold text-slate-600">Nome Fantasia:</span>
-                                <p id="cnpjNomeFantasia" class="text-slate-900 font-medium">-</p>
-                            </div>
-                            <div class="bg-slate-50 p-3 rounded-lg">
-                                <span class="font-semibold text-slate-600">CNPJ:</span>
-                                <p id="cnpjNumero" class="text-slate-900 font-medium">-</p>
-                            </div>
-                            <div class="bg-slate-50 p-3 rounded-lg">
-                                <span class="font-semibold text-slate-600">Situação:</span>
-                                <p id="cnpjSituacao" class="text-slate-900 font-medium">-</p>
-                            </div>
-                            <div class="bg-slate-50 p-3 rounded-lg col-span-2">
-                                <span class="font-semibold text-slate-600">Endereço:</span>
-                                <p id="cnpjEndereco" class="text-slate-900 font-medium">-</p>
-                            </div>
-                            <div class="bg-slate-50 p-3 rounded-lg">
-                                <span class="font-semibold text-slate-600">Telefone:</span>
-                                <p id="cnpjTelefone" class="text-slate-900 font-medium">-</p>
-                            </div>
-                            <div class="bg-slate-50 p-3 rounded-lg">
-                                <span class="font-semibold text-slate-600">Email:</span>
-                                <p id="cnpjEmail" class="text-slate-900 font-medium">-</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Conteúdo Tab Dados Completos -->
-                    <div id="contentDadosCompletos" class="hidden">
-                        <div class="grid grid-cols-2 gap-3 text-sm max-h-96 overflow-y-auto">
-                            <div class="bg-slate-50 p-3 rounded-lg">
-                                <span class="font-semibold text-slate-600">CNPJ:</span>
-                                <p id="cnpjNumeroCompleto" class="text-slate-900 font-medium">-</p>
-                            </div>
-                            <div class="bg-slate-50 p-3 rounded-lg">
-                                <span class="font-semibold text-slate-600">Razão Social:</span>
-                                <p id="cnpjRazaoSocialCompleto" class="text-slate-900 font-medium">-</p>
-                            </div>
-                            <div class="bg-slate-50 p-3 rounded-lg">
-                                <span class="font-semibold text-slate-600">Nome Fantasia:</span>
-                                <p id="cnpjNomeFantasiaCompleto" class="text-slate-900 font-medium">-</p>
-                            </div>
-                            <div class="bg-slate-50 p-3 rounded-lg">
-                                <span class="font-semibold text-slate-600">Situação Cadastral:</span>
-                                <p id="cnpjSituacaoCompleto" class="text-slate-900 font-medium">-</p>
-                            </div>
-                            <div class="bg-slate-50 p-3 rounded-lg">
-                                <span class="font-semibold text-slate-600">Data Situação:</span>
-                                <p id="cnpjDataSituacao" class="text-slate-900 font-medium">-</p>
-                            </div>
-                            <div class="bg-slate-50 p-3 rounded-lg">
-                                <span class="font-semibold text-slate-600">Tipo:</span>
-                                <p id="cnpjTipo" class="text-slate-900 font-medium">-</p>
-                            </div>
-                            <div class="bg-slate-50 p-3 rounded-lg">
-                                <span class="font-semibold text-slate-600">Porte:</span>
-                                <p id="cnpjPorte" class="text-slate-900 font-medium">-</p>
-                            </div>
-                            <div class="bg-slate-50 p-3 rounded-lg">
-                                <span class="font-semibold text-slate-600">Natureza Jurídica:</span>
-                                <p id="cnpjNaturezaJuridica" class="text-slate-900 font-medium">-</p>
-                            </div>
-                            <div class="bg-slate-50 p-3 rounded-lg">
-                                <span class="font-semibold text-slate-600">Data de Abertura:</span>
-                                <p id="cnpjDataAbertura" class="text-slate-900 font-medium">-</p>
-                            </div>
-                            <div class="bg-slate-50 p-3 rounded-lg">
-                                <span class="font-semibold text-slate-600">Capital Social:</span>
-                                <p id="cnpjCapitalSocial" class="text-slate-900 font-medium">-</p>
-                            </div>
-                            <div class="bg-slate-50 p-3 rounded-lg col-span-2">
-                                <span class="font-semibold text-slate-600">Logradouro:</span>
-                                <p id="cnpjLogradouro" class="text-slate-900 font-medium">-</p>
-                            </div>
-                            <div class="bg-slate-50 p-3 rounded-lg">
-                                <span class="font-semibold text-slate-600">Número:</span>
-                                <p id="cnpjNumeroEnd" class="text-slate-900 font-medium">-</p>
-                            </div>
-                            <div class="bg-slate-50 p-3 rounded-lg">
-                                <span class="font-semibold text-slate-600">Complemento:</span>
-                                <p id="cnpjComplemento" class="text-slate-900 font-medium">-</p>
-                            </div>
-                            <div class="bg-slate-50 p-3 rounded-lg">
-                                <span class="font-semibold text-slate-600">Bairro:</span>
-                                <p id="cnpjBairro" class="text-slate-900 font-medium">-</p>
-                            </div>
-                            <div class="bg-slate-50 p-3 rounded-lg">
-                                <span class="font-semibold text-slate-600">CEP:</span>
-                                <p id="cnpjCEP" class="text-slate-900 font-medium">-</p>
-                            </div>
-                            <div class="bg-slate-50 p-3 rounded-lg">
-                                <span class="font-semibold text-slate-600">Município:</span>
-                                <p id="cnpjMunicipio" class="text-slate-900 font-medium">-</p>
-                            </div>
-                            <div class="bg-slate-50 p-3 rounded-lg">
-                                <span class="font-semibold text-slate-600">UF:</span>
-                                <p id="cnpjUF" class="text-slate-900 font-medium">-</p>
-                            </div>
-                            <div class="bg-slate-50 p-3 rounded-lg">
-                                <span class="font-semibold text-slate-600">Telefone 1:</span>
-                                <p id="cnpjTelefone1" class="text-slate-900 font-medium">-</p>
-                            </div>
-                            <div class="bg-slate-50 p-3 rounded-lg">
-                                <span class="font-semibold text-slate-600">Telefone 2:</span>
-                                <p id="cnpjTelefone2" class="text-slate-900 font-medium">-</p>
-                            </div>
-                            <div class="bg-slate-50 p-3 rounded-lg col-span-2">
-                                <span class="font-semibold text-slate-600">Email:</span>
-                                <p id="cnpjEmailCompleto" class="text-slate-900 font-medium">-</p>
-                            </div>
-                            <div class="bg-slate-50 p-3 rounded-lg col-span-2">
-                                <span class="font-semibold text-slate-600">Atividade Principal:</span>
-                                <p id="cnpjAtividadePrincipal" class="text-slate-900 font-medium text-xs">-</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Conteúdo Tab JSON Completo -->
-                    <div id="contentDadosJSON" class="hidden">
-                        <div class="bg-slate-50 rounded-lg p-4 max-h-96 overflow-y-auto">
-                            <pre id="cnpjDadosJSON" class="text-xs text-slate-700 whitespace-pre-wrap font-mono"></pre>
-                        </div>
-                    </div>
-
-                    <!-- Botão Preencher - Único para todas as abas -->
-                    <button type="button" id="btnPreencherDados" class="w-full mt-4 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-semibold transition-all">
-                        ✓ Preencher Formulário com Estes Dados
-                    </button>
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
@@ -528,38 +380,7 @@
         // ========== INTEGRAÇÃO COM API BRASILAPI ==========
         let cnpjDataCache = null;
 
-        // Toggle entre abas
-        document.getElementById('tabDadosSimples').addEventListener('click', function() {
-            ativarAba('tabDadosSimples', 'contentDadosSimples');
-        });
-
-        document.getElementById('tabDadosCompletos').addEventListener('click', function() {
-            ativarAba('tabDadosCompletos', 'contentDadosCompletos');
-        });
-
-        document.getElementById('tabDadosJSON').addEventListener('click', function() {
-            ativarAba('tabDadosJSON', 'contentDadosJSON');
-        });
-
-        function ativarAba(tabId, contentId) {
-            // Desativar todas as abas
-            ['tabDadosSimples', 'tabDadosCompletos', 'tabDadosJSON'].forEach(id => {
-                document.getElementById(id).classList.remove('text-blue-600', 'border-b-2', 'border-blue-600');
-                document.getElementById(id).classList.add('text-slate-500');
-            });
-
-            // Esconder todos os conteúdos
-            ['contentDadosSimples', 'contentDadosCompletos', 'contentDadosJSON'].forEach(id => {
-                document.getElementById(id).classList.add('hidden');
-            });
-
-            // Ativar aba selecionada
-            document.getElementById(tabId).classList.add('text-blue-600', 'border-b-2', 'border-blue-600');
-            document.getElementById(tabId).classList.remove('text-slate-500');
-            document.getElementById(contentId).classList.remove('hidden');
-        }
-
-        // Consultar CNPJ na API BrasilAPI
+        // Consultar CNPJ na API BrasilAPI e preencher automaticamente
         document.getElementById('btnConsultarCNPJ').addEventListener('click', async function() {
             const cnpjInput = document.getElementById('fcnpjConsulta').value;
             const cnpj = cnpjInput.replace(/\D/g, ''); // Remove caracteres não numéricos
@@ -572,6 +393,7 @@
             // Mostrar loading
             document.getElementById('btnConsultarTexto').classList.add('hidden');
             document.getElementById('btnConsultarLoading').classList.remove('hidden');
+            document.getElementById('cnpjMensagemSucesso').classList.add('hidden');
             this.disabled = true;
 
             try {
@@ -584,56 +406,14 @@
                 const data = await response.json();
                 cnpjDataCache = data;
 
-                // Preencher dados simples
-                document.getElementById('cnpjRazaoSocial').textContent = data.razao_social || '-';
-                document.getElementById('cnpjNomeFantasia').textContent = data.nome_fantasia || data.razao_social || '-';
-                document.getElementById('cnpjNumero').textContent = formatarCNPJ(data.cnpj) || '-';
-                document.getElementById('cnpjSituacao').textContent = data.descricao_situacao_cadastral || '-';
+                // Preencher formulário automaticamente
+                preencherFormularioComDados(data);
+
+                // Mostrar mensagem de sucesso
+                document.getElementById('cnpjMensagemSucesso').classList.remove('hidden');
                 
-                // Montar endereço completo
-                const endereco = `${data.logradouro || ''}, ${data.numero || 's/n'} - ${data.bairro || ''} - ${data.municipio || ''}/${data.uf || ''} - CEP: ${data.cep || ''}`.trim();
-                document.getElementById('cnpjEndereco').textContent = endereco;
-                
-                document.getElementById('cnpjTelefone').textContent = data.ddd_telefone_1 || '-';
-                document.getElementById('cnpjEmail').textContent = data.email || '-';
-
-                // Preencher dados completos (usando os mesmos dados da API)
-                document.getElementById('cnpjNumeroCompleto').textContent = formatarCNPJ(data.cnpj) || '-';
-                document.getElementById('cnpjRazaoSocialCompleto').textContent = data.razao_social || '-';
-                document.getElementById('cnpjNomeFantasiaCompleto').textContent = data.nome_fantasia || '-';
-                document.getElementById('cnpjSituacaoCompleto').textContent = data.descricao_situacao_cadastral || '-';
-                document.getElementById('cnpjDataSituacao').textContent = data.data_situacao_cadastral || '-';
-                document.getElementById('cnpjTipo').textContent = data.tipo || '-';
-                document.getElementById('cnpjPorte').textContent = data.porte || '-';
-                document.getElementById('cnpjNaturezaJuridica').textContent = data.natureza_juridica ? `${data.natureza_juridica} - ${data.descricao_natureza_juridica || ''}` : '-';
-                document.getElementById('cnpjDataAbertura').textContent = data.data_inicio_atividade || '-';
-                document.getElementById('cnpjCapitalSocial').textContent = data.capital_social ? `R$ ${parseFloat(data.capital_social).toLocaleString('pt-BR', {minimumFractionDigits: 2})}` : '-';
-                document.getElementById('cnpjLogradouro').textContent = data.logradouro || '-';
-                document.getElementById('cnpjNumeroEnd').textContent = data.numero || '-';
-                document.getElementById('cnpjComplemento').textContent = data.complemento || '-';
-                document.getElementById('cnpjBairro').textContent = data.bairro || '-';
-                document.getElementById('cnpjCEP').textContent = data.cep || '-';
-                document.getElementById('cnpjMunicipio').textContent = data.municipio || '-';
-                document.getElementById('cnpjUF').textContent = data.uf || '-';
-                document.getElementById('cnpjTelefone1').textContent = data.ddd_telefone_1 || '-';
-                document.getElementById('cnpjTelefone2').textContent = data.ddd_telefone_2 || '-';
-                document.getElementById('cnpjEmailCompleto').textContent = data.email || '-';
-                
-                // Atividade principal
-                if (data.cnae_fiscal_principal && data.cnae_fiscal_principal.codigo) {
-                    document.getElementById('cnpjAtividadePrincipal').textContent = `${data.cnae_fiscal_principal.codigo} - ${data.cnae_fiscal_principal.descricao || ''}`;
-                } else {
-                    document.getElementById('cnpjAtividadePrincipal').textContent = '-';
-                }
-
-                // Preencher JSON completo
-                document.getElementById('cnpjDadosJSON').textContent = JSON.stringify(data, null, 2);
-
-                // Mostrar tabs
-                document.getElementById('cnpjResultTabs').classList.remove('hidden');
-
-                // Scroll suave até os resultados
-                document.getElementById('cnpjResultTabs').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                // Scroll para o formulário
+                document.getElementById('fnome').scrollIntoView({ behavior: 'smooth', block: 'center' });
 
             } catch (error) {
                 alert('Erro ao consultar CNPJ: ' + error.message + '\n\nVerifique se o CNPJ está correto e tente novamente.');
@@ -646,12 +426,8 @@
             }
         });
 
-        // Preencher formulário com dados da consulta
-        document.getElementById('btnPreencherDados').addEventListener('click', function() {
-            if (!cnpjDataCache) return;
-
-            const data = cnpjDataCache;
-            
+        // Função para preencher o formulário
+        function preencherFormularioComDados(data) {
             // Preencher campos do formulário
             document.getElementById('fnome').value = data.nome_fantasia || data.razao_social || '';
             document.getElementById('fcnpj').value = formatarCNPJ(data.cnpj) || '';
@@ -665,9 +441,6 @@
             document.getElementById('fbanco').value = '';
             document.getElementById('fagencia').value = '';
             document.getElementById('fconta').value = '';
-
-            // Scroll para o formulário
-            document.getElementById('fnome').scrollIntoView({ behavior: 'smooth', block: 'center' });
             
             // Highlight temporário dos campos preenchidos
             [document.getElementById('fnome'), document.getElementById('fcnpj'), 
@@ -676,9 +449,7 @@
                 el.classList.add('ring-2', 'ring-green-400');
                 setTimeout(() => el.classList.remove('ring-2', 'ring-green-400'), 2000);
             });
-
-            showMensagem('✓ Dados preenchidos automaticamente! Revise e complete as informações bancárias.', true);
-        });
+        }
 
         // Função para formatar CNPJ
         function formatarCNPJ(cnpj) {
@@ -704,7 +475,7 @@
         document.getElementById('btnNovoFornecedor').addEventListener('click', function() {
             cnpjDataCache = null;
             document.getElementById('fcnpjConsulta').value = '';
-            document.getElementById('cnpjResultTabs').classList.add('hidden');
+            document.getElementById('cnpjMensagemSucesso').classList.add('hidden');
         });
     </script>
 
