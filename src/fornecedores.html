@@ -173,7 +173,7 @@
                     <p class="text-xs text-slate-500 mt-2">Digite o CNPJ para buscar os dados automaticamente na Receita Federal</p>
                 </div>
 
-                <!-- Tabs para Dados Simples e Completos -->
+                <!-- Tabs para Dados Simples, Completos e JSON -->
                 <div id="cnpjResultTabs" class="hidden mb-6">
                     <div class="flex border-b border-slate-200 mb-4">
                         <button type="button" id="tabDadosSimples" class="px-6 py-3 font-semibold text-blue-600 border-b-2 border-blue-600 transition-all">
@@ -181,6 +181,9 @@
                         </button>
                         <button type="button" id="tabDadosCompletos" class="px-6 py-3 font-semibold text-slate-500 hover:text-slate-700 transition-all">
                             Dados Completos
+                        </button>
+                        <button type="button" id="tabDadosJSON" class="px-6 py-3 font-semibold text-slate-500 hover:text-slate-700 transition-all">
+                            JSON Completo
                         </button>
                     </div>
 
@@ -223,8 +226,98 @@
 
                     <!-- Conteúdo Tab Dados Completos -->
                     <div id="contentDadosCompletos" class="hidden">
+                        <div class="grid grid-cols-2 gap-3 text-sm max-h-96 overflow-y-auto">
+                            <div class="bg-slate-50 p-3 rounded-lg">
+                                <span class="font-semibold text-slate-600">CNPJ:</span>
+                                <p id="cnpjNumeroCompleto" class="text-slate-900 font-medium">-</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-lg">
+                                <span class="font-semibold text-slate-600">Razão Social:</span>
+                                <p id="cnpjRazaoSocialCompleto" class="text-slate-900 font-medium">-</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-lg">
+                                <span class="font-semibold text-slate-600">Nome Fantasia:</span>
+                                <p id="cnpjNomeFantasiaCompleto" class="text-slate-900 font-medium">-</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-lg">
+                                <span class="font-semibold text-slate-600">Situação Cadastral:</span>
+                                <p id="cnpjSituacaoCompleto" class="text-slate-900 font-medium">-</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-lg">
+                                <span class="font-semibold text-slate-600">Data Situação:</span>
+                                <p id="cnpjDataSituacao" class="text-slate-900 font-medium">-</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-lg">
+                                <span class="font-semibold text-slate-600">Tipo:</span>
+                                <p id="cnpjTipo" class="text-slate-900 font-medium">-</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-lg">
+                                <span class="font-semibold text-slate-600">Porte:</span>
+                                <p id="cnpjPorte" class="text-slate-900 font-medium">-</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-lg">
+                                <span class="font-semibold text-slate-600">Natureza Jurídica:</span>
+                                <p id="cnpjNaturezaJuridica" class="text-slate-900 font-medium">-</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-lg">
+                                <span class="font-semibold text-slate-600">Data de Abertura:</span>
+                                <p id="cnpjDataAbertura" class="text-slate-900 font-medium">-</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-lg">
+                                <span class="font-semibold text-slate-600">Capital Social:</span>
+                                <p id="cnpjCapitalSocial" class="text-slate-900 font-medium">-</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-lg col-span-2">
+                                <span class="font-semibold text-slate-600">Logradouro:</span>
+                                <p id="cnpjLogradouro" class="text-slate-900 font-medium">-</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-lg">
+                                <span class="font-semibold text-slate-600">Número:</span>
+                                <p id="cnpjNumeroEnd" class="text-slate-900 font-medium">-</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-lg">
+                                <span class="font-semibold text-slate-600">Complemento:</span>
+                                <p id="cnpjComplemento" class="text-slate-900 font-medium">-</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-lg">
+                                <span class="font-semibold text-slate-600">Bairro:</span>
+                                <p id="cnpjBairro" class="text-slate-900 font-medium">-</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-lg">
+                                <span class="font-semibold text-slate-600">CEP:</span>
+                                <p id="cnpjCEP" class="text-slate-900 font-medium">-</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-lg">
+                                <span class="font-semibold text-slate-600">Município:</span>
+                                <p id="cnpjMunicipio" class="text-slate-900 font-medium">-</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-lg">
+                                <span class="font-semibold text-slate-600">UF:</span>
+                                <p id="cnpjUF" class="text-slate-900 font-medium">-</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-lg">
+                                <span class="font-semibold text-slate-600">Telefone 1:</span>
+                                <p id="cnpjTelefone1" class="text-slate-900 font-medium">-</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-lg">
+                                <span class="font-semibold text-slate-600">Telefone 2:</span>
+                                <p id="cnpjTelefone2" class="text-slate-900 font-medium">-</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-lg col-span-2">
+                                <span class="font-semibold text-slate-600">Email:</span>
+                                <p id="cnpjEmailCompleto" class="text-slate-900 font-medium">-</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-lg col-span-2">
+                                <span class="font-semibold text-slate-600">Atividade Principal:</span>
+                                <p id="cnpjAtividadePrincipal" class="text-slate-900 font-medium text-xs">-</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Conteúdo Tab JSON Completo -->
+                    <div id="contentDadosJSON" class="hidden">
                         <div class="bg-slate-50 rounded-lg p-4 max-h-96 overflow-y-auto">
-                            <pre id="cnpjDadosCompletos" class="text-xs text-slate-700 whitespace-pre-wrap font-mono"></pre>
+                            <pre id="cnpjDadosJSON" class="text-xs text-slate-700 whitespace-pre-wrap font-mono"></pre>
                         </div>
                     </div>
                 </div>
@@ -435,22 +528,34 @@
 
         // Toggle entre abas
         document.getElementById('tabDadosSimples').addEventListener('click', function() {
-            document.getElementById('tabDadosSimples').classList.add('text-blue-600', 'border-b-2', 'border-blue-600');
-            document.getElementById('tabDadosSimples').classList.remove('text-slate-500');
-            document.getElementById('tabDadosCompletos').classList.remove('text-blue-600', 'border-b-2', 'border-blue-600');
-            document.getElementById('tabDadosCompletos').classList.add('text-slate-500');
-            document.getElementById('contentDadosSimples').classList.remove('hidden');
-            document.getElementById('contentDadosCompletos').classList.add('hidden');
+            ativarAba('tabDadosSimples', 'contentDadosSimples');
         });
 
         document.getElementById('tabDadosCompletos').addEventListener('click', function() {
-            document.getElementById('tabDadosCompletos').classList.add('text-blue-600', 'border-b-2', 'border-blue-600');
-            document.getElementById('tabDadosCompletos').classList.remove('text-slate-500');
-            document.getElementById('tabDadosSimples').classList.remove('text-blue-600', 'border-b-2', 'border-blue-600');
-            document.getElementById('tabDadosSimples').classList.add('text-slate-500');
-            document.getElementById('contentDadosCompletos').classList.remove('hidden');
-            document.getElementById('contentDadosSimples').classList.add('hidden');
+            ativarAba('tabDadosCompletos', 'contentDadosCompletos');
         });
+
+        document.getElementById('tabDadosJSON').addEventListener('click', function() {
+            ativarAba('tabDadosJSON', 'contentDadosJSON');
+        });
+
+        function ativarAba(tabId, contentId) {
+            // Desativar todas as abas
+            ['tabDadosSimples', 'tabDadosCompletos', 'tabDadosJSON'].forEach(id => {
+                document.getElementById(id).classList.remove('text-blue-600', 'border-b-2', 'border-blue-600');
+                document.getElementById(id).classList.add('text-slate-500');
+            });
+
+            // Esconder todos os conteúdos
+            ['contentDadosSimples', 'contentDadosCompletos', 'contentDadosJSON'].forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+
+            // Ativar aba selecionada
+            document.getElementById(tabId).classList.add('text-blue-600', 'border-b-2', 'border-blue-600');
+            document.getElementById(tabId).classList.remove('text-slate-500');
+            document.getElementById(contentId).classList.remove('hidden');
+        }
 
         // Consultar CNPJ na API BrasilAPI
         document.getElementById('btnConsultarCNPJ').addEventListener('click', async function() {
@@ -490,8 +595,37 @@
                 document.getElementById('cnpjTelefone').textContent = data.ddd_telefone_1 || '-';
                 document.getElementById('cnpjEmail').textContent = data.email || '-';
 
-                // Preencher dados completos (JSON formatado)
-                document.getElementById('cnpjDadosCompletos').textContent = JSON.stringify(data, null, 2);
+                // Preencher dados completos
+                document.getElementById('cnpjNumeroCompleto').textContent = formatarCNPJ(data.cnpj) || '-';
+                document.getElementById('cnpjRazaoSocialCompleto').textContent = data.razao_social || '-';
+                document.getElementById('cnpjNomeFantasiaCompleto').textContent = data.nome_fantasia || '-';
+                document.getElementById('cnpjSituacaoCompleto').textContent = data.descricao_situacao_cadastral || '-';
+                document.getElementById('cnpjDataSituacao').textContent = data.data_situacao_cadastral || '-';
+                document.getElementById('cnpjTipo').textContent = data.tipo || '-';
+                document.getElementById('cnpjPorte').textContent = data.porte || '-';
+                document.getElementById('cnpjNaturezaJuridica').textContent = data.natureza_juridica ? `${data.natureza_juridica} - ${data.descricao_natureza_juridica || ''}` : '-';
+                document.getElementById('cnpjDataAbertura').textContent = data.data_inicio_atividade || '-';
+                document.getElementById('cnpjCapitalSocial').textContent = data.capital_social ? `R$ ${parseFloat(data.capital_social).toLocaleString('pt-BR', {minimumFractionDigits: 2})}` : '-';
+                document.getElementById('cnpjLogradouro').textContent = data.logradouro || '-';
+                document.getElementById('cnpjNumeroEnd').textContent = data.numero || '-';
+                document.getElementById('cnpjComplemento').textContent = data.complemento || '-';
+                document.getElementById('cnpjBairro').textContent = data.bairro || '-';
+                document.getElementById('cnpjCEP').textContent = data.cep || '-';
+                document.getElementById('cnpjMunicipio').textContent = data.municipio || '-';
+                document.getElementById('cnpjUF').textContent = data.uf || '-';
+                document.getElementById('cnpjTelefone1').textContent = data.ddd_telefone_1 || '-';
+                document.getElementById('cnpjTelefone2').textContent = data.ddd_telefone_2 || '-';
+                document.getElementById('cnpjEmailCompleto').textContent = data.email || '-';
+                
+                // Atividade principal
+                if (data.cnae_fiscal_principal && data.cnae_fiscal_principal.codigo) {
+                    document.getElementById('cnpjAtividadePrincipal').textContent = `${data.cnae_fiscal_principal.codigo} - ${data.cnae_fiscal_principal.descricao || ''}`;
+                } else {
+                    document.getElementById('cnpjAtividadePrincipal').textContent = '-';
+                }
+
+                // Preencher JSON completo
+                document.getElementById('cnpjDadosJSON').textContent = JSON.stringify(data, null, 2);
 
                 // Mostrar tabs
                 document.getElementById('cnpjResultTabs').classList.remove('hidden');
