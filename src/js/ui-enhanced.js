@@ -183,7 +183,7 @@ function displayUserInfo() {
 // ===== PASSWORD RECOVERY LOGIC =====
 function requestPasswordReset(email) {
     try {
-        const usuarios = JSON.parse(localStorage.getItem('prefeitura_usuarios') || '[]');
+        const usuarios = JSON.parse(localStorage.getItem('prefeitura_users') || '[]');
         const usuario = usuarios.find(u => u.email === email);
         
         if (!usuario) {
@@ -282,7 +282,7 @@ function resetPassword(email, token, novaSenha) {
         }
         
         // Atualizar senha
-        const usuarios = JSON.parse(localStorage.getItem('prefeitura_usuarios') || '[]');
+        const usuarios = JSON.parse(localStorage.getItem('prefeitura_users') || '[]');
         const usuarioIndex = usuarios.findIndex(u => u.email === email);
         
         if (usuarioIndex === -1) {
@@ -296,7 +296,7 @@ function resetPassword(email, token, novaSenha) {
         const novoHash = hashPassword(novaSenha);
         usuarios[usuarioIndex].senhaHash = novoHash;
         
-        localStorage.setItem('prefeitura_usuarios', JSON.stringify(usuarios));
+        localStorage.setItem('prefeitura_users', JSON.stringify(usuarios));
         
         // Remover token usado
         const resetRequests = JSON.parse(localStorage.getItem('prefeitura_reset_requests') || '[]');
