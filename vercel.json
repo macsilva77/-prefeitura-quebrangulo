@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "public": true,
+  "buildCommand": null,
+  "devCommand": null,
+  "installCommand": null,
+  "framework": null,
+  "outputDirectory": "src",
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/login.html"
+    }
+  ]
+}
