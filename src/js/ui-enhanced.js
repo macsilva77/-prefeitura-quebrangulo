@@ -332,12 +332,46 @@ function generateRandomToken(length = 32) {
     return token;
 }
 
+// ===== USER DROPDOWN =====
+function initUserDropdown() {
+    const dropdownBtn = document.getElementById('userDropdownBtn');
+    const dropdownMenu = document.getElementById('userDropdownMenu');
+    
+    if (!dropdownBtn || !dropdownMenu) {
+        console.log('User dropdown elements not found');
+        return;
+    }
+    
+    // Toggle dropdown ao clicar no botão
+    dropdownBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropdownMenu.classList.toggle('hidden');
+    });
+    
+    // Fechar dropdown ao clicar fora
+    document.addEventListener('click', (e) => {
+        if (!dropdownMenu.classList.contains('hidden') && 
+            !dropdownBtn.contains(e.target) && 
+            !dropdownMenu.contains(e.target)) {
+            dropdownMenu.classList.add('hidden');
+        }
+    });
+    
+    // Evitar que cliques dentro do menu fechem o dropdown
+    dropdownMenu.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+    
+    console.log('✓ User dropdown initialized');
+}
+
 // ===== INITIALIZE =====
 document.addEventListener('DOMContentLoaded', () => {
     console.log('🔄 DOMContentLoaded - iniciando ui-enhanced');
     createFloatingMenuButton();
     initSidebarToggle();
     initMenuSearch();
+    initUserDropdown();
     
     // Pequeno delay para garantir que os elementos estão prontos
     setTimeout(() => {

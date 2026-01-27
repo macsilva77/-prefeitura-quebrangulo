@@ -11,10 +11,12 @@
 <body class="bg-slate-100 text-slate-900">
     <div class="min-h-screen flex">
         <!-- Sidebar -->
-        <aside id="sidebar" class="w-72 bg-gradient-to-b from-blue-950 to-blue-900 text-white p-6 shadow-lg fixed h-screen overflow-y-auto transition-all duration-300 z-40">
-            <!-- Menu Search -->
-            <div class="mb-6">
-                <input id="menuSearch" type="text" placeholder="🔍 Pesquisar..." class="w-full px-3 py-2 rounded-lg bg-blue-900 text-blue-100 placeholder-blue-300 border border-blue-800 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm">
+        <aside id="sidebar" class="w-72 bg-gradient-to-b from-blue-950 to-blue-900 text-white p-6 shadow-lg fixed h-screen overflow-y-auto transition-all duration-300 z-40">            <!-- Toggle Button + Menu Search -->
+            <div class="mb-6 flex gap-2">
+                <button id="toggleSidebar" class="px-3 py-2 bg-blue-800 hover:bg-blue-700 rounded-lg transition text-sm flex items-center justify-center flex-shrink-0">
+                    <span class="text-lg">☰</span>
+                </button>
+                <input id="menuSearch" type="text" placeholder="🔍 Pesquisar..." class="flex-1 px-3 py-2 rounded-lg bg-blue-900 text-blue-100 placeholder-blue-300 border border-blue-800 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm">
             </div>
 
             <nav class="space-y-1">
@@ -80,8 +82,8 @@
                     <span class="text-sm text-blue-100">Versão</span>
                     <span class="text-xl font-semibold text-white">1.0</span>
                     <!-- User Dropdown -->
-                    <div class="relative group">
-                        <button class="flex items-center gap-2 px-3 py-2 rounded-lg bg-blue-800/80 hover:bg-blue-700 border border-blue-600 transition-all text-white">
+                    <div class="relative">
+                        <button id="userDropdownBtn" class="flex items-center gap-2 px-3 py-2 rounded-lg bg-blue-800/80 hover:bg-blue-700 border border-blue-600 transition-all text-white">
                             <div class="text-left">
                                 <p class="text-sm font-semibold leading-tight" id="usuarioEmailDropdown">Usuário</p>
                                 <p class="text-xs text-blue-100" id="usuarioEmailDropdown2">-</p>
@@ -92,7 +94,7 @@
                         </button>
                         
                         <!-- Dropdown Menu -->
-                        <div class="hidden group-hover:block absolute right-0 mt-1 w-56 bg-blue-900 text-white rounded-lg shadow-xl z-50 border border-blue-700">
+                        <div id="userDropdownMenu" class="hidden absolute right-0 mt-1 w-56 bg-blue-900 text-white rounded-lg shadow-xl z-50 border border-blue-700">
                             <div class="p-2">
                                 <button id="btnConfiguracao" class="w-full flex items-center gap-3 px-3 py-2 hover:bg-blue-800 rounded transition-all text-sm text-left">
                                     <span class="text-lg">⚙️</span>
@@ -153,11 +155,80 @@
     </div>
 
     <!-- Modal - Novo/Editar Fornecedor -->
-    <div id="modalFornecedor" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-        <div class="bg-white rounded-xl shadow-xl p-8 max-w-2xl w-full mx-4">
+    <div id="modalFornecedor" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 overflow-y-auto">
+        <div class="bg-white rounded-xl shadow-xl p-8 max-w-4xl w-full mx-4 my-8">
             <h3 class="text-2xl font-bold mb-6" id="modalTitulo">Novo Fornecedor</h3>
             
             <form id="formFornecedor" class="space-y-4">
+                <!-- Busca de CNPJ -->
+                <div class="bg-blue-50 border-2 border-blue-200 rounded-lg p-4 mb-6">
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Consultar CNPJ na Receita Federal</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="fcnpjConsulta" placeholder="00.000.000/0000-00" class="flex-1 px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <button type="button" id="btnConsultarCNPJ" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold transition-all flex items-center gap-2">
+                            <span id="btnConsultarTexto">🔍 Consultar</span>
+                            <span id="btnConsultarLoading" class="hidden">⏳ Consultando...</span>
+                        </button>
+                    </div>
+                    <p class="text-xs text-slate-500 mt-2">Digite o CNPJ para buscar os dados automaticamente na Receita Federal</p>
+                </div>
+
+                <!-- Tabs para Dados Simples e Completos -->
+                <div id="cnpjResultTabs" class="hidden mb-6">
+                    <div class="flex border-b border-slate-200 mb-4">
+                        <button type="button" id="tabDadosSimples" class="px-6 py-3 font-semibold text-blue-600 border-b-2 border-blue-600 transition-all">
+                            Dados Simples
+                        </button>
+                        <button type="button" id="tabDadosCompletos" class="px-6 py-3 font-semibold text-slate-500 hover:text-slate-700 transition-all">
+                            Dados Completos
+                        </button>
+                    </div>
+
+                    <!-- Conteúdo Tab Dados Simples -->
+                    <div id="contentDadosSimples" class="space-y-3">
+                        <div class="grid grid-cols-2 gap-3 text-sm">
+                            <div class="bg-slate-50 p-3 rounded-lg">
+                                <span class="font-semibold text-slate-600">Razão Social:</span>
+                                <p id="cnpjRazaoSocial" class="text-slate-900 font-medium">-</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-lg">
+                                <span class="font-semibold text-slate-600">Nome Fantasia:</span>
+                                <p id="cnpjNomeFantasia" class="text-slate-900 font-medium">-</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-lg">
+                                <span class="font-semibold text-slate-600">CNPJ:</span>
+                                <p id="cnpjNumero" class="text-slate-900 font-medium">-</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-lg">
+                                <span class="font-semibold text-slate-600">Situação:</span>
+                                <p id="cnpjSituacao" class="text-slate-900 font-medium">-</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-lg col-span-2">
+                                <span class="font-semibold text-slate-600">Endereço:</span>
+                                <p id="cnpjEndereco" class="text-slate-900 font-medium">-</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-lg">
+                                <span class="font-semibold text-slate-600">Telefone:</span>
+                                <p id="cnpjTelefone" class="text-slate-900 font-medium">-</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-lg">
+                                <span class="font-semibold text-slate-600">Email:</span>
+                                <p id="cnpjEmail" class="text-slate-900 font-medium">-</p>
+                            </div>
+                        </div>
+                        <button type="button" id="btnPreencherDados" class="w-full mt-4 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-semibold transition-all">
+                            ✓ Preencher Formulário com Estes Dados
+                        </button>
+                    </div>
+
+                    <!-- Conteúdo Tab Dados Completos -->
+                    <div id="contentDadosCompletos" class="hidden">
+                        <div class="bg-slate-50 rounded-lg p-4 max-h-96 overflow-y-auto">
+                            <pre id="cnpjDadosCompletos" class="text-xs text-slate-700 whitespace-pre-wrap font-mono"></pre>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-semibold text-slate-700 mb-2">Nome *</label>
@@ -356,6 +427,149 @@
             div.className = sucesso ? 'p-4 rounded-lg bg-green-100 text-green-800' : 'p-4 rounded-lg bg-red-100 text-red-800';
             div.classList.remove('hidden');
         }
+    </script>
+
+    <script>
+        // ========== INTEGRAÇÃO COM API BRASILAPI ==========
+        let cnpjDataCache = null;
+
+        // Toggle entre abas
+        document.getElementById('tabDadosSimples').addEventListener('click', function() {
+            document.getElementById('tabDadosSimples').classList.add('text-blue-600', 'border-b-2', 'border-blue-600');
+            document.getElementById('tabDadosSimples').classList.remove('text-slate-500');
+            document.getElementById('tabDadosCompletos').classList.remove('text-blue-600', 'border-b-2', 'border-blue-600');
+            document.getElementById('tabDadosCompletos').classList.add('text-slate-500');
+            document.getElementById('contentDadosSimples').classList.remove('hidden');
+            document.getElementById('contentDadosCompletos').classList.add('hidden');
+        });
+
+        document.getElementById('tabDadosCompletos').addEventListener('click', function() {
+            document.getElementById('tabDadosCompletos').classList.add('text-blue-600', 'border-b-2', 'border-blue-600');
+            document.getElementById('tabDadosCompletos').classList.remove('text-slate-500');
+            document.getElementById('tabDadosSimples').classList.remove('text-blue-600', 'border-b-2', 'border-blue-600');
+            document.getElementById('tabDadosSimples').classList.add('text-slate-500');
+            document.getElementById('contentDadosCompletos').classList.remove('hidden');
+            document.getElementById('contentDadosSimples').classList.add('hidden');
+        });
+
+        // Consultar CNPJ na API BrasilAPI
+        document.getElementById('btnConsultarCNPJ').addEventListener('click', async function() {
+            const cnpjInput = document.getElementById('fcnpjConsulta').value;
+            const cnpj = cnpjInput.replace(/\D/g, ''); // Remove caracteres não numéricos
+
+            if (!cnpj || cnpj.length !== 14) {
+                alert('Por favor, digite um CNPJ válido com 14 dígitos');
+                return;
+            }
+
+            // Mostrar loading
+            document.getElementById('btnConsultarTexto').classList.add('hidden');
+            document.getElementById('btnConsultarLoading').classList.remove('hidden');
+            this.disabled = true;
+
+            try {
+                const response = await fetch(`https://brasilapi.com.br/api/cnpj/v1/${cnpj}`);
+                
+                if (!response.ok) {
+                    throw new Error('CNPJ não encontrado ou erro na consulta');
+                }
+
+                const data = await response.json();
+                cnpjDataCache = data;
+
+                // Preencher dados simples
+                document.getElementById('cnpjRazaoSocial').textContent = data.razao_social || '-';
+                document.getElementById('cnpjNomeFantasia').textContent = data.nome_fantasia || data.razao_social || '-';
+                document.getElementById('cnpjNumero').textContent = formatarCNPJ(data.cnpj) || '-';
+                document.getElementById('cnpjSituacao').textContent = data.descricao_situacao_cadastral || '-';
+                
+                // Montar endereço completo
+                const endereco = `${data.logradouro || ''}, ${data.numero || 's/n'} - ${data.bairro || ''} - ${data.municipio || ''}/${data.uf || ''} - CEP: ${data.cep || ''}`.trim();
+                document.getElementById('cnpjEndereco').textContent = endereco;
+                
+                document.getElementById('cnpjTelefone').textContent = data.ddd_telefone_1 || '-';
+                document.getElementById('cnpjEmail').textContent = data.email || '-';
+
+                // Preencher dados completos (JSON formatado)
+                document.getElementById('cnpjDadosCompletos').textContent = JSON.stringify(data, null, 2);
+
+                // Mostrar tabs
+                document.getElementById('cnpjResultTabs').classList.remove('hidden');
+
+                // Scroll suave até os resultados
+                document.getElementById('cnpjResultTabs').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+            } catch (error) {
+                alert('Erro ao consultar CNPJ: ' + error.message + '\n\nVerifique se o CNPJ está correto e tente novamente.');
+                console.error('Erro na consulta:', error);
+            } finally {
+                // Esconder loading
+                document.getElementById('btnConsultarTexto').classList.remove('hidden');
+                document.getElementById('btnConsultarLoading').classList.add('hidden');
+                this.disabled = false;
+            }
+        });
+
+        // Preencher formulário com dados da consulta
+        document.getElementById('btnPreencherDados').addEventListener('click', function() {
+            if (!cnpjDataCache) return;
+
+            const data = cnpjDataCache;
+            
+            // Preencher campos do formulário
+            document.getElementById('fnome').value = data.nome_fantasia || data.razao_social || '';
+            document.getElementById('fcnpj').value = formatarCNPJ(data.cnpj) || '';
+            document.getElementById('femail').value = data.email || '';
+            document.getElementById('ftelefone').value = data.ddd_telefone_1 ? formatarTelefone(data.ddd_telefone_1) : '';
+            
+            const endereco = `${data.logradouro || ''}, ${data.numero || 's/n'} - ${data.bairro || ''} - ${data.municipio || ''}/${data.uf || ''}`.trim();
+            document.getElementById('fendereco').value = endereco;
+
+            // Limpar campos bancários (não vêm da API)
+            document.getElementById('fbanco').value = '';
+            document.getElementById('fagencia').value = '';
+            document.getElementById('fconta').value = '';
+
+            // Scroll para o formulário
+            document.getElementById('fnome').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Highlight temporário dos campos preenchidos
+            [document.getElementById('fnome'), document.getElementById('fcnpj'), 
+             document.getElementById('femail'), document.getElementById('ftelefone'),
+             document.getElementById('fendereco')].forEach(el => {
+                el.classList.add('ring-2', 'ring-green-400');
+                setTimeout(() => el.classList.remove('ring-2', 'ring-green-400'), 2000);
+            });
+
+            showMensagem('✓ Dados preenchidos automaticamente! Revise e complete as informações bancárias.', true);
+        });
+
+        // Função para formatar CNPJ
+        function formatarCNPJ(cnpj) {
+            if (!cnpj) return '';
+            cnpj = cnpj.replace(/\D/g, '');
+            return cnpj.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5');
+        }
+
+        // Função para formatar telefone
+        function formatarTelefone(tel) {
+            if (!tel) return '';
+            tel = tel.replace(/\D/g, '');
+            if (tel.length === 10) {
+                return tel.replace(/^(\d{2})(\d{4})(\d{4})$/, '($1) $2-$3');
+            } else if (tel.length === 11) {
+                return tel.replace(/^(\d{2})(\d{5})(\d{4})$/, '($1) $2-$3');
+            }
+            return tel;
+        }
+
+        // Limpar dados quando abrir modal para novo fornecedor
+        const originalNovoFornecedorClick = document.getElementById('btnNovoFornecedor').onclick;
+        document.getElementById('btnNovoFornecedor').addEventListener('click', function() {
+            cnpjDataCache = null;
+            document.getElementById('fcnpjConsulta').value = '';
+            document.getElementById('cnpjResultTabs').classList.add('hidden');
+        });
     </script>
 
     <style>
