@@ -1,0 +1,1 @@
+Manual note: unify verbas.html header and sidebar; remove usuarioNome assignments at load; ensure ui-enhanced handles dropdown.

@@ -7,6 +7,31 @@ let chartVerbas = null;
 let chartPizza = null;
 let chartPizzaSecretaria = null;
 let chartVerbasPorSecretaria = null;
+let chartSecretariaType = 'barra'; // 'barra' ou 'pizza'
+
+/**
+ * Atualiza estado visual dos botões de toggle
+ */
+function updateChartToggleButtons(type) {
+    const btnBarra = document.getElementById("btnChartBarra");
+    const btnPizza = document.getElementById("btnChartPizza");
+    
+    if (btnBarra && btnPizza) {
+        if (type === 'barra') {
+            btnBarra.classList.add("bg-blue-600", "text-white");
+            btnBarra.classList.remove("bg-slate-200", "text-slate-700");
+            
+            btnPizza.classList.remove("bg-blue-600", "text-white");
+            btnPizza.classList.add("bg-slate-200", "text-slate-700");
+        } else {
+            btnPizza.classList.add("bg-blue-600", "text-white");
+            btnPizza.classList.remove("bg-slate-200", "text-slate-700");
+            
+            btnBarra.classList.remove("bg-blue-600", "text-white");
+            btnBarra.classList.add("bg-slate-200", "text-slate-700");
+        }
+    }
+}
 
 /**
  * Renderiza todos os gráficos
@@ -14,7 +39,7 @@ let chartVerbasPorSecretaria = null;
 function renderCharts() {
     renderTopFornecedoresChart();
     renderPizzaChart();
-    renderPizzaSecretariaChart();
+    renderSecretariaChart();
     renderVerbasPorSecretariaChart();
 }
 
@@ -60,6 +85,14 @@ function renderTopFornecedoresChart() {
                     titleFont: { size: 13, weight: 'bold' },
                     bodyFont: { size: 12 },
                     callbacks: {
+                        title: (context) => {
+                            const fornecedorNome = context[0].label;
+                            const fornecedor = obterFornecedorPorNome(fornecedorNome);
+                            if (fornecedor) {
+                                return `${fornecedor.nome}\nCNPJ: ${fornecedor.cnpj}`;
+                            }
+                            return "Fornecedor desconhecido";
+                        },
                         label: (ctx) => " " + money(ctx.raw)
                     }
                 }
@@ -208,18 +241,24 @@ function renderPizzaChart() {
         }
     });
 }
-            }
-        }
-    });
+
+/**
+ * Renderiza gráfico de Fornecedores por Secretaria (Barras ou Pizza)
+ */
+function renderSecretariaChart() {
+    if (chartSecretariaType === 'barra') {
+        renderBarraSecretariaChart();
+    } else {
+        renderPizzaSecretariaChart();
+    }
 }
 
 /**
- * Renderiza gráfico Pizza de Fornecedores por Secretaria
+ * Renderiza gráfico em Barras de Fornecedores por Secretaria
  */
-function renderPizzaSecretariaChart() {
+function renderBarraSecretariaChart() {
     const { periodo, secretaria } = getCurrentFilters();
     const box = document.getElementById("boxTopFornecedoresSecretaria");
-    const title = document.getElementById("titlePizzaSecretaria");
     const canvas = document.getElementById("chartFornecedoresSecretariaPizza");
 
     if (secretaria === "__geral__") {
@@ -234,7 +273,97 @@ function renderPizzaSecretariaChart() {
     box.classList.remove("hidden");
     if (!canvas) return;
 
-    title.textContent = `Top fornecedores - ${secretaria} (${periodo})`;
+    const topSec = topFornecedoresDaSecretaria(periodo, secretaria, 6);
+
+    if (chartPizzaSecretaria) chartPizzaSecretaria.destroy();
+
+    chartPizzaSecretaria = new Chart(canvas, {
+        type: "bar",
+        data: {
+            labels: topSec.map(x => x.fornecedor),
+            datasets: [{
+                label: "Total pago",
+                data: topSec.map(x => x.total),
+                backgroundColor: "#0ea5e9",
+                borderColor: "#0284c7",
+                borderWidth: 2,
+                borderRadius: 4,
+                barThickness: 'flex',
+                maxBarThickness: 50
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            aspectRatio: 2.2,
+            indexAxis: 'y',
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0,0,0,0.8)',
+                    padding: 12,
+                    titleFont: { size: 13, weight: 'bold' },
+                    bodyFont: { size: 12 },
+                    callbacks: {
+                        title: (context) => {
+                            const fornecedorNome = context[0].label;
+                            const fornecedor = obterFornecedorPorNome(fornecedorNome);
+                            if (fornecedor) {
+                                return `${fornecedor.nome}\nCNPJ: ${fornecedor.cnpj}`;
+                            }
+                            return "Fornecedor desconhecido";
+                        },
+                        label: (ctx) => " " + money(ctx.raw)
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        color: 'rgba(0,0,0,0.05)',
+                        drawBorder: false
+                    },
+                    ticks: {
+                        callback: (v) => money(v),
+                        font: { size: 11 }
+                    }
+                },
+                y: {
+                    grid: {
+                        display: false,
+                        drawBorder: false
+                    },
+                    ticks: {
+                        font: { size: 11 }
+                    }
+                }
+            }
+        }
+    });
+}
+
+/**
+ * Renderiza gráfico Pizza de Fornecedores por Secretaria
+ */
+function renderPizzaSecretariaChart() {
+    const { periodo, secretaria } = getCurrentFilters();
+    const box = document.getElementById("boxTopFornecedoresSecretaria");
+    const canvas = document.getElementById("chartFornecedoresSecretariaPizza");
+
+    if (secretaria === "__geral__") {
+        box.classList.add("hidden");
+        if (chartPizzaSecretaria) {
+            chartPizzaSecretaria.destroy();
+            chartPizzaSecretaria = null;
+        }
+        return;
+    }
+
+    box.classList.remove("hidden");
+    if (!canvas) return;
+
     const topSec = topFornecedoresDaSecretaria(periodo, secretaria, 6);
 
     if (chartPizzaSecretaria) chartPizzaSecretaria.destroy();
@@ -261,6 +390,14 @@ function renderPizzaSecretariaChart() {
             plugins: {
                 tooltip: {
                     callbacks: {
+                        title: (context) => {
+                            const fornecedorNome = context[0].label;
+                            const fornecedor = obterFornecedorPorNome(fornecedorNome);
+                            if (fornecedor) {
+                                return `${fornecedor.nome}\nCNPJ: ${fornecedor.cnpj}`;
+                            }
+                            return "Fornecedor desconhecido";
+                        },
                         label: (ctx) => ` ${ctx.label}: ${money(ctx.raw)}`
                     }
                 }
@@ -283,10 +420,13 @@ function renderVerbasPorSecretariaChart() {
     // Obter dados de verbas por secretaria
     const verbas_secretaria = SECRETARIAS.map(sec => {
         const v = verbas.find(x => x.periodo === periodo && x.secretaria === sec);
+        const recebida = v?.verba_recebida || 0;
+        const aplicada = v?.verba_aplicada || 0;
         return {
             secretaria: sec,
-            recebida: v?.verba_recebida || 0,
-            aplicada: v?.verba_aplicada || 0
+            recebida: recebida,
+            aplicada: aplicada,
+            saldo: recebida - aplicada
         };
     }).filter(x => x.recebida > 0 || x.aplicada > 0);
 
@@ -298,16 +438,24 @@ function renderVerbasPorSecretariaChart() {
                 {
                     label: "Verba Recebida",
                     data: verbas_secretaria.map(x => x.recebida),
+                    backgroundColor: "#3b82f6",
+                    borderColor: "#1e40af",
+                    borderWidth: 2,
+                    borderRadius: 4
+                },
+                {
+                    label: "Verba Aplicada",
+                    data: verbas_secretaria.map(x => x.aplicada),
                     backgroundColor: "#10b981",
                     borderColor: "#047857",
                     borderWidth: 2,
                     borderRadius: 4
                 },
                 {
-                    label: "Verba Paga",
-                    data: verbas_secretaria.map(x => x.aplicada),
-                    backgroundColor: "#f97316",
-                    borderColor: "#d97706",
+                    label: "Verba Disponível",
+                    data: verbas_secretaria.map(x => x.saldo),
+                    backgroundColor: verbas_secretaria.map(x => x.saldo >= 0 ? "#8b5cf6" : "#ef4444"),
+                    borderColor: "rgba(0,0,0,0.1)",
                     borderWidth: 2,
                     borderRadius: 4
                 }
@@ -332,13 +480,20 @@ function renderVerbasPorSecretariaChart() {
                     titleFont: { size: 12, weight: 'bold' },
                     bodyFont: { size: 11 },
                     callbacks: {
-                        label: (ctx) => ` ${ctx.dataset.label}: ${money(ctx.raw)}`
+                        label: (ctx) => {
+                            let label = ctx.dataset.label || '';
+                            if (label) label += ': ';
+                            label += money(ctx.raw);
+                            if (ctx.dataset.label === 'Verba Disponível' && ctx.raw < 0) {
+                                label = '✗ Estourada ' + money(Math.abs(ctx.raw));
+                            }
+                            return ' ' + label;
+                        }
                     }
                 }
             },
             scales: {
                 x: {
-                    stacked: true,
                     grid: {
                         display: false,
                         drawBorder: false
@@ -348,7 +503,6 @@ function renderVerbasPorSecretariaChart() {
                     }
                 },
                 y: {
-                    stacked: true,
                     grid: {
                         color: 'rgba(0,0,0,0.05)',
                         drawBorder: false

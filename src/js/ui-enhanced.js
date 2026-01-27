@@ -163,15 +163,13 @@ function displayUserInfo() {
             console.log('Nome:', nome, 'Sobrenome:', sobrenome);
             
             // Atualizar elementos
-            const usuarioNomeEl = document.getElementById('usuarioNome');
-            const usuarioNomeCompletoEl = document.getElementById('usuarioNomeCompleto');
-            const usuarioEmailEl = document.getElementById('usuarioEmail');
+            const usuarioEmailDropdown = document.getElementById('usuarioEmailDropdown');
+            const usuarioEmailDropdown2 = document.getElementById('usuarioEmailDropdown2');
             
-            console.log('Elementos encontrados:', { usuarioNomeEl, usuarioNomeCompletoEl, usuarioEmailEl });
-            
-            if (usuarioNomeEl) usuarioNomeEl.textContent = nome;
-            if (usuarioNomeCompletoEl) usuarioNomeCompletoEl.textContent = nomeCompleto;
-            if (usuarioEmailEl) usuarioEmailEl.textContent = usuarioAtual.email;
+            console.log('Elementos encontrados:', { usuarioEmailDropdown, usuarioEmailDropdown2 });
+
+            if (usuarioEmailDropdown) usuarioEmailDropdown.textContent = 'Usuário';
+            if (usuarioEmailDropdown2) usuarioEmailDropdown2.textContent = usuarioAtual.email;
             
             console.log('✓ Elementos atualizados com sucesso');
         } else {

@@ -30,11 +30,14 @@ function renderTabelaPagamentos() {
 
     tbody.innerHTML = "";
     for (const p of lista) {
+        const fornecedor = obterFornecedorPorNome(p.fornecedor);
+        const cnpj = fornecedor ? fornecedor.cnpj : "—";
         const tr = document.createElement("tr");
         tr.innerHTML = `
             <td class="p-4">${p.data}</td>
             <td class="p-4">${p.secretaria}</td>
             <td class="p-4 font-semibold">${p.fornecedor}</td>
+            <td class="p-4 text-slate-600 text-xs">${cnpj}</td>
             <td class="p-4">${p.documento}</td>
             <td class="p-4 text-right">${money(p.valor)}</td>
         `;
@@ -106,25 +109,15 @@ function showView(viewId, title, subtitle) {
 }
 
 /**
- * Inicializa a lista de secretarias na sidebar
+ * Inicializa a lista de secretarias no seletor de filtro
  */
 function initSecretariasList() {
-    const secretariaList = document.getElementById("secretariaList");
     const select = document.getElementById("secretariaFilter");
 
-    if (!secretariaList || !select) return;
+    if (!select) return;
 
+    // Adiciona as secretarias ao seletor
     for (const s of SECRETARIAS) {
-        const btn = document.createElement("button");
-        btn.className = "w-full text-left px-2 py-1 rounded hover:bg-slate-800 text-sm transition-colors";
-        btn.textContent = s;
-        btn.onclick = (e) => {
-            e.preventDefault();
-            select.value = s;
-            rerenderAll();
-        };
-        secretariaList.appendChild(btn);
-
         const opt = document.createElement("option");
         opt.value = s;
         opt.textContent = s;

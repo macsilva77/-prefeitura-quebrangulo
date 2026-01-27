@@ -14,8 +14,9 @@ function checkAuthentication() {
     
     // Exibe informações do usuário (será complementado pelo ui-enhanced.js)
     const usuario = getUsuarioAtual();
-    if (usuario) {
-        document.getElementById("usuarioNome").textContent = usuario.nome.split(' ')[0];
+    const usuarioNomeEl = document.getElementById("usuarioNome");
+    if (usuario && usuarioNomeEl) {
+        usuarioNomeEl.textContent = usuario.nome.split(' ')[0];
     }
     
     return true;
@@ -56,10 +57,13 @@ function init() {
             e.preventDefault();
             const page = btn.dataset.page;
 
-            // Remove active de todos
-            document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("bg-slate-700"));
-            // Adiciona ao clicado
-            btn.classList.add("bg-slate-700");
+            // Atualiza estados de ativo para a paleta azul
+            document.querySelectorAll(".nav-btn").forEach(b => {
+                b.classList.remove("bg-blue-800", "text-white");
+                b.classList.add("text-blue-100");
+            });
+            btn.classList.add("bg-blue-800", "text-white");
+            btn.classList.remove("text-blue-100");
 
             // Muda view
             if (page === "dashboard") {
@@ -88,6 +92,26 @@ function init() {
     document.getElementById("secretariaFilter").addEventListener("change", rerenderAll);
     document.getElementById("periodoFilter").addEventListener("change", rerenderAll);
     document.getElementById("searchFornecedor").addEventListener("input", rerenderAll);
+
+    // Event listeners - Chart Type Toggle
+    const btnChartBarra = document.getElementById("btnChartBarra");
+    const btnChartPizza = document.getElementById("btnChartPizza");
+    
+    if (btnChartBarra) {
+        btnChartBarra.addEventListener("click", () => {
+            chartSecretariaType = 'barra';
+            updateChartToggleButtons('barra');
+            renderSecretariaChart();
+        });
+    }
+    
+    if (btnChartPizza) {
+        btnChartPizza.addEventListener("click", () => {
+            chartSecretariaType = 'pizza';
+            updateChartToggleButtons('pizza');
+            renderSecretariaChart();
+        });
+    }
 
     // Event listeners - Importação
     document.getElementById("btnImportExcel").addEventListener("click", handleExcelImport);

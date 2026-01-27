@@ -11,46 +11,53 @@
 <body class="bg-slate-100 text-slate-900">
     <div class="min-h-screen flex">
         <!-- Sidebar -->
-        <aside id="sidebar" class="w-72 bg-gradient-to-b from-slate-900 to-slate-800 text-white p-6 shadow-lg fixed h-screen overflow-y-auto transition-all duration-300 z-40">
-            <div class="flex items-center justify-between mb-8">
-                <div class="flex-1">
-                    <h1 class="text-2xl font-bold mb-1">Prefeitura de Quebrangulo</h1>
-                    <p class="text-slate-400 text-sm">Controle de Pagamentos</p>
-                </div>
-                <button id="toggleSidebar" class="ml-4 text-slate-300 hover:text-white transition" title="Recolher menu">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                    </svg>
-                </button>
-            </div>
-
+        <aside id="sidebar" class="w-72 bg-gradient-to-b from-blue-950 to-blue-900 text-white p-6 shadow-lg fixed h-screen overflow-y-auto transition-all duration-300 z-40">
             <!-- Menu Search -->
             <div class="mb-6">
-                <input id="menuSearch" type="text" placeholder="🔍 Pesquisar..." class="w-full px-3 py-2 rounded-lg bg-slate-700 text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm">
+                <input id="menuSearch" type="text" placeholder="🔍 Pesquisar..." class="w-full px-3 py-2 rounded-lg bg-blue-900 text-blue-100 placeholder-blue-300 border border-blue-800 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm">
             </div>
 
-            <nav class="space-y-2 mb-8">
-                <a href="dashboard.html" class="nav-btn w-full text-left px-4 py-3 rounded-lg transition-all hover:bg-slate-700 block">
+            <nav class="space-y-1">
+                <!-- Administração (pai com submenu) -->
+                <div>
+                    <button class="menu-parent w-full text-left px-4 py-3 rounded-lg transition-all hover:bg-blue-800 text-blue-100 flex items-center justify-between font-semibold text-sm" data-submenu="admin">
+                        <span><span class="text-lg mr-2">⚙️</span>Administração</span>
+                        <span class="text-lg font-bold transition-transform menu-toggle">+</span>
+                        </svg>
+                    </button>
+                    <div id="submenu-admin" class="submenu ml-4 space-y-1 max-h-40 overflow-hidden">
+                        <a href="fornecedores.html" class="block w-full text-left px-4 py-2 rounded-lg transition-all bg-blue-800 text-white text-xs">
+                            <span class="mr-2">🏢</span>Fornecedores
+                        </a>
+                        <a href="secretarias.html" class="block w-full text-left px-4 py-2 rounded-lg transition-all hover:bg-blue-800 text-xs text-blue-100">
+                            <span class="mr-2">🏛️</span>Secretarias
+                        </a>
+                        <a href="usuarios.html" class="block w-full text-left px-4 py-2 rounded-lg transition-all hover:bg-blue-800 text-xs text-blue-100">
+                            <span class="mr-2">👥</span>Usuários
+                        </a>
+                        <a href="verbas.html" class="block w-full text-left px-4 py-2 rounded-lg transition-all hover:bg-blue-800 text-xs text-blue-100">
+                            <span class="mr-2">💰</span>Verbas
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Dashboard -->
+                <a href="dashboard.html" class="nav-btn w-full text-left px-4 py-3 rounded-lg transition-all hover:bg-blue-800 hover:text-white text-blue-100 block font-semibold text-sm">
                     <span class="text-lg mr-2">📊</span>Dashboard
                 </a>
+
+                <!-- Dados -->
+                <button class="nav-btn w-full text-left px-4 py-3 rounded-lg transition-all hover:bg-blue-800 hover:text-white text-blue-100 font-semibold text-sm" data-page="data">
+                    <span class="text-lg mr-2">📋</span>Dados
+                </button>
+
+                <!-- Importação -->
+                <button class="nav-btn w-full text-left px-4 py-3 rounded-lg transition-all hover:bg-blue-800 hover:text-white text-blue-100 font-semibold text-sm" data-page="import">
+                    <span class="text-lg mr-2">📥</span>Importação
+                </button>
             </nav>
 
-            <hr class="border-slate-700 my-6">
-
-            <div>
-                <div class="text-sm font-semibold text-slate-300 mb-3">Administração</div>
-                <a href="fornecedores.html" class="nav-btn w-full text-left px-4 py-2 rounded-lg transition-all bg-slate-700 text-sm block">
-                    <span class="mr-2">🏢</span>Fornecedores
-                </a>
-                <a href="secretarias.html" class="nav-btn w-full text-left px-4 py-2 rounded-lg transition-all hover:bg-slate-700 text-sm block">
-                    <span class="mr-2">🏛️</span>Secretarias
-                </a>
-                <a href="usuarios.html" class="nav-btn w-full text-left px-4 py-2 rounded-lg transition-all hover:bg-slate-700 text-sm block">
-                    <span class="mr-2">👥</span>Usuários
-                </a>
-            </div>
-
-            <div class="mt-8 pt-6 border-t border-slate-700 text-xs text-slate-500">
+            <div class="mt-8 pt-6 border-t border-blue-800 text-xs text-blue-300">
                 v1.0 • Sistema Profissional
             </div>
         </aside>
@@ -58,26 +65,45 @@
         <!-- Main Content -->
         <main id="mainContent" class="flex-1 ml-72 p-8 overflow-y-auto transition-all duration-300">
             <!-- Top Header with User Info and Logout -->
-            <div class="bg-gradient-to-r from-blue-900 to-blue-800 text-white rounded-xl shadow-md p-6 mb-8 flex justify-between items-center">
-                <div>
-                    <p class="text-sm text-blue-100">Bem-vindo</p>
-                    <h2 class="text-2xl font-bold" id="usuarioNome">Carregando...</h2>
-                </div>
-                <div class="flex items-center gap-6">
-                    <!-- User Info Right Side -->
-                    <div class="text-right">
-                        <p class="text-sm text-blue-100">Usuário logado:</p>
-                        <p class="text-lg font-semibold" id="usuarioNomeCompleto">-</p>
-                        <p class="text-xs text-blue-200" id="usuarioEmail">-</p>
+            <div class="bg-gradient-to-r from-blue-900 to-blue-800 text-white rounded-xl shadow-md p-3 mb-8 flex items-center gap-6">
+                <div class="flex items-center gap-4">
+                    <div class="h-12 w-1.5 rounded-full bg-gradient-to-b from-blue-900 to-blue-600 shadow-[0_0_14px_rgba(30,64,175,0.28)]"></div>
+                    <div class="leading-tight text-left">
+                        <p class="text-base font-semibold text-blue-100">Construindo um</p>
+                        <p class="text-lg font-semibold text-white tracking-wide">novo caminho</p>
                     </div>
-                    <div class="w-px h-12 bg-blue-700"></div>
-                    <div class="flex flex-col gap-2">
-                        <button id="btnLogout" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg font-semibold transition-all text-sm">
-                            🚪 Sair
+                </div>
+                <div class="flex-1 text-left ml-2">
+                    <p class="text-3xl font-bold text-white">Prefeitura de Quebrangulo</p>
+                </div>
+                <div class="flex items-center gap-3 ml-auto">
+                    <span class="text-sm text-blue-100">Versão</span>
+                    <span class="text-xl font-semibold text-white">1.0</span>
+                    <!-- User Dropdown -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-2 px-3 py-2 rounded-lg bg-blue-800/80 hover:bg-blue-700 border border-blue-600 transition-all text-white">
+                            <div class="text-left">
+                                <p class="text-sm font-semibold leading-tight" id="usuarioEmailDropdown">Usuário</p>
+                                <p class="text-xs text-blue-100" id="usuarioEmailDropdown2">-</p>
+                            </div>
+                            <svg class="w-4 h-4 text-blue-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
                         </button>
-                        <button id="btnConfiguracao" class="bg-blue-700 hover:bg-blue-600 px-4 py-2 rounded-lg font-semibold transition-all text-sm" title="Configurações">
-                            ⚙️ Config
-                        </button>
+                        
+                        <!-- Dropdown Menu -->
+                        <div class="hidden group-hover:block absolute right-0 mt-1 w-56 bg-blue-900 text-white rounded-lg shadow-xl z-50 border border-blue-700">
+                            <div class="p-2">
+                                <button id="btnConfiguracao" class="w-full flex items-center gap-3 px-3 py-2 hover:bg-blue-800 rounded transition-all text-sm text-left">
+                                    <span class="text-lg">⚙️</span>
+                                    <span>Configurações de usuário</span>
+                                </button>
+                                <button id="btnLogout" class="w-full flex items-center gap-3 px-3 py-2 hover:bg-blue-800 rounded transition-all text-sm text-left text-red-300 hover:text-red-200">
+                                    <span class="text-lg">🚪</span>
+                                    <span>Sair</span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -202,9 +228,7 @@
                 return;
             }
 
-            const usuario = getUsuarioAtual();
-            document.getElementById('usuarioNome').textContent = usuario.nome;
-            document.getElementById('usuarioRole').textContent = usuario.role.toUpperCase();
+            // Usuário será exibido via dropdown pelo ui-enhanced.js
 
             renderFornecedoresTable();
         });
@@ -332,6 +356,36 @@
             div.className = sucesso ? 'p-4 rounded-lg bg-green-100 text-green-800' : 'p-4 rounded-lg bg-red-100 text-red-800';
             div.classList.remove('hidden');
         }
+    </script>
+
+    <style>
+        .submenu {
+            max-height: 0;
+            transition: max-height 0.3s ease-in-out;
+            overflow: hidden;
+        }
+    </style>
+
+    <script>
+        // Menu submenu toggle
+        document.querySelectorAll('.menu-parent').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const submenuId = this.getAttribute('data-submenu');
+                const submenu = document.getElementById(`submenu-${submenuId}`);
+                const toggle = this.querySelector('.menu-toggle');
+                
+                const isExpanded = submenu.style.maxHeight && submenu.style.maxHeight !== '0px';
+                
+                if (isExpanded) {
+                    submenu.style.maxHeight = '0px';
+                    if (toggle) toggle.textContent = '+';
+                } else {
+                    submenu.style.maxHeight = submenu.scrollHeight + 'px';
+                    if (toggle) toggle.textContent = '-';
+                }
+            });
+        });
     </script>
     <script src="js/ui-enhanced.js?v=13"></script>
 </body>

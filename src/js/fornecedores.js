@@ -29,6 +29,136 @@ let fornecedores = JSON.parse(localStorage.getItem('prefeitura_fornecedores')) |
         agencia: "0002",
         ativo: true,
         dataCadastro: new Date().toISOString()
+    },
+    {
+        id: 3,
+        nome: "Alfa Serviços",
+        cnpj: "11.222.333/0001-44",
+        email: "contato@alfaservicos.com.br",
+        telefone: "(82) 3301-1111",
+        endereco: "Rua A, 10 - Quebrangulo/AL",
+        banco: "Banco do Brasil",
+        conta: "111111-1",
+        agencia: "0001",
+        ativo: true,
+        dataCadastro: new Date().toISOString()
+    },
+    {
+        id: 4,
+        nome: "MedSupply LTDA",
+        cnpj: "22.333.444/0001-55",
+        email: "vendas@medsupply.com.br",
+        telefone: "(82) 3301-2222",
+        endereco: "Rua B, 20 - Quebrangulo/AL",
+        banco: "Itaú",
+        conta: "222222-2",
+        agencia: "0001",
+        ativo: true,
+        dataCadastro: new Date().toISOString()
+    },
+    {
+        id: 5,
+        nome: "Construtora Delta",
+        cnpj: "33.444.555/0001-66",
+        email: "contato@construtoradelta.com.br",
+        telefone: "(82) 3301-3333",
+        endereco: "Rua C, 30 - Quebrangulo/AL",
+        banco: "Caixa",
+        conta: "333333-3",
+        agencia: "0001",
+        ativo: true,
+        dataCadastro: new Date().toISOString()
+    },
+    {
+        id: 6,
+        nome: "TechGov",
+        cnpj: "44.555.666/0001-77",
+        email: "vendas@techgov.com.br",
+        telefone: "(82) 3301-4444",
+        endereco: "Rua D, 40 - Quebrangulo/AL",
+        banco: "Bradesco",
+        conta: "444444-4",
+        agencia: "0001",
+        ativo: true,
+        dataCadastro: new Date().toISOString()
+    },
+    {
+        id: 7,
+        nome: "Papelaria Nordeste",
+        cnpj: "55.666.777/0001-88",
+        email: "contato@papelariandeste.com.br",
+        telefone: "(82) 3301-5555",
+        endereco: "Rua E, 50 - Quebrangulo/AL",
+        banco: "Banco do Brasil",
+        conta: "555555-5",
+        agencia: "0001",
+        ativo: true,
+        dataCadastro: new Date().toISOString()
+    },
+    {
+        id: 8,
+        nome: "Cesta Viva",
+        cnpj: "66.777.888/0001-99",
+        email: "vendas@cestaviva.com.br",
+        telefone: "(82) 3301-6666",
+        endereco: "Rua F, 60 - Quebrangulo/AL",
+        banco: "Itaú",
+        conta: "666666-6",
+        agencia: "0001",
+        ativo: true,
+        dataCadastro: new Date().toISOString()
+    },
+    {
+        id: 9,
+        nome: "Som & Luz Produções",
+        cnpj: "77.888.999/0001-00",
+        email: "contato@someluz.com.br",
+        telefone: "(82) 3301-7777",
+        endereco: "Rua G, 70 - Quebrangulo/AL",
+        banco: "Caixa",
+        conta: "777777-7",
+        agencia: "0001",
+        ativo: true,
+        dataCadastro: new Date().toISOString()
+    },
+    {
+        id: 10,
+        nome: "AgroTec",
+        cnpj: "88.999.000/0001-11",
+        email: "vendas@agrotec.com.br",
+        telefone: "(82) 3301-8888",
+        endereco: "Rua H, 80 - Quebrangulo/AL",
+        banco: "Banco do Brasil",
+        conta: "888888-8",
+        agencia: "0001",
+        ativo: true,
+        dataCadastro: new Date().toISOString()
+    },
+    {
+        id: 11,
+        nome: "Pavimenta Brasil",
+        cnpj: "99.000.111/0001-22",
+        email: "contato@pavimentabrasil.com.br",
+        telefone: "(82) 3301-9999",
+        endereco: "Rua I, 90 - Quebrangulo/AL",
+        banco: "Bradesco",
+        conta: "999999-9",
+        agencia: "0001",
+        ativo: true,
+        dataCadastro: new Date().toISOString()
+    },
+    {
+        id: 12,
+        nome: "LabVida",
+        cnpj: "00.111.222/0001-33",
+        email: "vendas@labvida.com.br",
+        telefone: "(82) 3301-1010",
+        endereco: "Rua J, 100 - Quebrangulo/AL",
+        banco: "Itaú",
+        conta: "101010-10",
+        agencia: "0001",
+        ativo: true,
+        dataCadastro: new Date().toISOString()
     }
 ];
 
@@ -47,6 +177,13 @@ function listarFornecedores(filtroAtivo = true) {
  */
 function obterFornecedor(id) {
     return fornecedores.find(f => f.id === id);
+}
+
+/**
+ * Obtém fornecedor por nome
+ */
+function obterFornecedorPorNome(nome) {
+    return fornecedores.find(f => f.nome === nome);
 }
 
 /**
