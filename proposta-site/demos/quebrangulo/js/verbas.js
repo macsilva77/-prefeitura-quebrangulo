@@ -3,7 +3,10 @@
  * Armazena apenas verba_recebida. Verba aplicada é calculada com base nos pagamentos
  */
 
-let verbasRecebidas = JSON.parse(localStorage.getItem('prefeitura_verbas_recebidas')) || [
+// Limpar localStorage para garantir dados atualizados (versão 2026-01-29)
+localStorage.removeItem('prefeitura_verbas_recebidas');
+
+let verbasRecebidas = [
     { periodo: "2026-01", secretaria: "Educação", verba_recebida: 1270000 },
     { periodo: "2026-01", secretaria: "Saúde", verba_recebida: 635000 },
     { periodo: "2026-01", secretaria: "Infraestrutura e Obras", verba_recebida: 1443000 },
