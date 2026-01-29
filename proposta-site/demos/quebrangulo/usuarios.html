@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuários - Prefeitura de Quebrangulo</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 text-slate-900">
+    <div class="min-h-screen flex">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="w-72 bg-gradient-to-b from-blue-950 to-blue-900 text-white p-6 shadow-lg fixed h-screen overflow-y-auto transition-all duration-300 z-40">            <!-- Toggle Button + Menu Search -->
+            <div class="mb-6 flex gap-2">
+                <button id="toggleSidebar" class="px-3 py-2 bg-blue-800 hover:bg-blue-700 rounded-lg transition text-sm flex items-center justify-center flex-shrink-0">
+                    <span class="text-lg">☰</span>
+                </button>
+                <input id="menuSearch" type="text" placeholder="🔍 Pesquisar..." class="flex-1 px-3 py-2 rounded-lg bg-blue-900 text-blue-100 placeholder-blue-300 border border-blue-800 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm">
+            </div>
+
+            <nav class="space-y-1">
+                <!-- Administração (pai com submenu) -->
+                <div>
+                    <button class="menu-parent w-full text-left px-4 py-3 rounded-lg transition-all hover:bg-blue-800 text-blue-100 flex items-center justify-between font-semibold text-sm" data-submenu="admin">
+                        <span><span class="text-lg mr-2">⚙️</span>Administração</span>
+                        <span class="text-lg font-bold transition-transform menu-toggle">+</span>
+                        </svg>
+                    </button>
+                    <div id="submenu-admin" class="submenu ml-4 space-y-1 max-h-40 overflow-hidden">
+                        <a href="fornecedores.html" class="block w-full text-left px-4 py-2 rounded-lg transition-all hover:bg-blue-800 text-xs text-blue-100">
+                            <span class="mr-2">🏢</span>Fornecedores
+                        </a>
+                        <a href="secretarias.html" class="block w-full text-left px-4 py-2 rounded-lg transition-all hover:bg-blue-800 text-xs text-blue-100">
+                            <span class="mr-2">🏛️</span>Secretarias
+                        </a>
+                        <a href="usuarios.html" class="block w-full text-left px-4 py-2 rounded-lg transition-all bg-blue-800 text-white text-xs">
+                            <span class="mr-2">👥</span>Usuários
+                        </a>
+                        <a href="verbas.html" class="block w-full text-left px-4 py-2 rounded-lg transition-all hover:bg-blue-800 text-xs text-blue-100">
+                            <span class="mr-2">💰</span>Verbas
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Dashboard -->
+                <a href="dashboard.html" class="nav-btn w-full text-left px-4 py-3 rounded-lg transition-all hover:bg-blue-800 hover:text-white text-blue-100 block font-semibold text-sm">
+                    <span class="text-lg mr-2">📊</span>Dashboard
+                </a>
+
+                <!-- Dados -->
+                <button class="nav-btn w-full text-left px-4 py-3 rounded-lg transition-all hover:bg-blue-800 hover:text-white text-blue-100 font-semibold text-sm" data-page="data">
+                    <span class="text-lg mr-2">📋</span>Dados
+                </button>
+
+                <!-- Importação -->
+                <button class="nav-btn w-full text-left px-4 py-3 rounded-lg transition-all hover:bg-blue-800 hover:text-white text-blue-100 font-semibold text-sm" data-page="import">
+                    <span class="text-lg mr-2">📥</span>Importação
+                </button>
+            </nav>
+
+            <div class="mt-8 pt-6 border-t border-blue-800 text-xs text-blue-300">
+                v1.0 • Sistema Profissional
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main id="mainContent" class="flex-1 ml-72 p-8 overflow-y-auto transition-all duration-300">
+            <!-- Top Header with User Info and Logout -->
+            <div class="bg-gradient-to-r from-blue-900 to-blue-800 text-white rounded-xl shadow-md p-3 mb-8 flex items-center gap-6">
+                <div class="flex items-center gap-4">
+                    <div class="h-12 w-1.5 rounded-full bg-gradient-to-b from-blue-900 to-blue-600 shadow-[0_0_14px_rgba(30,64,175,0.28)]"></div>
+                    <div class="leading-tight text-left">
+                        <p class="text-base font-semibold text-blue-100">Construindo um</p>
+                        <p class="text-lg font-semibold text-white tracking-wide">novo caminho</p>
+                    </div>
+                </div>
+                <div class="flex-1 text-left ml-2">
+                    <p class="text-3xl font-bold text-white">Prefeitura de Quebrangulo</p>
+                </div>
+                <div class="flex items-center gap-3 ml-auto">
+                    <span class="text-sm text-blue-100">Versão</span>
+                    <span class="text-xl font-semibold text-white">1.0</span>
+                    <!-- User Dropdown -->
+                    <div class="relative">
+                        <button id="userDropdownBtn" class="flex items-center gap-2 px-3 py-2 rounded-lg bg-blue-800/80 hover:bg-blue-700 border border-blue-600 transition-all text-white">
+                            <div class="text-left">
+                                <p class="text-sm font-semibold leading-tight" id="usuarioEmailDropdown">Usuário</p>
+                                <p class="text-xs text-blue-100" id="usuarioEmailDropdown2">-</p>
+                            </div>
+                            <svg class="w-4 h-4 text-blue-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        
+                        <!-- Dropdown Menu -->
+                        <div id="userDropdownMenu" class="hidden absolute right-0 mt-1 w-56 bg-blue-900 text-white rounded-lg shadow-xl z-50 border border-blue-700">
+                            <div class="p-2">
+                                <button id="btnConfiguracao" class="w-full flex items-center gap-3 px-3 py-2 hover:bg-blue-800 rounded transition-all text-sm text-left">
+                                    <span class="text-lg">⚙️</span>
+                                    <span>Configurações de usuário</span>
+                                </button>
+                                <button id="btnLogout" class="w-full flex items-center gap-3 px-3 py-2 hover:bg-blue-800 rounded transition-all text-sm text-left text-red-300 hover:text-red-200">
+                                    <span class="text-lg">🚪</span>
+                                    <span>Sair</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alert - Admin Only -->
+            <div id="alertAdminOnly" class="hidden bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-8 rounded-lg">
+                <p class="text-yellow-800 font-semibold">⚠️ Acesso Restrito</p>
+                <p class="text-yellow-700 text-sm mt-1">Esta seção é visível apenas para administradores.</p>
+            </div>
+
+            <!-- Page Header -->
+            <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-sm text-slate-500 font-semibold">ADMINISTRAÇÃO</p>
+                        <h2 class="text-3xl font-bold mt-1">Gestão de Usuários</h2>
+                        <p class="text-slate-600 text-sm mt-2">Cadastro e controle de usuários do sistema</p>
+                    </div>
+                    <button id="btnNovoUsuario" class="bg-green-600 hover:bg-green-700 px-6 py-3 rounded-lg text-white font-semibold shadow-md transition-all">
+                        + Novo Usuário
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="bg-white rounded-xl shadow-md p-4 mb-6 flex gap-3 items-center">
+                <input type="text" id="searchUsuario" placeholder="Buscar por nome ou email..." class="flex-1 px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                <button id="btnRefreshUsuarios" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold">
+                    Atualizar
+                </button>
+            </div>
+
+            <!-- Table -->
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-slate-100">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-slate-900">Nome</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-slate-900">Email</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-slate-900">Papel</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-slate-900">Status</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-slate-900">Data Criação</th>
+                                <th class="px-6 py-3 text-center text-sm font-semibold text-slate-900">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyUsuarios" class="divide-y divide-slate-200">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal - Novo Usuário -->
+    <div id="modalUsuario" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-xl shadow-xl p-8 max-w-2xl w-full mx-4">
+            <h3 class="text-2xl font-bold mb-6">Novo Usuário</h3>
+            
+            <form id="formUsuario" class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">Nome *</label>
+                        <input type="text" id="unome" required class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">Email *</label>
+                        <input type="email" id="uemail" required class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">Senha *</label>
+                        <input type="password" id="usenha" required class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">Confirmar Senha *</label>
+                        <input type="password" id="usenhaConfirm" required class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Papel *</label>
+                    <select id="urole" required class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <option value="">Selecione um papel</option>
+                        <option value="admin">Administrador</option>
+                        <option value="gerenciador">Gerenciador</option>
+                        <option value="usuario">Usuário</option>
+                    </select>
+                </div>
+
+                <div id="mensagemUsuario" class="hidden p-4 rounded-lg"></div>
+
+                <div class="flex gap-3 justify-end mt-6 pt-4 border-t border-slate-200">
+                    <button type="button" id="btnCancelarUsuario" class="px-6 py-2 rounded-lg border border-slate-300 text-slate-900 hover:bg-slate-50 font-semibold transition-all">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 font-semibold transition-all">
+                        Criar Usuário
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/crypto.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        // Check authentication and admin role
+        window.addEventListener('load', () => {
+            if (!estaAutenticado()) {
+                window.location.href = '/login.html';
+                return;
+            }
+
+            // Usuário será exibido via dropdown pelo ui-enhanced.js
+
+            // Show admin alert if not admin
+            if (usuario.role !== 'admin') {
+                document.getElementById('alertAdminOnly').classList.remove('hidden');
+            }
+
+            renderUsuariosTable();
+        });
+
+        // Logout
+        document.getElementById('btnLogout').addEventListener('click', () => {
+            logout();
+            window.location.href = '/index.html';
+        });
+
+        // Novo Usuário
+        document.getElementById('btnNovoUsuario').addEventListener('click', () => {
+            if (getUsuarioAtual().role !== 'admin') {
+                showMensagem('Apenas administradores podem criar usuários', false);
+                return;
+            }
+            document.getElementById('formUsuario').reset();
+            document.getElementById('mensagemUsuario').classList.add('hidden');
+            document.getElementById('modalUsuario').classList.remove('hidden');
+        });
+
+        // Fechar Modal
+        document.getElementById('btnCancelarUsuario').addEventListener('click', () => {
+            document.getElementById('modalUsuario').classList.add('hidden');
+        });
+
+        // Form Submit
+        document.getElementById('formUsuario').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            if (getUsuarioAtual().role !== 'admin') {
+                showMensagem('Você não tem permissão para criar usuários', false);
+                return;
+            }
+
+            const nome = document.getElementById('unome').value;
+            const email = document.getElementById('uemail').value;
+            const senha = document.getElementById('usenha').value;
+            const senhaConfirm = document.getElementById('usenhaConfirm').value;
+            const role = document.getElementById('urole').value;
+
+            if (senha !== senhaConfirm) {
+                showMensagem('As senhas não correspondem', false);
+                return;
+            }
+
+            if (senha.length < 6) {
+                showMensagem('A senha deve ter pelo menos 6 caracteres', false);
+                return;
+            }
+
+            const resultado = registrarUsuario(nome, email, senha, senhaConfirm, role);
+
+            if (resultado.sucesso) {
+                showMensagem('Usuário criado com sucesso!', true);
+                setTimeout(() => {
+                    document.getElementById('modalUsuario').classList.add('hidden');
+                    renderUsuariosTable();
+                }, 1000);
+            } else {
+                showMensagem(resultado.mensagem || 'Erro ao criar usuário', false);
+            }
+        });
+
+        // Search
+        document.getElementById('searchUsuario').addEventListener('input', renderUsuariosTable);
+
+        // Refresh
+        document.getElementById('btnRefreshUsuarios').addEventListener('click', renderUsuariosTable);
+
+        function renderUsuariosTable() {
+            const usuarios = listarUsuarios();
+            const search = document.getElementById('searchUsuario').value.toLowerCase();
+            const tbody = document.getElementById('tbodyUsuarios');
+            tbody.innerHTML = '';
+
+            const filtrados = usuarios.filter(u =>
+                u.nome.toLowerCase().includes(search) ||
+                u.email.toLowerCase().includes(search)
+            );
+
+            if (filtrados.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="px-6 py-4 text-center text-slate-500">Nenhum usuário encontrado</td></tr>';
+                return;
+            }
+
+            filtrados.forEach(u => {
+                const tr = document.createElement('tr');
+                const dataCriacao = u.dataCriacao ? new Date(u.dataCriacao).toLocaleDateString('pt-BR') : '-';
+                tr.innerHTML = `
+                    <td class="px-6 py-4 text-sm font-semibold text-slate-900">${u.nome}</td>
+                    <td class="px-6 py-4 text-sm text-slate-600">${u.email}</td>
+                    <td class="px-6 py-4 text-sm text-slate-600">
+                        <span class="px-2 py-1 rounded-full text-xs font-semibold ${
+                            u.role === 'admin' ? 'bg-red-100 text-red-800' :
+                            u.role === 'gerenciador' ? 'bg-blue-100 text-blue-800' :
+                            'bg-slate-100 text-slate-800'
+                        }">
+                            ${u.role.charAt(0).toUpperCase() + u.role.slice(1)}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="px-3 py-1 rounded-full text-xs font-semibold ${u.ativo ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                            ${u.ativo ? 'Ativo' : 'Inativo'}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-sm text-slate-600">${dataCriacao}</td>
+                    <td class="px-6 py-4 text-center">
+                        <div class="flex gap-2 justify-center">
+                            ${u.ativo ? `<button onclick="desativar(${u.id})" class="text-red-600 hover:text-red-800 font-semibold">Desativar</button>` : `<button onclick="ativar(${u.id})" class="text-green-600 hover:text-green-800 font-semibold">Ativar</button>`}
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function desativar(userId) {
+            if (confirm('Tem certeza que deseja desativar este usuário?')) {
+                desativarUsuario(userId);
+                renderUsuariosTable();
+            }
+        }
+
+        function ativar(userId) {
+            if (confirm('Tem certeza que deseja ativar este usuário?')) {
+                ativarUsuario(userId);
+                renderUsuariosTable();
+            }
+        }
+
+        function showMensagem(texto, sucesso) {
+            const div = document.getElementById('mensagemUsuario');
+            div.textContent = texto;
+            div.className = sucesso ? 'p-4 rounded-lg bg-green-100 text-green-800' : 'p-4 rounded-lg bg-red-100 text-red-800';
+            div.classList.remove('hidden');
+        }
+
+        // Add ativar function (needed for ativar button)
+        function ativarUsuario(userId) {
+            const users = JSON.parse(localStorage.getItem('prefeitura_users') || '[]');
+            const user = users.find(u => u.id === userId);
+            if (user) {
+                user.ativo = true;
+                localStorage.setItem('prefeitura_users', JSON.stringify(users));
+            }
+        }
+    </script>
+
+    <style>
+        .submenu {
+            max-height: 0;
+            transition: max-height 0.3s ease-in-out;
+            overflow: hidden;
+        }
+    </style>
+
+    <script>
+        // Menu submenu toggle
+        document.querySelectorAll('.menu-parent').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const submenuId = this.getAttribute('data-submenu');
+                const submenu = document.getElementById(`submenu-${submenuId}`);
+                const toggle = this.querySelector('.menu-toggle');
+                
+                const isExpanded = submenu.style.maxHeight && submenu.style.maxHeight !== '0px';
+                
+                if (isExpanded) {
+                    submenu.style.maxHeight = '0px';
+                    if (toggle) toggle.textContent = '+';
+                } else {
+                    submenu.style.maxHeight = submenu.scrollHeight + 'px';
+                    if (toggle) toggle.textContent = '-';
+                }
+            });
+        });
+    </script>
+    <script src="js/ui-enhanced.js?v=13"></script>
+</body>
+</html>
