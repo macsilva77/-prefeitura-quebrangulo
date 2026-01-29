@@ -278,7 +278,7 @@
             const result = login(email, senha);
             
             if (result.sucesso) {
-                window.location.href = 'dashboard.html';
+                window.location.href = './dashboard.html';
             } else {
                 errorDiv.textContent = result.mensagem;
                 errorDiv.classList.remove('hidden');
@@ -308,7 +308,7 @@
                 
                 setTimeout(() => {
                     login(email, senha);
-                    window.location.href = 'dashboard.html';
+                    window.location.href = './dashboard.html';
                 }, 2000);
             } else {
                 errorDiv.textContent = result.mensagem;
@@ -318,7 +318,7 @@
 
         // Verificar se já está autenticado
         if (estaAutenticado()) {
-            window.location.href = 'dashboard.html';
+            window.location.href = './dashboard.html';
         }
     </script>
             </div>
