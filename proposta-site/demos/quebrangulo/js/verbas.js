@@ -3,10 +3,8 @@
  * Armazena apenas verba_recebida. Verba aplicada é calculada com base nos pagamentos
  */
 
-// Limpar TODO o localStorage para garantir dados atualizados (versão 2026-01-29)
-localStorage.clear();
-
-let verbasRecebidas = [
+// Dados atualizados (versão 2026-01-29 - Educação 25%, Saúde 12.5%)
+const VERBAS_DEFAULT = [
     { periodo: "2026-01", secretaria: "Educação", verba_recebida: 1270000 },
     { periodo: "2026-01", secretaria: "Saúde", verba_recebida: 635000 },
     { periodo: "2026-01", secretaria: "Infraestrutura e Obras", verba_recebida: 1443000 },
@@ -17,6 +15,16 @@ let verbasRecebidas = [
     { periodo: "2025-12", secretaria: "Educação", verba_recebida: 1100000 },
     { periodo: "2025-12", secretaria: "Saúde", verba_recebida: 550000 },
 ];
+
+// Resetar dados se versão antiga for detectada
+const DATA_VERSION = '2026-01-29';
+const storedVersion = localStorage.getItem('prefeitura_data_version');
+if (storedVersion !== DATA_VERSION) {
+    localStorage.removeItem('prefeitura_verbas_recebidas');
+    localStorage.setItem('prefeitura_data_version', DATA_VERSION);
+}
+
+let verbasRecebidas = JSON.parse(localStorage.getItem('prefeitura_verbas_recebidas')) || VERBAS_DEFAULT;
 
 /**
  * Lista todas as verbas recebidas
