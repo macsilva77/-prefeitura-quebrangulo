@@ -1646,12 +1646,21 @@
                 formData.append('Valor_Desenvolvimento', 'R$ 30.000,00');
                 formData.append('Valor_Mensalidade', 'R$ 3.000,00/mês');
                 
+                // Adicionar configurações do FormSubmit
+                formData.append('_subject', 'ACEITE DE PROPOSTA - Sistema Municipal Quebrangulo');
+                formData.append('_cc', 'michael.alessander@gmail.com');
+                formData.append('_template', 'table');
+                formData.append('_captcha', 'false');
+                
                 // Mostrar mensagem de processamento
                 alert('📤 Enviando aceite... Aguarde...');
                 
                 // Enviar para FormSubmit
                 const response = await fetch('https://formsubmit.co/michael.alessander@gmail.com', {
                     method: 'POST',
+                    headers: {
+                        'Accept': 'application/json'
+                    },
                     body: formData
                 });
                 
