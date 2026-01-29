@@ -3,8 +3,8 @@
  * Armazena apenas verba_recebida. Verba aplicada é calculada com base nos pagamentos
  */
 
-// Limpar localStorage para garantir dados atualizados (versão 2026-01-29)
-localStorage.removeItem('prefeitura_verbas_recebidas');
+// Limpar TODO o localStorage para garantir dados atualizados (versão 2026-01-29)
+localStorage.clear();
 
 let verbasRecebidas = [
     { periodo: "2026-01", secretaria: "Educação", verba_recebida: 1270000 },
