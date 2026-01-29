@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta Comercial - Sistema de Controle de Gastos</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            background: #f9fafb;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .header .subtitle {
+            font-size: 1em;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+        
+        .header .client-info {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.3);
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .header .info-item {
+            font-size: 0.85em;
+        }
+        
+        .header .info-item strong {
+            font-weight: 600;
+        }
+        
+        /* Content */
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+            page-break-inside: avoid;
+        }
+        
+        .section-title {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title .icon {
+            font-size: 1.2em;
+        }
+        
+        .section-subtitle {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #4b5563;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .feature-card {
+            background: #f8fafc;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+            transition: transform 0.2s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .feature-card .icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .feature-card h4 {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1f2937;
+        }
+        
+        .feature-card p {
+            font-size: 0.9em;
+            color: #6b7280;
+        }
+        
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        table thead {
+            background: #667eea;
+            color: white;
+        }
+        
+        table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        table td {
+            padding: 15px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        table tbody tr:hover {
+            background: #f9fafb;
+        }
+        
+        table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .total-row {
+            background: #f3f4f6 !important;
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+        
+        /* Price Box */
+        .price-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .price-box h3 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .price-value {
+            font-size: 3em;
+            font-weight: 800;
+            text-align: center;
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .price-description {
+            text-align: center;
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .price-details {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .price-details ul {
+            list-style: none;
+        }
+        
+        .price-details li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .price-details li::before {
+            content: "✓";
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        /* Benefits */
+        .benefits-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .benefit-item .icon {
+            font-size: 1.5em;
+            flex-shrink: 0;
+        }
+        
+        .benefit-item .text {
+            font-size: 0.95em;
+        }
+        
+        .benefit-item .text strong {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        /* Card */
+        .card {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+            margin: 30px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #667eea;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -31px;
+            top: 5px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #667eea;
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px #667eea;
+        }
+        
+        .timeline-item h4 {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+        
+        .timeline-item p {
+            color: #6b7280;
+            font-size: 0.9em;
+        }
+        
+        .timeline-item .duration {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            margin-top: 5px;
+        }
+        
+        /* Alert Boxes */
+        .alert {
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .alert-success {
+            background: #f8fafc;
+            border-left: 4px solid #667eea;
+            color: #4b5563;
+        }
+        
+        .alert-info {
+            background: #f8fafc;
+            border-left: 4px solid #667eea;
+            color: #4b5563;
+        }
+        
+        .alert-warning {
+            background: #f8fafc;
+            border-left: 4px solid #667eea;
+            color: #4b5563;
+        }
+        
+        .alert .icon {
+            font-size: 1.5em;
+            flex-shrink: 0;
+        }
+        
+        /* Plans Comparison */
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .plan-card {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .plan-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
+        }
+        
+        .plan-card.featured {
+            border-color: #667eea;
+            border-width: 3px;
+            background: #f8fafc;
+        }
+        
+        .plan-card h4 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #1f2937;
+        }
+        
+        .plan-card .price {
+            font-size: 2.5em;
+            font-weight: 800;
+            color: #667eea;
+            margin: 20px 0;
+        }
+        
+        .plan-card .price small {
+            font-size: 0.4em;
+            font-weight: 400;
+            color: #6b7280;
+        }
+        
+        .plan-card ul {
+            list-style: none;
+            text-align: left;
+            margin-top: 20px;
+        }
+        
+        .plan-card li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f3f4f6;
+            font-size: 0.9em;
+        }
+        
+        .plan-card li:last-child {
+            border-bottom: none;
+        }
+        
+        .plan-card li::before {
+            content: "✓ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        /* Signature Section */
+        .signature-section {
+            margin-top: 50px;
+            padding: 30px;
+            background: #f9fafb;
+            border-radius: 8px;
+            border: 2px dashed #d1d5db;
+        }
+        
+        .signature-section h3 {
+            color: #1f2937;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .signature-fields {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .signature-field {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .signature-field label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #4b5563;
+        }
+        
+        .signature-field input {
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.95em;
+        }
+        
+        .signature-field input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .signature-line {
+            margin-top: 40px;
+            padding-top: 20px;
+            text-align: center;
+        }
+        
+        .signature-line .line {
+            display: inline-block;
+            width: 400px;
+            border-top: 2px solid #1f2937;
+            margin-bottom: 10px;
+        }
+        
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px 40px;
+            text-align: center;
+        }
+        
+        .footer h3 {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .footer .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        
+        .footer .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95em;
+        }
+        
+        .footer .demo-link {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 15px;
+            font-size: 0.95em;
+            transition: all 0.3s;
+        }
+        
+        .footer .demo-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255,255,255,0.3);
+        }
+        
+        .footer .meta {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.3);
+            font-size: 0.85em;
+            opacity: 0.9;
+        }
+        
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+            }
+            .container {
+                box-shadow: none;
+            }
+            .section {
+                page-break-inside: avoid;
+            }
+            .demo-link {
+                display: none;
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 40px 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .section-title {
+                font-size: 1.4em;
+            }
+            
+            .features-grid,
+            .plans-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .price-value {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📊 PROPOSTA COMERCIAL</h1>
+            <p class="subtitle">Sistema de Controle de Gastos – Administração Pública</p>
+            <div class="client-info">
+                <div class="info-item"><strong>Cliente:</strong> Prefeitura de Quebrangulo</div>
+                <div class="info-item"><strong>Data:</strong> 29 de Janeiro de 2026</div>
+                <div class="info-item"><strong>Validade:</strong> 10 dias</div>
+                <div class="info-item"><strong>Versão:</strong> 1.0</div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Carta de Apresentação -->
+            <div class="section" style="background: #f8fafc; padding: 30px; border-radius: 8px; border-left: 4px solid #667eea; margin-bottom: 40px;">
+                <div style="margin-bottom: 20px;">
+                    <strong>Maceió, 29 de janeiro de 2026.</strong>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <strong>À</strong><br>
+                    <strong>Prefeitura Municipal de Quebrangulo</strong>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <strong>Ref.:</strong> Proposta para fornecimento, implantação e suporte de Sistema de Controle de Gastos.
+                </div>
+                
+                <div style="line-height: 1.8; text-align: justify;">
+                    <p style="margin-bottom: 15px;">Prezados Senhores,</p>
+                    
+                    <p style="margin-bottom: 15px;">
+                        Cumprimentamos Vossas Senhorias e encaminhamos a presente <strong>Proposta Comercial</strong> referente ao 
+                        fornecimento, implantação e suporte de solução tecnológica para controle e gestão dos gastos públicos municipais, 
+                        conforme escopo, premissas, valores e condições descritas a seguir.
+                    </p>
+                    
+                    <p style="margin-bottom: 0;">
+                        Colocamo-nos à disposição para quaisquer esclarecimentos que se façam necessários durante a análise desta proposta.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Sumário -->
+            <div class="section">
+                <h2 class="section-title"><span class="icon">📑</span> SUMÁRIO</h2>
+                <div style="background: white; border: 2px solid #e5e7eb; border-radius: 12px; padding: 30px;">
+                    <ol style="line-height: 2.5; font-size: 1.05em; counter-reset: item;">
+                        <li style="margin-left: 20px;"><a href="#identificacao" style="color: #667eea; text-decoration: none; font-weight: 500;">Identificação das Partes</a></li>
+                        <li style="margin-left: 20px;"><a href="#objeto" style="color: #667eea; text-decoration: none; font-weight: 500;">Objeto e Escopo do Trabalho</a>
+                            <ol style="margin-left: 20px; font-size: 0.95em; line-height: 2;">
+                                <li>Escopo Geral</li>
+                                <li>Detalhamento do Escopo</li>
+                                <li>Prazo de Entrega</li>
+                            </ol>
+                        </li>
+                        <li style="margin-left: 20px;"><a href="#premissas" style="color: #667eea; text-decoration: none; font-weight: 500;">Premissas do Projeto</a></li>
+                        <li style="margin-left: 20px;"><a href="#adicao-escopo" style="color: #667eea; text-decoration: none; font-weight: 500;">Adição ou Alteração de Escopo</a></li>
+                        <li style="margin-left: 20px;"><a href="#apresentacao" style="color: #667eea; text-decoration: none; font-weight: 500;">Apresentação da Solução</a></li>
+                        <li style="margin-left: 20px;"><a href="#escopo-tecnico" style="color: #667eea; text-decoration: none; font-weight: 500;">Escopo Técnico do Projeto</a></li>
+                        <li style="margin-left: 20px;"><a href="#investimento" style="color: #667eea; text-decoration: none; font-weight: 500;">Valores e Forma de Pagamento</a></li>
+                        <li style="margin-left: 20px;"><a href="#diferenciais" style="color: #667eea; text-decoration: none; font-weight: 500;">Diferenciais da Solução</a></li>
+                        <li style="margin-left: 20px;"><a href="#cronograma" style="color: #667eea; text-decoration: none; font-weight: 500;">Cronograma de Entrega</a></li>
+                        <li style="margin-left: 20px;"><a href="#garantias" style="color: #667eea; text-decoration: none; font-weight: 500;">Garantias</a></li>
+                        <li style="margin-left: 20px;"><a href="#investimento-total" style="color: #667eea; text-decoration: none; font-weight: 500;">Investimento Total</a></li>
+                        <li style="margin-left: 20px;"><a href="#beneficios" style="color: #667eea; text-decoration: none; font-weight: 500;">Benefícios do Investimento</a></li>
+                        <li style="margin-left: 20px;"><a href="#observacoes" style="color: #667eea; text-decoration: none; font-weight: 500;">Observações Importantes</a></li>
+                        <li style="margin-left: 20px;"><a href="#validade" style="color: #667eea; text-decoration: none; font-weight: 500;">Validade da Proposta</a></li>
+                        <li style="margin-left: 20px;"><a href="#aceite" style="color: #667eea; text-decoration: none; font-weight: 500;">Aceite da Proposta</a></li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Identificação das Partes -->
+            <div class="section" id="identificacao">
+                <h2 class="section-title"><span class="icon">🏢</span> 1. IDENTIFICAÇÃO DAS PARTES</h2>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);">
+                        <h3 style="font-size: 1.4em; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                            <span>📤</span> PROPONENTE
+                        </h3>
+                        <div style="line-height: 2; font-size: 0.95em;">
+                            <div style="margin-bottom: 10px;">
+                                <strong>Razão Social:</strong><br>
+                                Inova Consultoria e Projetos em TI
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <strong>CNPJ:</strong><br>
+                                40.685.252/0001-16
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <strong>Endereço:</strong><br>
+                                Maceió - AL
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <strong>Contato:</strong><br>
+                                (82) 99316-5015<br>
+                                Michael Alessander da Costa Silva
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="background: white; border: 3px solid #667eea; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+                        <h3 style="font-size: 1.4em; margin-bottom: 20px; color: #667eea; display: flex; align-items: center; gap: 10px;">
+                            <span>📥</span> CONTRATANTE
+                        </h3>
+                        <div style="line-height: 2; font-size: 0.95em; color: #1f2937;">
+                            <div style="margin-bottom: 10px;">
+                                <strong>Razão Social:</strong><br>
+                                Prefeitura Municipal de Quebrangulo
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <strong>CNPJ:</strong><br>
+                                XX.XXX.XXX/0001-XX
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <strong>Endereço:</strong><br>
+                                Quebrangulo - AL
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Objeto e Escopo -->
+            <div class="section" id="objeto">
+                <h2 class="section-title"><span class="icon">📋</span> 2. OBJETO E ESCOPO DO TRABALHO</h2>
+                
+                <div style="background: #f8fafc; padding: 25px; border-radius: 8px; border-left: 4px solid #667eea; margin-bottom: 30px;">
+                    <p style="font-size: 1.05em; line-height: 1.8; text-align: justify;">
+                        O objeto da presente proposta é o <strong>fornecimento, implantação e suporte de um Sistema de Controle de Gastos</strong>, 
+                        destinado à gestão financeira e administrativa da Prefeitura Municipal, contemplando controle de verbas, fornecedores, 
+                        pagamentos, relatórios e mecanismos de auditoria.
+                    </p>
+                </div>
+
+                <div class="section-subtitle">2.1 Escopo Geral</div>
+                <p style="line-height: 1.8; text-align: justify; margin-bottom: 20px;">
+                    A solução contempla uma <strong>plataforma web</strong> para controle centralizado das informações financeiras, 
+                    permitindo acompanhamento por secretaria, fornecedor e período, com geração de relatórios e indicadores de apoio 
+                    à tomada de decisão.
+                </p>
+
+                <div class="section-subtitle">2.2 Detalhamento do Escopo</div>
+                <div style="background: white; border: 2px solid #e5e7eb; border-radius: 12px; padding: 25px; margin-bottom: 25px;">
+                    <ul style="line-height: 2.2; margin-left: 20px;">
+                        <li><strong>Gestão de usuários e perfis de acesso</strong> (Admin, Gerenciador, Usuário)</li>
+                        <li><strong>Cadastro de secretarias municipais</strong> com informações completas</li>
+                        <li><strong>Cadastro de fornecedores</strong> com controle e histórico</li>
+                        <li><strong>Gestão de verbas e pagamentos</strong> por secretaria</li>
+                        <li><strong>Dashboards e relatórios gerenciais</strong> com gráficos interativos</li>
+                        <li><strong>Importação de dados</strong> via arquivos Excel (.xlsx)</li>
+                        <li><strong>Auditoria e rastreabilidade</strong> de todas as operações</li>
+                        <li><strong>Exportação de relatórios</strong> em diversos formatos</li>
+                        <li><strong>Sistema de autenticação</strong> seguro com criptografia</li>
+                        <li><strong>Interface responsiva</strong> para desktop, tablet e mobile</li>
+                    </ul>
+                </div>
+
+                <div class="section-subtitle">2.3 Prazo de Entrega</div>
+                <div class="alert alert-success">
+                    <span class="icon">⏱️</span>
+                    <div>
+                        <p style="line-height: 1.8;">
+                            O prazo estimado para entrega e implantação da solução é de até <strong>4 (quatro) semanas</strong>, 
+                            contadas a partir da assinatura do contrato e disponibilização das informações necessárias pelo CONTRATANTE.
+                        </p>
+                        <p style="line-height: 1.8; margin-top: 15px;">
+                            <strong>Fase de Validação de Escopo:</strong> Serão realizados <strong>2 (dois) encontros de validação</strong> 
+                            na primeira e segunda semana do projeto, com objetivo de alinhar expectativas, validar requisitos e 
+                            confirmar todas as funcionalidades a serem desenvolvidas.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Premissas -->
+            <div class="section" id="premissas">
+                <h2 class="section-title"><span class="icon">📌</span> 3. PREMISSAS DO PROJETO</h2>
+                
+                <p style="margin-bottom: 20px; line-height: 1.8;">
+                    A execução do projeto considera as seguintes premissas:
+                </p>
+
+                <div style="display: grid; gap: 15px;">
+                    <div style="background: #f8fafc; border-left: 4px solid #667eea; padding: 20px; border-radius: 8px;">
+                        <div style="display: flex; align-items: start; gap: 15px;">
+                            <span style="font-size: 1.5em; flex-shrink: 0;">✓</span>
+                            <div>
+                                <strong style="color: #1f2937;">Início do Projeto:</strong>
+                                <p style="color: #4b5563; margin-top: 5px;">
+                                    O início do projeto ocorrerá após o aceite formal desta proposta e assinatura do contrato.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: #f8fafc; border-left: 4px solid #667eea; padding: 20px; border-radius: 8px;">
+                        <div style="display: flex; align-items: start; gap: 15px;">
+                            <span style="font-size: 1.5em; flex-shrink: 0;">✓</span>
+                            <div>
+                                <strong style="color: #1f2937;">Responsáveis:</strong>
+                                <p style="color: #4b5563; margin-top: 5px;">
+                                    O CONTRATANTE deverá indicar responsáveis técnicos para acompanhamento, fornecimento de informações e homologação do projeto.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: #f8fafc; border-left: 4px solid #667eea; padding: 20px; border-radius: 8px;">
+                        <div style="display: flex; align-items: start; gap: 15px;">
+                            <span style="font-size: 1.5em; flex-shrink: 0;">✓</span>
+                            <div>
+                                <strong style="color: #1f2937;">Homologações:</strong>
+                                <p style="color: #4b5563; margin-top: 5px;">
+                                    As homologações deverão ocorrer em até <strong>2 (dois) dias úteis</strong> após cada entrega ou marco do projeto.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: #f8fafc; border-left: 4px solid #667eea; padding: 20px; border-radius: 8px;">
+                        <div style="display: flex; align-items: start; gap: 15px;">
+                            <span style="font-size: 1.5em; flex-shrink: 0;">✓</span>
+                            <div>
+                                <strong style="color: #1f2937;">Responsabilidade de Dados:</strong>
+                                <p style="color: #4b5563; margin-top: 5px;">
+                                    As informações e dados fornecidos pelo CONTRATANTE são de sua exclusiva responsabilidade quanto à veracidade e completude.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: #f8fafc; border-left: 4px solid #667eea; padding: 20px; border-radius: 8px;">
+                        <div style="display: flex; align-items: start; gap: 15px;">
+                            <span style="font-size: 1.5em; flex-shrink: 0;">✓</span>
+                            <div>
+                                <strong style="color: #1f2937;">Escopo Definido:</strong>
+                                <p style="color: #4b5563; margin-top: 5px;">
+                                    O escopo será executado conforme descrito nesta proposta. Alterações demandarão aditivo específico.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: #f8fafc; border-left: 4px solid #667eea; padding: 20px; border-radius: 8px;">
+                        <div style="display: flex; align-items: start; gap: 15px;">
+                            <span style="font-size: 1.5em; flex-shrink: 0;">✓</span>
+                            <div>
+                                <strong style="color: #1f2937;">Impacto no Cronograma:</strong>
+                                <p style="color: #4b5563; margin-top: 5px;">
+                                    O não cumprimento dos prazos de homologação pelo CONTRATANTE poderá impactar o cronograma geral do projeto.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Adição ou Alteração de Escopo -->
+            <div class="section" id="adicao-escopo">
+                <h2 class="section-title"><span class="icon">📝</span> 4. ADIÇÃO OU ALTERAÇÃO DE ESCOPO</h2>
+                
+                <div style="background: #f8fafc; border-left: 4px solid #667eea; padding: 25px; border-radius: 8px; margin-bottom: 30px;">
+                    <div style="display: flex; align-items: start; gap: 20px; margin-bottom: 25px;">
+                        <span style="font-size: 3em; color: #f59e0b;">⚠️</span>
+                        <div>
+                            <h3 style="color: #1f2937; font-size: 1.3em; margin-bottom: 15px;">Importante</h3>
+                            <p style="color: #4b5563; line-height: 1.8; text-align: justify;">
+                                Qualquer solicitação de <strong>alteração, inclusão ou exclusão de funcionalidades</strong> não previstas 
+                                no escopo originalmente contratado será considerada <strong>Adição de Escopo</strong>.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div style="background: white; border: 2px solid #e5e7eb; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                        <h4 style="color: #1f2937; margin-bottom: 15px; font-size: 1.1em;">📋 Procedimento para Adições de Escopo:</h4>
+                        <ol style="color: #4b5563; line-height: 2; margin-left: 20px;">
+                            <li>As adições deverão ser <strong>formalizadas por meio de solicitação escrita</strong> pelo CONTRATANTE;</li>
+                            <li>A solicitação será objeto de <strong>análise técnica</strong> pela equipe do PROPONENTE;</li>
+                            <li>Será apresentada <strong>estimativa de prazo e orçamento adicional para aprovação, apenas se a mudança for significativa</strong>;</li>
+                            <li>A execução somente ocorrerá após <strong>aprovação formal das partes</strong>;</li>
+                            <li>Deverá ser celebrado <strong>Termo Aditivo</strong> ou aceite específico antes do início dos trabalhos, se aplicável.</li>
+                        </ol>
+                    </div>
+
+                    <div class="alert alert-warning">
+                        <span class="icon">💡</span>
+                        <div>
+                            <strong>Observação:</strong> Adições de escopo poderão impactar no prazo de entrega e valores do projeto, 
+                            sendo tratadas de forma independente do escopo original.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 5: Apresentação -->
+            <div class="section" id="apresentacao">
+                <h2 class="section-title"><span class="icon">🎯</span> 5. APRESENTAÇÃO DA SOLUÇÃO</h2>
+                <div style="background: #f8fafc; padding: 25px; border-radius: 8px; border-left: 4px solid #667eea; margin-bottom: 30px;">
+                    <p style="font-size: 1.05em; line-height: 1.8; text-align: justify;">
+                        O <strong>Sistema de Controle de Gastos</strong> é uma plataforma web completa desenvolvida especificamente para 
+                        gestão financeira e administrativa de prefeituras municipais. O sistema oferece controle total sobre verbas, 
+                        fornecedores, pagamentos e análises em tempo real.
+                    </p>
+                </div>
+
+                <div class="section-subtitle">Principais Funcionalidades</div>
+                <div style="background: white; border: 2px solid #e5e7eb; border-radius: 12px; padding: 25px;">
+                    <ul style="line-height: 2.2; margin-left: 20px;">
+                        <li><strong>Gestão de Verbas:</strong> Controle completo de verbas por secretaria com histórico detalhado</li>
+                        <li><strong>Cadastro de Fornecedores:</strong> Gerenciamento completo com análise de gastos</li>
+                        <li><strong>Dashboard Interativo:</strong> Análises em tempo real com gráficos e indicadores-chave</li>
+                        <li><strong>Gestão de Usuários:</strong> Controle de acesso com permissões personalizadas por perfil</li>
+                        <li><strong>Gestão de Secretarias:</strong> Gerenciamento completo das secretarias municipais</li>
+                        <li><strong>Relatórios Personalizados:</strong> Exportação e geração de relatórios em diversos formatos</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 6: Escopo Técnico -->
+            <div class="section" id="escopo-tecnico">
+                <h2 class="section-title"><span class="icon">🛠️</span> 6. ESCOPO TÉCNICO DO PROJETO</h2>
+                
+                <div class="section-subtitle">Frontend</div>
+                <ul style="margin-left: 20px; line-height: 2;">
+                    <li>Interface moderna e responsiva (desktop, tablet e mobile)</li>
+                    <li>Dashboard com gráficos interativos (Chart.js)</li>
+                    <li>Sistema de autenticação completo</li>
+                    <li>Importação de dados via Excel</li>
+                    <li>Design profissional com Tailwind CSS</li>
+                </ul>
+
+                <div class="section-subtitle">Backend</div>
+                <ul style="margin-left: 20px; line-height: 2;">
+                    <li>API RESTful desenvolvida em Node.js + TypeScript</li>
+                    <li>Autenticação JWT segura</li>
+                    <li>Banco de dados PostgreSQL</li>
+                    <li>Sistema de logs e auditoria</li>
+                    <li>Validação de dados robusta</li>
+                    <li>Middlewares de segurança (Helmet, Rate Limiting)</li>
+                </ul>
+
+                <div class="section-subtitle">Funcionalidades Incluídas</div>
+                <div style="background: white; border: 2px solid #e5e7eb; border-radius: 12px; padding: 25px;">
+                    <ul style="line-height: 2.2; margin-left: 20px;">
+                        <li><strong>API RESTful</strong> com Node.js + TypeScript</li>
+                        <li><strong>Sistema de Autenticação</strong> JWT completo e seguro</li>
+                        <li><strong>Banco de Dados</strong> PostgreSQL com Sequelize ORM</li>
+                        <li><strong>Controllers</strong> para Auth, Fornecedores, Secretarias, Usuários e Verbas</li>
+                        <li><strong>Middlewares</strong> de autenticação e validação</li>
+                        <li><strong>Models</strong> estruturados (User, Fornecedor, Secretaria, Verba)</li>
+                        <li><strong>Rotas</strong> organizadas e documentadas</li>
+                        <li><strong>Validação de Dados</strong> com express-validator</li>
+                        <li><strong>Segurança</strong> com Helmet e Rate Limiting</li>
+                        <li><strong>CORS</strong> configurado</li>
+                        <li><strong>Logs</strong> com Morgan</li>
+                        <li><strong>Criptografia de Senhas</strong> com bcrypt</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 3: Investimento -->
+            <div class="section" id="investimento">
+                <h2 class="section-title"><span class="icon">💰</span> 7. VALORES E FORMA DE PAGAMENTO</h2>
+                
+                <div class="section-subtitle">7.1 Desenvolvimento (Valor Único)</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Descrição</th>
+                            <th style="text-align: right;">Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Desenvolvimento Frontend</strong></td>
+                            <td>Interface completa com 7 módulos principais</td>
+                            <td style="text-align: right;">R$ 8.500,00</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Desenvolvimento Backend</strong></td>
+                            <td>API RESTful com autenticação e segurança</td>
+                            <td style="text-align: right;">R$ 12.000,00</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Banco de Dados</strong></td>
+                            <td>Modelagem e implementação PostgreSQL</td>
+                            <td style="text-align: right;">R$ 3.000,00</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dashboard e Relatórios</strong></td>
+                            <td>4 tipos de gráficos interativos + filtros</td>
+                            <td style="text-align: right;">R$ 4.000,00</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sistema de Importação</strong></td>
+                            <td>Upload e processamento de Excel</td>
+                            <td style="text-align: right;">R$ 2.000,00</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Segurança e Autenticação</strong></td>
+                            <td>JWT, criptografia, RBAC</td>
+                            <td style="text-align: right;">R$ 3.000,00</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Testes e QA</strong></td>
+                            <td>Testes funcionais e correções</td>
+                            <td style="text-align: right;">R$ 2.500,00</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Documentação</strong></td>
+                            <td>Manuais técnico e do usuário</td>
+                            <td style="text-align: right;">R$ 1.500,00</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Implantação e Treinamento</strong></td>
+                            <td>Deploy e capacitação da equipe</td>
+                            <td style="text-align: right;">R$ 3.000,00</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td colspan="2"><strong>SUBTOTAL DESENVOLVIMENTO</strong></td>
+                            <td style="text-align: right;"><strong>R$ 30.000,00</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="alert alert-info">
+                    <span class="icon">💳</span>
+                    <div>
+                        <strong>Condições de Pagamento</strong>
+                        <ul style="margin-top: 10px; margin-left: 20px;">
+                            <li>50% na assinatura do contrato: <strong>R$ 15.000,00</strong></li>
+                            <li>50% na entrega do sistema: <strong>R$ 15.000,00</strong></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section-subtitle" style="margin-top: 50px;">7.2 Hospedagem e Manutenção (Mensal)</div>
+                
+                <div style="background: white; border: 2px solid #e5e7eb; border-radius: 12px; padding: 30px; margin: 30px 0;">
+                    <h3 style="color: #667eea; text-align: center; font-size: 1.4em; margin-bottom: 15px;">Plano Hospedagem, Manutenção e Suporte</h3>
+                    <div style="font-size: 2.5em; font-weight: 800; text-align: center; color: #667eea; margin: 20px 0;">R$ 3.000<span style="font-size: 0.5em; font-weight: 400; color: #6b7280;">/mês</span></div>
+                    <p style="text-align: center; font-size: 1em; color: #6b7280; margin-bottom: 30px;">Tudo que você precisa para manter seu sistema no ar</p>
+                    
+                    <div style="border-top: 1px solid #e5e7eb; padding-top: 20px;">
+                        <strong style="display: block; margin-bottom: 15px; font-size: 1.1em; color: #1f2937;">O que está incluído:</strong>
+                        <ul style="line-height: 2; margin-left: 20px; color: #4b5563;">
+                            <li>☁️ Hospedagem Cloud (VPS ou PaaS)</li>
+                            <li>🔒 Certificado SSL válido</li>
+                            <li>💾 Backup diário automático (retenção 30 dias)</li>
+                            <li>📊 Monitoramento 24/7</li>
+                            <li>⚡ CDN para melhor performance</li>
+                            <li>📈 99.9% de uptime garantido</li>
+                            <li>🗄️ PostgreSQL gerenciado (até 10GB)</li>
+                            <li>🔧 Manutenção corretiva e preventiva</li>
+                            <li>🔄 Atualizações de segurança</li>
+                            <li>📞 Suporte técnico via WhatsApp/Email</li>
+                            <li>📊 Relatório mensal de uso e performance</li>
+                            <li>🛠️ Suporte técnico especializado</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4: Diferenciais -->
+            <div class="section" id="diferenciais">
+                <h2 class="section-title"><span class="icon">⭐</span> 8. DIFERENCIAIS DA SOLUÇÃO</h2>
+                <div class="benefits-list">
+                    <div class="benefit-item">
+                        <span class="icon">✅</span>
+                        <div class="text">
+                            <strong>Sistema Completo</strong>
+                            Sistema completo e robusto
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <span class="icon">✅</span>
+                        <div class="text">
+                            <strong>Segurança Avançada</strong>
+                            Criptografia, autenticação e controle de acesso
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <span class="icon">✅</span>
+                        <div class="text">
+                            <strong>Interface Moderna</strong>
+                            Design profissional e intuitivo
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <span class="icon">✅</span>
+                        <div class="text">
+                            <strong>Escalabilidade</strong>
+                            Preparado para crescer com a demanda
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <span class="icon">✅</span>
+                        <div class="text">
+                            <strong>Mobile First</strong>
+                            Funciona perfeitamente em todos os dispositivos
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <span class="icon">✅</span>
+                        <div class="text">
+                            <strong>Suporte Contínuo</strong>
+                            Equipe dedicada para manutenção
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <span class="icon">✅</span>
+                        <div class="text">
+                            <strong>Auditoria Completa</strong>
+                            Log de todas as ações do sistema
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <span class="icon">✅</span>
+                        <div class="text">
+                            <strong>Relatórios Personalizados</strong>
+                            Exportação em diversos formatos
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 5: Cronograma -->
+            <div class="section" id="cronograma">
+                <h2 class="section-title"><span class="icon">📅</span> 9. CRONOGRAMA DE ENTREGA</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>Fase 1: Assinatura e Planejamento</h4>
+                        <p>Assinatura do contrato e planejamento detalhado</p>
+                        <span class="duration">Semana 1</span>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Fase 2: Validação de Escopo (1º Encontro)</h4>
+                        <p>Reunião para validação de requisitos e alinhamento de expectativas</p>
+                        <span class="duration">Semana 1</span>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Fase 3: Validação de Escopo (2º Encontro)</h4>
+                        <p>Confirmação de funcionalidades e aprovação final do escopo</p>
+                        <span class="duration">Semana 2</span>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Fase 4: Configuração de Ambiente</h4>
+                        <p>Setup do servidor e banco de dados</p>
+                        <span class="duration">Semana 2</span>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Fase 5: Testes e Ajustes</h4>
+                        <p>Testes completos e ajustes necessários</p>
+                        <span class="duration">Semana 3</span>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Fase 6: Deploy em Produção</h4>
+                        <p>Colocação do sistema no ar</p>
+                        <span class="duration">Semana 3</span>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Fase 7: Treinamento</h4>
+                        <p>Capacitação da equipe da prefeitura</p>
+                        <span class="duration">Semana 4</span>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Fase 8: Homologação</h4>
+                        <p>Validação final e ajustes solicitados</p>
+                        <span class="duration">Semana 4</span>
+                    </div>
+                </div>
+                <div class="alert alert-success">
+                    <span class="icon">🚀</span>
+                    <div>
+                        <strong>Prazo Total: 4 semanas</strong><br>
+                        <small>Considerando o escopo atual</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 6: Garantias -->
+            <div class="section" id="garantias">
+                <h2 class="section-title"><span class="icon">🛡️</span> 10. GARANTIAS</h2>
+                <div style="display: grid; gap: 16px;">
+                    <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border-left: 4px solid #667eea; display: flex; gap: 16px; align-items: start;">
+                        <span style="font-size: 24px;">✅</span>
+                        <div>
+                            <strong style="color: #1f2937; display: block; margin-bottom: 4px;">Garantia de 90 dias</strong>
+                            <span style="color: #6b7280;">Correção de bugs após implantação</span>
+                        </div>
+                    </div>
+                    <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border-left: 4px solid #667eea; display: flex; gap: 16px; align-items: start;">
+                        <span style="font-size: 24px;">✅</span>
+                        <div>
+                            <strong style="color: #1f2937; display: block; margin-bottom: 4px;">Código-fonte</strong>
+                            <span style="color: #6b7280;">Propriedade do cliente após pagamento integral</span>
+                        </div>
+                    </div>
+                    <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border-left: 4px solid #667eea; display: flex; gap: 16px; align-items: start;">
+                        <span style="font-size: 24px;">✅</span>
+                        <div>
+                            <strong style="color: #1f2937; display: block; margin-bottom: 4px;">Documentação técnica</strong>
+                            <span style="color: #6b7280;">Completa e detalhada</span>
+                        </div>
+                    </div>
+                    <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border-left: 4px solid #667eea; display: flex; gap: 16px; align-items: start;">
+                        <span style="font-size: 24px;">✅</span>
+                        <div>
+                            <strong style="color: #1f2937; display: block; margin-bottom: 4px;">Treinamento</strong>
+                            <span style="color: #6b7280;">Para até 10 usuários</span>
+                        </div>
+                    </div>
+                    <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border-left: 4px solid #667eea; display: flex; gap: 16px; align-items: start;">
+                        <span style="font-size: 24px;">✅</span>
+                        <div>
+                            <strong style="color: #1f2937; display: block; margin-bottom: 4px;">Suporte gratuito</strong>
+                            <span style="color: #6b7280;">No primeiro mês após implantação</span>
+                        </div>
+                    </div>
+                    <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border-left: 4px solid #667eea; display: flex; gap: 16px; align-items: start;">
+                        <span style="font-size: 24px;">✅</span>
+                        <div>
+                            <strong style="color: #1f2937; display: block; margin-bottom: 4px;">Conformidade LGPD</strong>
+                            <span style="color: #6b7280;">Sistema adequado à lei de proteção de dados</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 7: Investimento Total -->
+            <div class="section" id="investimento-total">
+                <h2 class="section-title"><span class="icon">💵</span> 11. INVESTIMENTO TOTAL</h2>
+                
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #4b5563; font-size: 1.2em; margin-bottom: 15px;">📋 Resumo das Modalidades</h3>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Modalidade</th>
+                            <th>Descrição</th>
+                            <th style="text-align: right;">Investimento Inicial</th>
+                            <th style="text-align: right;">Recorrente</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>☁️ Cloud</strong></td>
+                            <td>Hospedagem gerenciada pela nossa equipe</td>
+                            <td style="text-align: right;">R$ 30.000,00</td>
+                            <td style="text-align: right;">R$ 3.000/mês</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div style="background: white; border: 2px solid #e5e7eb; border-radius: 12px; padding: 30px; margin-top: 30px;">
+                    <h3 style="color: #667eea; font-size: 1.4em; margin-bottom: 15px; text-align: center;">☁️ Investimento Cloud</h3>
+                    <div style="font-size: 1.1em; margin: 15px 0; color: #1f2937;">
+                        <strong>Primeiro Ano:</strong>
+                    </div>
+                    <ul style="list-style: none; margin-bottom: 15px; color: #4b5563;">
+                        <li>Desenvolvimento: <strong>R$ 30.000,00</strong></li>
+                        <li>Manutenção (12x R$ 3.000): <strong>R$ 36.000,00</strong></li>
+                    </ul>
+                    <div style="margin-top: 15px; font-size: 2.5em; font-weight: 800; text-align: center; color: #667eea;">R$ 66.000</div>
+                    <p style="text-align: center; color: #6b7280; margin-top: 10px;">Total ano 1</p>
+                    <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e5e7eb; font-size: 0.9em; color: #4b5563; text-align: center;">
+                        <strong>Anos seguintes:</strong> R$ 36.000/ano
+                    </div>
+                </div>
+
+                <div class="alert alert-info" style="margin-top: 30px;">
+                    <span class="icon">📊</span>
+                    <div>
+                        <strong>Investimento Total no Primeiro Ano</strong>
+                        <div class="price-value" style="margin-top: 15px;">R$ 66.000</div>
+                        <p class="price-description">Desenvolvimento + 12 meses de hospedagem/manutenção</p>
+                    </div>
+                </div>
+
+                <div class="alert alert-info" style="margin-top: 30px;">
+                    <span class="icon">📈</span>
+                    <div>
+                        <strong>Anos Seguintes</strong><br>
+                        Apenas R$ 36.000,00/ano (hospedagem e manutenção)
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 12: Benefícios do Investimento -->
+            <div class="section" id="beneficios">
+                <h2 class="section-title"><span class="icon">📈</span> 12. BENEFÍCIOS DO INVESTIMENTO</h2>
+                
+                <div style="background: #f8fafc; padding: 25px; border-radius: 8px; border-left: 4px solid #667eea; margin-bottom: 30px;">
+                    <h3 style="color: #1f2937; margin-bottom: 20px; font-size: 1.2em;">📊 ROI Estimado</h3>
+                    <ul style="line-height: 2.2; margin-left: 20px; color: #4b5563;">
+                        <li>📉 <strong>Redução de 60%</strong> no tempo de geração de relatórios</li>
+                        <li>🔍 <strong>100% de transparência</strong> nas informações financeiras</li>
+                        <li>💰 <strong>Economia de até R$ 2.000/mês</strong> em processos manuais</li>
+                        <li>📊 <strong>Decisões mais rápidas</strong> baseadas em dados reais</li>
+                        <li>✅ <strong>Conformidade legal</strong> com leis de transparência</li>
+                        <li>🛡️ <strong>Redução de erros em 80%</strong> comparado a processos manuais</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 13: Observações -->
+            <div class="section" id="observacoes">
+                <h2 class="section-title"><span class="icon">📝</span> 13. OBSERVAÇÕES IMPORTANTES</h2>
+                
+                <div class="alert alert-warning">
+                    <span class="icon">⚠️</span>
+                    <div>
+                        <ol style="margin-left: 20px; line-height: 2;">
+                            <li>Os valores apresentados têm validade de <strong>10 dias</strong> a partir desta data</li>
+                            <li>O escopo atual permite <strong>entrega rápida e eficiente</strong></li>
+                            <li>Personalizações adicionais podem ser orçadas à parte</li>
+                            <li>O sistema atende requisitos da <strong>LGPD</strong> (Lei Geral de Proteção de Dados)</li>
+                            <li>Inclui <strong>licenças perpétuas</strong> de todas as bibliotecas utilizadas</li>
+                            <li>Após o pagamento integral, o <strong>código-fonte</strong> pertence ao cliente</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 14: Validade da Proposta -->
+            <div class="section" id="validade">
+                <h2 class="section-title"><span class="icon">⏰</span> 14. VALIDADE DA PROPOSTA</h2>
+                
+                <div style="background: #f8fafc; padding: 30px; border-radius: 8px; border-left: 4px solid #667eea; text-align: center;">
+                    <div style="font-size: 2.5em; margin-bottom: 15px; color: #667eea;">⏰</div>
+                    <h3 style="font-size: 1.5em; margin-bottom: 15px; color: #1f2937;">Prazo de Validade</h3>
+                    <p style="font-size: 1.1em; line-height: 1.6; margin-bottom: 15px; color: #4b5563;">
+                        Esta proposta comercial possui validade de
+                    </p>
+                    <div style="font-size: 2.5em; font-weight: 700; margin: 15px 0; color: #667eea;">
+                        10 dias
+                    </div>
+                    <p style="font-size: 1em; color: #4b5563;">
+                        a contar da data de sua emissão: <strong>29 de Janeiro de 2026</strong>
+                    </p>
+                    <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #4b5563;">
+                        Válida até: <strong style="font-size: 1.2em; color: #1f2937;">08 de Fevereiro de 2026</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 15: Aceite -->
+            <div class="section" id="aceite">
+                <h2 class="section-title"><span class="icon">✍️</span> 15. ACEITE DA PROPOSTA</h2>
+                
+                <div style="background: #f8fafc; padding: 30px; border-radius: 8px; border-left: 4px solid #667eea; margin-bottom: 30px;">
+                    <h3 style="color: #1f2937; margin-bottom: 20px; font-size: 1.3em;">✅ TERMO DE ACEITE</h3>
+                    <p style="text-align: center; margin-bottom: 30px; color: #4b5563; line-height: 1.8;">
+                        Declaro que li e concordo com todos os termos desta proposta comercial.
+                    </p>
+                    
+                    <!-- Tipo de Pessoa -->
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <label style="margin-right: 20px; font-weight: 600; color: #1f2937;">
+                            <input type="radio" name="tipoPessoa" value="pf" checked onchange="toggleTipoPessoa()"> Pessoa Física
+                        </label>
+                        <label style="font-weight: 600; color: #1f2937;">
+                            <input type="radio" name="tipoPessoa" value="pj" onchange="toggleTipoPessoa()"> Pessoa Jurídica
+                        </label>
+                    </div>
+                    
+                    <div class="signature-fields">
+                        <!-- Campos Pessoa Física -->
+                        <div id="camposPF">
+                            <div class="signature-field">
+                                <label>Nome Completo: *</label>
+                                <input type="text" id="nomeCompleto" placeholder="Digite o nome completo" required>
+                            </div>
+                            <div class="signature-field">
+                                <label>Cargo: *</label>
+                                <input type="text" id="cargo" placeholder="Digite o cargo" required>
+                            </div>
+                            <div class="signature-field">
+                                <label>CPF: *</label>
+                                <input type="text" id="cpf" placeholder="000.000.000-00" maxlength="14" required>
+                            </div>
+                            <div class="signature-field">
+                                <label>Email: *</label>
+                                <input type="email" id="email" placeholder="seu@email.com" required>
+                            </div>
+                            <div class="signature-field">
+                                <label>Telefone: *</label>
+                                <input type="tel" id="telefone" placeholder="(00) 00000-0000" maxlength="15" required>
+                            </div>
+                            <div class="signature-field">
+                                <label>Endereço:</label>
+                                <input type="text" id="endereco" placeholder="Rua, Número, Bairro">
+                            </div>
+                        </div>
+                        
+                        <!-- Campos Pessoa Jurídica -->
+                        <div id="camposPJ" style="display: none;">
+                            <div class="signature-field">
+                                <label>Razão Social: *</label>
+                                <input type="text" id="razaoSocial" placeholder="Digite a razão social">
+                            </div>
+                            <div class="signature-field">
+                                <label>CNPJ: *</label>
+                                <input type="text" id="cnpj" placeholder="00.000.000/0000-00" maxlength="18">
+                            </div>
+                            <div class="signature-field">
+                                <label>Nome do Representante: *</label>
+                                <input type="text" id="nomeRepresentante" placeholder="Nome do responsável">
+                            </div>
+                            <div class="signature-field">
+                                <label>CPF do Representante: *</label>
+                                <input type="text" id="cpfRepresentante" placeholder="000.000.000-00" maxlength="14">
+                            </div>
+                            <div class="signature-field">
+                                <label>Cargo do Representante: *</label>
+                                <input type="text" id="cargoRepresentante" placeholder="Digite o cargo">
+                            </div>
+                            <div class="signature-field">
+                                <label>Email: *</label>
+                                <input type="email" id="emailPJ" placeholder="contato@empresa.com">
+                            </div>
+                            <div class="signature-field">
+                                <label>Telefone: *</label>
+                                <input type="tel" id="telefonePJ" placeholder="(00) 0000-0000" maxlength="15">
+                            </div>
+                            <div class="signature-field">
+                                <label>Endereço:</label>
+                                <input type="text" id="enderecoPJ" placeholder="Endereço completo">
+                            </div>
+                        </div>
+                        
+                        <div class="signature-field">
+                            <label>Data: *</label>
+                            <input type="date" id="dataAceite" value="2026-01-29" required>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 30px;">
+                        <button onclick="enviarAceite()" style="background: #667eea; color: white; border: none; padding: 15px 40px; border-radius: 8px; font-size: 1.1em; font-weight: 600; cursor: pointer; box-shadow: 0 4px 6px rgba(102, 126, 234, 0.3); transition: all 0.3s;">
+                            📧 Enviar Aceite
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Assinatura do Proponente -->
+                <div style="background: #f8fafc; padding: 30px; border-radius: 8px; border-left: 4px solid #667eea;">
+                    <h3 style="text-align: center; color: #1f2937; margin-bottom: 30px; font-size: 1.3em;">
+                        ✍️ Pelo PROPONENTE
+                    </h3>
+                    
+                    <div style="text-align: center; margin-top: 50px;">
+                        <div style="display: inline-block; border-top: 2px solid #1f2937; padding-top: 10px; min-width: 400px;">
+                            <strong style="color: #1f2937;">Michael Alessander da Costa Silva</strong><br>
+                            <span style="color: #6b7280;">CPF: 027.238.504-20</span><br>
+                            <span style="color: #6b7280;">Representante Legal</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 30px; text-align: center; color: #6b7280; font-size: 0.95em;">
+                        <p style="margin-bottom: 10px;"><strong>Contato para Aceite:</strong></p>
+                        <p style="margin: 5px 0;">📱 (82) 99316-5015</p>
+                        <p style="margin: 5px 0;">📧 Michael Alessander da Costa Silva</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <h3>📞 CONTATO</h3>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span>�</span> (82) 99316-5015
+                </div>
+                <div class="contact-item">
+                    <span>📧</span> michael.alessander@gmail.com
+                </div>
+                <div class="contact-item">
+                    <span>🏢</span> Inova Consultoria e Projetos em TI
+                </div>
+            </div>
+            
+            <a href="https://inovaprojetosti.com.br/prototipoQuebrangulo" target="_blank" class="demo-link">
+                🚀 Ver Demonstração Online
+            </a>
+            
+            <div class="meta">
+                Documento gerado em 29/01/2026 | Versão 1.0 - Confidencial<br>
+                <strong>Para aceitar esta proposta, responda por email ou entre em contato conosco.</strong>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        // Máscaras de input
+        document.addEventListener('DOMContentLoaded', function() {
+            // Máscara para CPF
+            const cpfInputs = document.querySelectorAll('#cpf, #cpfRepresentante');
+            cpfInputs.forEach(input => {
+                input.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length <= 11) {
+                        value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                        value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                        value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+                        e.target.value = value;
+                    }
+                });
+            });
+            
+            // Máscara para CNPJ
+            const cnpjInput = document.querySelector('#cnpj');
+            if (cnpjInput) {
+                cnpjInput.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length <= 14) {
+                        value = value.replace(/^(\d{2})(\d)/, '$1.$2');
+                        value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+                        value = value.replace(/\.(\d{3})(\d)/, '.$1/$2');
+                        value = value.replace(/(\d{4})(\d)/, '$1-$2');
+                        e.target.value = value;
+                    }
+                });
+            }
+            
+            // Máscara para Telefone
+            const telefoneInputs = document.querySelectorAll('#telefone, #telefonePJ');
+            telefoneInputs.forEach(input => {
+                input.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length <= 11) {
+                        if (value.length <= 10) {
+                            value = value.replace(/^(\d{2})(\d)/, '($1) $2');
+                            value = value.replace(/(\d{4})(\d)/, '$1-$2');
+                        } else {
+                            value = value.replace(/^(\d{2})(\d)/, '($1) $2');
+                            value = value.replace(/(\d{5})(\d)/, '$1-$2');
+                        }
+                        e.target.value = value;
+                    }
+                });
+            });
+        });
+        
+        // Alternar entre campos PF e PJ
+        function toggleTipoPessoa() {
+            const tipoPessoa = document.querySelector('input[name="tipoPessoa"]:checked').value;
+            const camposPF = document.getElementById('camposPF');
+            const camposPJ = document.getElementById('camposPJ');
+            
+            if (tipoPessoa === 'pf') {
+                camposPF.style.display = 'block';
+                camposPJ.style.display = 'none';
+                // Tornar campos PF obrigatórios
+                document.getElementById('nomeCompleto').required = true;
+                document.getElementById('cargo').required = true;
+                document.getElementById('cpf').required = true;
+                document.getElementById('email').required = true;
+                document.getElementById('telefone').required = true;
+                // Remover obrigatoriedade dos campos PJ
+                document.getElementById('razaoSocial').required = false;
+                document.getElementById('cnpj').required = false;
+                document.getElementById('nomeRepresentante').required = false;
+                document.getElementById('cpfRepresentante').required = false;
+                document.getElementById('cargoRepresentante').required = false;
+                document.getElementById('emailPJ').required = false;
+                document.getElementById('telefonePJ').required = false;
+            } else {
+                camposPF.style.display = 'none';
+                camposPJ.style.display = 'block';
+                // Remover obrigatoriedade dos campos PF
+                document.getElementById('nomeCompleto').required = false;
+                document.getElementById('cargo').required = false;
+                document.getElementById('cpf').required = false;
+                document.getElementById('email').required = false;
+                document.getElementById('telefone').required = false;
+                // Tornar campos PJ obrigatórios
+                document.getElementById('razaoSocial').required = true;
+                document.getElementById('cnpj').required = true;
+                document.getElementById('nomeRepresentante').required = true;
+                document.getElementById('cpfRepresentante').required = true;
+                document.getElementById('cargoRepresentante').required = true;
+                document.getElementById('emailPJ').required = true;
+                document.getElementById('telefonePJ').required = true;
+            }
+        }
+        
+        // Função para enviar aceite por email
+        async function enviarAceite() {
+            const tipoPessoa = document.querySelector('input[name="tipoPessoa"]:checked').value;
+            const dataAceite = document.getElementById('dataAceite').value;
+            
+            let dadosFormulario = {};
+            
+            if (tipoPessoa === 'pf') {
+                // Validação campos PF
+                const nomeCompleto = document.getElementById('nomeCompleto').value;
+                const cargo = document.getElementById('cargo').value;
+                const cpf = document.getElementById('cpf').value;
+                const email = document.getElementById('email').value;
+                const telefone = document.getElementById('telefone').value;
+                const endereco = document.getElementById('endereco').value;
+                
+                if (!nomeCompleto || !cargo || !cpf || !email || !telefone || !dataAceite) {
+                    alert('❌ Por favor, preencha todos os campos obrigatórios (*)');
+                    return;
+                }
+                
+                dadosFormulario = {
+                    tipo: 'Pessoa Física',
+                    nomeCompleto,
+                    cargo,
+                    cpf,
+                    email,
+                    telefone,
+                    endereco,
+                    dataAceite
+                };
+            } else {
+                // Validação campos PJ
+                const razaoSocial = document.getElementById('razaoSocial').value;
+                const cnpj = document.getElementById('cnpj').value;
+                const nomeRepresentante = document.getElementById('nomeRepresentante').value;
+                const cpfRepresentante = document.getElementById('cpfRepresentante').value;
+                const cargoRepresentante = document.getElementById('cargoRepresentante').value;
+                const emailPJ = document.getElementById('emailPJ').value;
+                const telefonePJ = document.getElementById('telefonePJ').value;
+                const enderecoPJ = document.getElementById('enderecoPJ').value;
+                
+                if (!razaoSocial || !cnpj || !nomeRepresentante || !cpfRepresentante || !cargoRepresentante || !emailPJ || !telefonePJ || !dataAceite) {
+                    alert('❌ Por favor, preencha todos os campos obrigatórios (*)');
+                    return;
+                }
+                
+                dadosFormulario = {
+                    tipo: 'Pessoa Jurídica',
+                    razaoSocial,
+                    cnpj,
+                    nomeRepresentante,
+                    cpfRepresentante,
+                    cargoRepresentante,
+                    email: emailPJ,
+                    telefone: telefonePJ,
+                    endereco: enderecoPJ,
+                    dataAceite
+                };
+            }
+            
+            // Criar corpo do email formatado
+            let corpoEmail = `NOVO ACEITE DE PROPOSTA COMERCIAL\n\n`;
+            corpoEmail += `Tipo: ${dadosFormulario.tipo}\n`;
+            corpoEmail += `Data do Aceite: ${new Date(dadosFormulario.dataAceite).toLocaleDateString('pt-BR')}\n\n`;
+            
+            if (tipoPessoa === 'pf') {
+                corpoEmail += `DADOS PESSOA FÍSICA:\n`;
+                corpoEmail += `Nome Completo: ${dadosFormulario.nomeCompleto}\n`;
+                corpoEmail += `Cargo: ${dadosFormulario.cargo}\n`;
+                corpoEmail += `CPF: ${dadosFormulario.cpf}\n`;
+                corpoEmail += `Email: ${dadosFormulario.email}\n`;
+                corpoEmail += `Telefone: ${dadosFormulario.telefone}\n`;
+                corpoEmail += `Endereço: ${dadosFormulario.endereco || 'Não informado'}\n`;
+            } else {
+                corpoEmail += `DADOS PESSOA JURÍDICA:\n`;
+                corpoEmail += `Razão Social: ${dadosFormulario.razaoSocial}\n`;
+                corpoEmail += `CNPJ: ${dadosFormulario.cnpj}\n`;
+                corpoEmail += `Nome do Representante: ${dadosFormulario.nomeRepresentante}\n`;
+                corpoEmail += `CPF do Representante: ${dadosFormulario.cpfRepresentante}\n`;
+                corpoEmail += `Cargo do Representante: ${dadosFormulario.cargoRepresentante}\n`;
+                corpoEmail += `Email: ${dadosFormulario.email}\n`;
+                corpoEmail += `Telefone: ${dadosFormulario.telefone}\n`;
+                corpoEmail += `Endereço: ${dadosFormulario.endereco || 'Não informado'}\n`;
+            }
+            
+            corpoEmail += `\n---\nProposta: Sistema de Controle de Despesas Municipais\n`;
+            corpoEmail += `Valor: R$ 30.000,00 (desenvolvimento) + R$ 3.000,00/mês (manutenção)\n`;
+            
+            // Tentar enviar via FormSubmit (serviço gratuito)
+            try {
+                const formData = new FormData();
+                formData.append('_subject', '🔔 ACEITE DE PROPOSTA COMERCIAL - Sistema Municipal');
+                formData.append('_template', 'table');
+                formData.append('_captcha', 'false');
+                formData.append('Tipo_Pessoa', dadosFormulario.tipo);
+                formData.append('Data_Aceite', new Date(dadosFormulario.dataAceite).toLocaleDateString('pt-BR'));
+                
+                if (tipoPessoa === 'pf') {
+                    formData.append('Nome_Completo', dadosFormulario.nomeCompleto);
+                    formData.append('Cargo', dadosFormulario.cargo);
+                    formData.append('CPF', dadosFormulario.cpf);
+                    formData.append('Email_Cliente', dadosFormulario.email);
+                    formData.append('Telefone', dadosFormulario.telefone);
+                    formData.append('Endereco', dadosFormulario.endereco || 'Não informado');
+                } else {
+                    formData.append('Razao_Social', dadosFormulario.razaoSocial);
+                    formData.append('CNPJ', dadosFormulario.cnpj);
+                    formData.append('Nome_Representante', dadosFormulario.nomeRepresentante);
+                    formData.append('CPF_Representante', dadosFormulario.cpfRepresentante);
+                    formData.append('Cargo_Representante', dadosFormulario.cargoRepresentante);
+                    formData.append('Email_Cliente', dadosFormulario.email);
+                    formData.append('Telefone', dadosFormulario.telefone);
+                    formData.append('Endereco', dadosFormulario.endereco || 'Não informado');
+                }
+                
+                formData.append('Proposta', 'Sistema de Controle de Despesas Municipais');
+                formData.append('Valor_Desenvolvimento', 'R$ 30.000,00');
+                formData.append('Valor_Mensalidade', 'R$ 3.000,00/mês');
+                
+                // Mostrar mensagem de processamento
+                alert('📤 Enviando aceite... Aguarde...');
+                
+                // Enviar para FormSubmit
+                const response = await fetch('https://formsubmit.co/michael.alessander@gmail.com', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    alert('✅ Aceite enviado com sucesso!\n\nRecebemos seus dados e em breve entraremos em contato.\n\n📧 Email: michael.alessander@gmail.com\n📱 Telefone: (82) 99316-5015');
+                    
+                    // Limpar formulário
+                    document.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"]').forEach(input => {
+                        if (input.id !== 'dataAceite') input.value = '';
+                    });
+                    
+                    // Voltar para Pessoa Física
+                    document.querySelector('input[name="tipoPessoa"][value="pf"]').checked = true;
+                    toggleTipoPessoa();
+                } else {
+                    throw new Error('Erro ao enviar');
+                }
+            } catch (error) {
+                console.error('Erro no envio:', error);
+                // Fallback: abrir cliente de email do usuário
+                alert('⚠️ Não foi possível enviar automaticamente.\n\nVamos abrir seu cliente de email para você enviar manualmente.');
+                const subject = encodeURIComponent('ACEITE DE PROPOSTA COMERCIAL - Sistema Municipal');
+                const body = encodeURIComponent(corpoEmail);
+                window.location.href = `mailto:michael.alessander@gmail.com?subject=${subject}&body=${body}`;
+            }
+        }
+        
+        // Função antiga mantida para compatibilidade
+        function gerarContrato() {
+            enviarAceite();
+        }
+    </script>
+</body>
+</html>
