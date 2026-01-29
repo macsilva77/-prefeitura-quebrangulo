@@ -1676,7 +1676,9 @@
                     document.querySelector('input[name="tipoPessoa"][value="pf"]').checked = true;
                     toggleTipoPessoa();
                 } else {
-                    throw new Error('Erro ao enviar');
+                    const errorText = await response.text();
+                    console.error('Erro FormSubmit:', response.status, errorText);
+                    throw new Error(`Erro ${response.status}: ${errorText}`);
                 }
             } catch (error) {
                 console.error('Erro no envio:', error);
