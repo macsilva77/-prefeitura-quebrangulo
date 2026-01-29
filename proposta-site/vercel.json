@@ -1,4 +1,17 @@
 {
   "version": 2,
-  "public": true
+  "public": true,
+  "redirects": [
+    {
+      "source": "/demos/quebrangulo",
+      "destination": "/demos/quebrangulo/",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/demos/quebrangulo/",
+      "destination": "/demos/quebrangulo/index.html"
+    }
+  ]
 }
