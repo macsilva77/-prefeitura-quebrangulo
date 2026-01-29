@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prefeitura de Quebrangulo - Sistema de Contaarole de Pagamentos</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    
+    <!-- SheetJS (Excel) -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+</head>
+<body class="bg-slate-100 text-slate-900">
+    <div class="min-h-screen flex">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="w-72 bg-gradient-to-b from-blue-950 to-blue-900 text-white p-6 shadow-lg fixed h-screen overflow-y-auto transition-all duration-300 z-40">
+            <!-- Toggle Button + Menu Search -->
+            <div class="mb-6 flex gap-2">
+                <button id="toggleSidebar" class="px-3 py-2 bg-blue-800 hover:bg-blue-700 rounded-lg transition text-sm flex items-center justify-center flex-shrink-0">
+                    <span class="text-lg">☰</span>
+                </button>
+                <input id="menuSearch" type="text" placeholder="🔍 Pesquisar..." class="flex-1 px-3 py-2 rounded-lg bg-blue-800 text-blue-100 placeholder-blue-300 border border-blue-700 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm">
+            </div>
+
+            <nav class="space-y-1">
+                <!-- Administração (pai com submenu) -->
+                <div>
+                    <button class="menu-parent w-full text-left px-4 py-3 rounded-lg transition-all hover:bg-blue-800 text-blue-100 flex items-center justify-between font-semibold text-sm" data-submenu="admin">
+                        <span><span class="text-lg mr-2">⚙️</span>Administração</span>
+                        <span class="text-lg font-bold transition-transform menu-toggle">+</span>
+                    </button>
+                    <div id="submenu-admin" class="submenu ml-4 space-y-1 max-h-40 overflow-hidden">
+                        <a href="fornecedores.html" class="block w-full text-left px-4 py-2 rounded-lg transition-all hover:bg-blue-800 text-xs text-blue-100">
+                            <span class="mr-2">🏢</span>Fornecedores
+                        </a>
+                        <a href="secretarias.html" class="block w-full text-left px-4 py-2 rounded-lg transition-all hover:bg-blue-800 text-xs text-blue-100">
+                            <span class="mr-2">🏛️</span>Secretarias
+                        </a>
+                        <a href="usuarios.html" class="block w-full text-left px-4 py-2 rounded-lg transition-all hover:bg-blue-800 text-xs text-blue-100">
+                            <span class="mr-2">👥</span>Usuários
+                        </a>
+                        <a href="verbas.html" class="block w-full text-left px-4 py-2 rounded-lg transition-all hover:bg-blue-800 text-xs text-blue-100">
+                            <span class="mr-2">💰</span>Verbas
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Dashboard -->
+                <button class="nav-btn w-full text-left px-4 py-3 rounded-lg transition-all bg-blue-800 text-white shadow-sm font-semibold text-sm" data-page="dashboard">
+                    <span class="text-lg mr-2">📊</span>Dashboard
+                </button>
+
+                <!-- Dados -->
+                <button class="nav-btn w-full text-left px-4 py-3 rounded-lg transition-all hover:bg-blue-800 hover:text-white text-blue-100 font-semibold text-sm" data-page="data">
+                    <span class="text-lg mr-2">📋</span>Dados
+                </button>
+
+                <!-- Importação -->
+                <button class="nav-btn w-full text-left px-4 py-3 rounded-lg transition-all hover:bg-blue-800 hover:text-white text-blue-100 font-semibold text-sm" data-page="import">
+                    <span class="text-lg mr-2">📥</span>Importação
+                </button>
+            </nav>
+
+            <div class="mt-8 pt-6 border-t border-blue-800 text-xs text-blue-300">
+                v1.0 • Sistema Profissional
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main id="mainContent" class="flex-1 ml-72 p-8 overflow-y-auto transition-all duration-300">
+            <!-- Top Header with User Info and Logout -->
+            <div class="bg-gradient-to-r from-blue-900 to-blue-800 text-white rounded-xl shadow-md p-3 mb-8 flex items-center gap-6">
+                <div class="flex items-center gap-4">
+                    <div class="h-12 w-1.5 rounded-full bg-gradient-to-b from-blue-900 to-blue-600 shadow-[0_0_14px_rgba(30,64,175,0.28)]"></div>
+                    <div class="leading-tight text-left">
+                        <p class="text-base font-semibold text-blue-100">Construindo um</p>
+                        <p class="text-lg font-semibold text-white tracking-wide">novo caminho</p>
+                    </div>
+                </div>
+                <div class="flex-1 text-left ml-2">
+                    <p class="text-3xl font-bold text-white">Prefeitura de Quebrangulo</p>
+                </div>
+                <div class="flex items-center gap-3 ml-auto">
+                    <span class="text-sm text-blue-100">Versão</span>
+                    <span class="text-xl font-semibold text-white">1.0</span>
+                    <!-- User Dropdown -->
+                    <div class="relative">
+                        <button id="userDropdownBtn" class="flex items-center gap-2 px-3 py-2 rounded-lg bg-blue-800/80 hover:bg-blue-700 border border-blue-600 transition-all text-white">
+                            <div class="text-left">
+                                <p class="text-sm font-semibold leading-tight" id="usuarioEmailDropdown">Usuário</p>
+                                <p class="text-xs text-blue-100" id="usuarioEmailDropdown2">-</p>
+                            </div>
+                            <svg class="w-4 h-4 text-blue-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        
+                        <!-- Dropdown Menu -->
+                        <div id="userDropdownMenu" class="hidden absolute right-0 mt-1 w-56 bg-blue-900 text-white rounded-lg shadow-xl z-50 border border-blue-700">
+                            <div class="p-2">
+                                <button id="btnConfiguracao" class="w-full flex items-center gap-3 px-3 py-2 hover:bg-blue-800 rounded transition-all text-sm text-left">
+                                    <span class="text-lg">⚙️</span>
+                                    <span>Configurações de usuário</span>
+                                </button>
+                                <button id="btnLogout" class="w-full flex items-center gap-3 px-3 py-2 hover:bg-blue-800 rounded transition-all text-sm text-left text-red-300 hover:text-red-200">
+                                    <span class="text-lg">🚪</span>
+                                    <span>Sair</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Header removed (duplicate black-text card) -->
+
+            <!-- Views Container -->
+            <div id="viewsContainer">
+                <!-- Dashboard View -->
+                <div id="viewDashboard" class="space-y-6">
+                    <!-- Controls Bar -->
+                    <div class="bg-white rounded-xl shadow-md p-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                        <div>
+                            <h3 class="text-2xl font-bold">Dashboard</h3>
+                            <p class="text-slate-600 text-sm mt-1">Visão geral e análise por secretaria</p>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <select id="secretariaFilter" class="px-4 py-2 rounded-lg border border-slate-300 bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="__geral__">Geral (todas as secretarias)</option>
+                            </select>
+                            <select id="periodoFilter" class="px-4 py-2 rounded-lg border border-slate-300 bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="2026-01">Jan/2026</option>
+                                <option value="2025-12">Dez/2025</option>
+                                <option value="2025-11">Nov/2025</option>
+                            </select>
+                            <button id="btnRefresh" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold shadow-md">
+                                Atualizar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- KPI Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-blue-500">
+                            <p class="text-sm text-slate-600 font-semibold">Total Pago</p>
+                            <p class="text-3xl font-bold mt-2" id="kpiTotalPago">R$ 0,00</p>
+                            <p class="text-xs text-slate-500 mt-2">Somatório dos pagamentos</p>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-emerald-500">
+                            <p class="text-sm text-slate-600 font-semibold">Maior Fornecedor</p>
+                            <p class="text-lg font-bold mt-2" id="kpiMaiorFornecedor">—</p>
+                            <p class="text-xs text-slate-500 mt-2" id="kpiMaiorFornecedorValor">R$ 0,00</p>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-purple-500">
+                            <p class="text-sm text-slate-600 font-semibold">Verba Recebida</p>
+                            <p class="text-3xl font-bold mt-2" id="kpiVerbaRecebida">R$ 0,00</p>
+                            <p class="text-xs text-slate-500 mt-2">Total de repasses</p>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-orange-500">
+                            <p class="text-sm text-slate-600 font-semibold">Disparidade</p>
+                            <p class="text-3xl font-bold mt-2" id="kpiDisparidade">R$ 0,00</p>
+                            <p class="text-xs text-slate-500 mt-2">Recebida - Aplicada</p>
+                        </div>
+                    </div>
+
+                    <!-- Charts Grid Section 1: Pizza e Top Fornecedores lado a lado -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Pizza Chart (Left) -->
+                        <div class="bg-gradient-to-br from-white to-slate-50 rounded-xl shadow-lg p-6 border border-slate-100">
+                            <div class="flex items-center justify-between mb-6">
+                                <div>
+                                    <h3 class="font-bold text-xl text-slate-800">Gastos por Secretaria</h3>
+                                    <p class="text-xs text-slate-500 mt-1">Distribuição de gastos</p>
+                                </div>
+                                <span class="text-2xl">📊</span>
+                            </div>
+                            <canvas id="chartGastosPizza"></canvas>
+                            <p class="text-xs text-slate-500 mt-4 text-center bg-blue-50 py-2 rounded">💡 Clique na pizza para filtrar</p>
+                        </div>
+
+                        <!-- Top Fornecedores (Right) -->
+                        <div class="bg-gradient-to-br from-white to-slate-50 rounded-xl shadow-lg p-6 border border-slate-100">
+                            <div class="flex items-center justify-between mb-6">
+                                <div>
+                                    <h3 class="font-bold text-xl text-slate-800">Top Fornecedores</h3>
+                                    <p class="text-xs text-slate-500 mt-1">Maiores gastos</p>
+                                </div>
+                                <span class="text-2xl">🏢</span>
+                            </div>
+                            <canvas id="chartTopFornecedores"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Charts Grid Section 2: Verba Recebida x Paga - Full Width -->
+                    <div class="bg-gradient-to-br from-white to-slate-50 rounded-xl shadow-lg p-6 border border-slate-100">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h3 class="font-bold text-xl text-slate-800">Verba Recebida x Verba Paga por Secretaria</h3>
+                                <p class="text-xs text-slate-500 mt-1">Comparação empilhada por secretaria</p>
+                            </div>
+                            <span class="text-2xl">💰</span>
+                        </div>
+                        <canvas id="chartVerbasPorSecretaria"></canvas>
+                    </div>
+
+                    <!-- Hidden Chart for Secretaria View -->
+                    <div id="boxTopFornecedoresSecretaria" class="hidden bg-gradient-to-br from-white to-slate-50 rounded-xl shadow-lg p-6 border border-slate-100">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h3 class="font-bold text-xl text-slate-800" id="titlePizzaSecretaria">Top Fornecedores da Secretaria</h3>
+                                <p class="text-xs text-slate-500 mt-1">Maiores gastos nesta secretaria</p>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="flex gap-2 bg-slate-100 rounded-lg p-1">
+                                    <button id="btnChartBarra" class="px-3 py-1 bg-blue-600 text-white rounded text-xs font-semibold transition-all">📊 Barras</button>
+                                    <button id="btnChartPizza" class="px-3 py-1 bg-slate-200 text-slate-700 rounded text-xs font-semibold hover:bg-slate-300 transition-all">🥧 Pizza</button>
+                                </div>
+                                <span class="text-2xl">📈</span>
+                            </div>
+                        </div>
+                        <canvas id="chartFornecedoresSecretariaPizza"></canvas>
+                    </div>
+
+                    <!-- Disparidade Table -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                        <div class="p-6 border-b border-slate-200 flex items-center justify-between">
+                            <h3 class="font-bold text-lg">Disparidade por Secretaria</h3>
+                            <span class="text-xs text-slate-500" id="labelPeriodoDisparidade">Período: —</span>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm">
+                                <thead class="bg-slate-50 text-slate-700 font-semibold">
+                                    <tr>
+                                        <th class="text-left p-4">Secretaria</th>
+                                        <th class="text-right p-4">Recebida</th>
+                                        <th class="text-right p-4">Aplicada</th>
+                                        <th class="text-right p-4">Disparidade</th>
+                                        <th class="text-right p-4">% Aplicada</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tblDisparidade" class="divide-y divide-slate-200"></tbody>
+                            </table>
+                        </div>
+                        <div class="p-4 bg-slate-50 text-xs text-slate-600" id="tblDisparidadeFooter">0 secretarias</div>
+                    </div>
+
+                    <!-- Pagamentos Table -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                        <div class="p-6 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                            <h3 class="font-bold text-lg">Pagamentos (Detalhe)</h3>
+                            <input id="searchFornecedor" class="px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm w-full sm:w-64" 
+                                placeholder="Buscar fornecedor...">
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm">
+                                <thead class="bg-slate-50 text-slate-700 font-semibold">
+                                    <tr>
+                                        <th class="text-left p-4">Data</th>
+                                        <th class="text-left p-4">Secretaria</th>
+                                        <th class="text-left p-4">Fornecedor</th>
+                                        <th class="text-left p-4">CNPJ</th>
+                                        <th class="text-left p-4">Documento</th>
+                                        <th class="text-right p-4">Valor</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tblPagamentos" class="divide-y divide-slate-200"></tbody>
+                            </table>
+                        </div>
+                        <div class="p-4 bg-slate-50 text-xs text-slate-600" id="tblFooter">0 registros</div>
+                    </div>
+                </div>
+
+                <!-- Import View -->
+                <div id="viewImport" class="hidden space-y-6">
+                    <div class="bg-white rounded-xl shadow-md p-6">
+                        <h3 class="text-2xl font-bold mb-4">Importação de Dados</h3>
+                        <p class="text-slate-600 mb-6">Importe dados de pagamentos e verbas via Excel ou API.</p>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div class="border-2 border-slate-200 rounded-lg p-6">
+                                <h4 class="font-bold text-lg mb-2">📊 Importar Excel</h4>
+                                <p class="text-slate-600 text-sm mb-4">Esperamos 2 abas: <span class="font-semibold">Pagamentos</span> e <span class="font-semibold">Verbas</span></p>
+                                <input type="file" id="excelFile" accept=".xlsx,.xls" class="mb-4 w-full">
+                                <button id="btnImportExcel" class="w-full px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors font-semibold">
+                                    Importar Excel
+                                </button>
+                                <p class="text-xs text-slate-500 mt-3">Máximo 10MB • Formatos: .xlsx, .xls</p>
+                            </div>
+
+                            <div class="border-2 border-slate-200 rounded-lg p-6">
+                                <h4 class="font-bold text-lg mb-2">🔌 Conectar API</h4>
+                                <p class="text-slate-600 text-sm mb-4">Busque dados através de endpoints configurados.</p>
+                                <input id="apiBaseUrl" class="w-full px-4 py-2 rounded-lg border border-slate-300 mb-3 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+                                    placeholder="Ex: https://api.prefeitura.gov.br">
+                                <button id="btnFetchApi" class="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold">
+                                    Buscar via API
+                                </button>
+                                <p class="text-xs text-slate-500 mt-3">Modo: simulação (protótipo)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-md p-6">
+                        <h3 class="font-bold text-lg mb-4">📋 Modelo de Excel</h3>
+                        <p class="text-slate-600 text-sm mb-4">Crie um arquivo com as seguintes estruturas:</p>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                            <div class="bg-slate-50 rounded-lg p-4">
+                                <p class="font-semibold text-slate-900 mb-3">Aba: Pagamentos</p>
+                                <ul class="text-sm text-slate-700 space-y-1">
+                                    <li>• <span class="font-mono">data_pagamento</span> (YYYY-MM-DD)</li>
+                                    <li>• <span class="font-mono">periodo</span> (ex: 2026-01)</li>
+                                    <li>• <span class="font-mono">secretaria</span></li>
+                                    <li>• <span class="font-mono">fornecedor</span></li>
+                                    <li>• <span class="font-mono">documento</span> (NF/Empenho)</li>
+                                    <li>• <span class="font-mono">valor</span> (número)</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-slate-50 rounded-lg p-4">
+                                <p class="font-semibold text-slate-900 mb-3">Aba: Verbas</p>
+                                <ul class="text-sm text-slate-700 space-y-1">
+                                    <li>• <span class="font-mono">periodo</span> (ex: 2026-01)</li>
+                                    <li>• <span class="font-mono">secretaria</span></li>
+                                    <li>• <span class="font-mono">verba_recebida</span> (número)</li>
+                                    <li>• <span class="font-mono">verba_destinada_especifica</span></li>
+                                    <li>• <span class="font-mono">verba_aplicada</span> (número)</li>
+                                    <li>• <span class="font-mono">observacao</span> (opcional)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data View -->
+                <div id="viewData" class="hidden space-y-6">
+                    <div class="bg-white rounded-xl shadow-md p-6">
+                        <h3 class="text-2xl font-bold mb-2">Dados Carregados</h3>
+                        <p class="text-slate-600 mb-6">Resumo e validações dos dados importados.</p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 border-l-4 border-blue-500">
+                                <p class="text-sm text-slate-600 font-semibold">Pagamentos</p>
+                                <p class="text-4xl font-bold mt-2 text-blue-600" id="countPagamentos">0</p>
+                            </div>
+                            <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-6 border-l-4 border-purple-500">
+                                <p class="text-sm text-slate-600 font-semibold">Verbas</p>
+                                <p class="text-4xl font-bold mt-2 text-purple-600" id="countVerbas">0</p>
+                            </div>
+                            <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-lg p-6 border-l-4 border-emerald-500">
+                                <p class="text-sm text-slate-600 font-semibold">Secretarias</p>
+                                <p class="text-4xl font-bold mt-2 text-emerald-600" id="countSecretarias">0</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                            <p class="text-sm text-blue-900">
+                                <span class="font-semibold">💡 Dica:</span> Quando este sistema for produzido, incluiremos 
+                                validações avançadas, logs de importação e trilha de auditoria.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/crypto.js?v=26"></script>
+    <script src="js/auth.js?v=26"></script>
+    <script src="js/data.js?v=26"></script>
+    <script src="js/utils.js?v=26"></script>
+    <script src="js/fornecedores.js?v=26"></script>
+    <script src="js/charts.js?v=26"></script>
+    <script src="js/ui.js?v=26"></script>
+    <script src="js/ui-enhanced.js?v=26"></script>
+    <script src="js/app.js?v=26"></script>
+
+    <style>
+        .submenu {
+            max-height: 0;
+            transition: max-height 0.3s ease-in-out;
+            overflow: hidden;
+        }
+    </style>
+
+    <script>
+        // Menu submenu toggle
+        document.querySelectorAll('.menu-parent').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const submenuId = this.getAttribute('data-submenu');
+                const submenu = document.getElementById(`submenu-${submenuId}`);
+                const toggle = this.querySelector('.menu-toggle');
+                
+                const isExpanded = submenu.style.maxHeight && submenu.style.maxHeight !== '0px';
+                
+                if (isExpanded) {
+                    submenu.style.maxHeight = '0px';
+                    if (toggle) toggle.textContent = '+';
+                } else {
+                    submenu.style.maxHeight = submenu.scrollHeight + 'px';
+                    if (toggle) toggle.textContent = '-';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

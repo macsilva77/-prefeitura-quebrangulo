@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fornecedores - Prefeitura de Quebrangulo</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 text-slate-900">
+    <div class="min-h-screen flex">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="w-72 bg-gradient-to-b from-blue-950 to-blue-900 text-white p-6 shadow-lg fixed h-screen overflow-y-auto transition-all duration-300 z-40">            <!-- Toggle Button + Menu Search -->
+            <div class="mb-6 flex gap-2">
+                <button id="toggleSidebar" class="px-3 py-2 bg-blue-800 hover:bg-blue-700 rounded-lg transition text-sm flex items-center justify-center flex-shrink-0">
+                    <span class="text-lg">☰</span>
+                </button>
+                <input id="menuSearch" type="text" placeholder="🔍 Pesquisar..." class="flex-1 px-3 py-2 rounded-lg bg-blue-900 text-blue-100 placeholder-blue-300 border border-blue-800 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-sm">
+            </div>
+
+            <nav class="space-y-1">
+                <!-- Administração (pai com submenu) -->
+                <div>
+                    <button class="menu-parent w-full text-left px-4 py-3 rounded-lg transition-all hover:bg-blue-800 text-blue-100 flex items-center justify-between font-semibold text-sm" data-submenu="admin">
+                        <span><span class="text-lg mr-2">⚙️</span>Administração</span>
+                        <span class="text-lg font-bold transition-transform menu-toggle">+</span>
+                        </svg>
+                    </button>
+                    <div id="submenu-admin" class="submenu ml-4 space-y-1 max-h-40 overflow-hidden">
+                        <a href="fornecedores.html" class="block w-full text-left px-4 py-2 rounded-lg transition-all bg-blue-800 text-white text-xs">
+                            <span class="mr-2">🏢</span>Fornecedores
+                        </a>
+                        <a href="secretarias.html" class="block w-full text-left px-4 py-2 rounded-lg transition-all hover:bg-blue-800 text-xs text-blue-100">
+                            <span class="mr-2">🏛️</span>Secretarias
+                        </a>
+                        <a href="usuarios.html" class="block w-full text-left px-4 py-2 rounded-lg transition-all hover:bg-blue-800 text-xs text-blue-100">
+                            <span class="mr-2">👥</span>Usuários
+                        </a>
+                        <a href="verbas.html" class="block w-full text-left px-4 py-2 rounded-lg transition-all hover:bg-blue-800 text-xs text-blue-100">
+                            <span class="mr-2">💰</span>Verbas
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Dashboard -->
+                <a href="dashboard.html" class="nav-btn w-full text-left px-4 py-3 rounded-lg transition-all hover:bg-blue-800 hover:text-white text-blue-100 block font-semibold text-sm">
+                    <span class="text-lg mr-2">📊</span>Dashboard
+                </a>
+
+                <!-- Dados -->
+                <button class="nav-btn w-full text-left px-4 py-3 rounded-lg transition-all hover:bg-blue-800 hover:text-white text-blue-100 font-semibold text-sm" data-page="data">
+                    <span class="text-lg mr-2">📋</span>Dados
+                </button>
+
+                <!-- Importação -->
+                <button class="nav-btn w-full text-left px-4 py-3 rounded-lg transition-all hover:bg-blue-800 hover:text-white text-blue-100 font-semibold text-sm" data-page="import">
+                    <span class="text-lg mr-2">📥</span>Importação
+                </button>
+            </nav>
+
+            <div class="mt-8 pt-6 border-t border-blue-800 text-xs text-blue-300">
+                v1.0 • Sistema Profissional
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main id="mainContent" class="flex-1 ml-72 p-8 overflow-y-auto transition-all duration-300">
+            <!-- Top Header with User Info and Logout -->
+            <div class="bg-gradient-to-r from-blue-900 to-blue-800 text-white rounded-xl shadow-md p-3 mb-8 flex items-center gap-6">
+                <div class="flex items-center gap-4">
+                    <div class="h-12 w-1.5 rounded-full bg-gradient-to-b from-blue-900 to-blue-600 shadow-[0_0_14px_rgba(30,64,175,0.28)]"></div>
+                    <div class="leading-tight text-left">
+                        <p class="text-base font-semibold text-blue-100">Construindo um</p>
+                        <p class="text-lg font-semibold text-white tracking-wide">novo caminho</p>
+                    </div>
+                </div>
+                <div class="flex-1 text-left ml-2">
+                    <p class="text-3xl font-bold text-white">Prefeitura de Quebrangulo</p>
+                </div>
+                <div class="flex items-center gap-3 ml-auto">
+                    <span class="text-sm text-blue-100">Versão</span>
+                    <span class="text-xl font-semibold text-white">1.0</span>
+                    <!-- User Dropdown -->
+                    <div class="relative">
+                        <button id="userDropdownBtn" class="flex items-center gap-2 px-3 py-2 rounded-lg bg-blue-800/80 hover:bg-blue-700 border border-blue-600 transition-all text-white">
+                            <div class="text-left">
+                                <p class="text-sm font-semibold leading-tight" id="usuarioEmailDropdown">Usuário</p>
+                                <p class="text-xs text-blue-100" id="usuarioEmailDropdown2">-</p>
+                            </div>
+                            <svg class="w-4 h-4 text-blue-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        
+                        <!-- Dropdown Menu -->
+                        <div id="userDropdownMenu" class="hidden absolute right-0 mt-1 w-56 bg-blue-900 text-white rounded-lg shadow-xl z-50 border border-blue-700">
+                            <div class="p-2">
+                                <button id="btnConfiguracao" class="w-full flex items-center gap-3 px-3 py-2 hover:bg-blue-800 rounded transition-all text-sm text-left">
+                                    <span class="text-lg">⚙️</span>
+                                    <span>Configurações de usuário</span>
+                                </button>
+                                <button id="btnLogout" class="w-full flex items-center gap-3 px-3 py-2 hover:bg-blue-800 rounded transition-all text-sm text-left text-red-300 hover:text-red-200">
+                                    <span class="text-lg">🚪</span>
+                                    <span>Sair</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page Header -->
+            <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-sm text-slate-500 font-semibold">ADMINISTRAÇÃO</p>
+                        <h2 class="text-3xl font-bold mt-1">Gestão de Fornecedores</h2>
+                        <p class="text-slate-600 text-sm mt-2">Cadastro e controle de fornecedores/empresas da prefeitura</p>
+                    </div>
+                    <button id="btnNovoFornecedor" class="bg-green-600 hover:bg-green-700 px-6 py-3 rounded-lg text-white font-semibold shadow-md transition-all">
+                        + Novo Fornecedor
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="bg-white rounded-xl shadow-md p-4 mb-6 flex gap-3 items-center">
+                <input type="text" id="searchFornecedor" placeholder="Buscar por nome, CNPJ ou email..." class="flex-1 px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                <button id="btnRefreshFornecedores" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold">
+                    Atualizar
+                </button>
+            </div>
+
+            <!-- Table -->
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-slate-100">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-slate-900">Nome</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-slate-900">CNPJ</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-slate-900">Email</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-slate-900">Telefone</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-slate-900">Status</th>
+                                <th class="px-6 py-3 text-center text-sm font-semibold text-slate-900">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyFornecedores" class="divide-y divide-slate-200">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal - Novo/Editar Fornecedor -->
+    <div id="modalFornecedor" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 overflow-y-auto">
+        <div class="bg-white rounded-xl shadow-xl p-8 max-w-4xl w-full mx-4 my-8">
+            <h3 class="text-2xl font-bold mb-6" id="modalTitulo">Novo Fornecedor</h3>
+            
+            <form id="formFornecedor" class="space-y-4">
+                <!-- Busca de CNPJ -->
+                <div class="bg-blue-50 border-2 border-blue-200 rounded-lg p-4 mb-6">
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Consultar CNPJ na Receita Federal</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="fcnpjConsulta" placeholder="00.000.000/0000-00" class="flex-1 px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <button type="button" id="btnConsultarCNPJ" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold transition-all flex items-center gap-2">
+                            <span id="btnConsultarTexto">🔍 Consultar e Preencher</span>
+                            <span id="btnConsultarLoading" class="hidden">⏳ Consultando...</span>
+                        </button>
+                    </div>
+                    <p class="text-xs text-slate-500 mt-2">Digite o CNPJ para buscar e preencher os dados automaticamente</p>
+                    <div id="cnpjMensagemSucesso" class="hidden mt-3 p-3 bg-green-50 border border-green-200 rounded-lg text-green-700 text-sm">
+                        ✓ Dados consultados e preenchidos com sucesso!
+                    </div>
+                    
+                    <!-- Collapse para visualizar dados completos -->
+                    <div id="cnpjDadosConsultados" class="hidden mt-3">
+                        <button type="button" id="btnToggleDadosCompletos" class="w-full flex items-center justify-between px-4 py-3 bg-slate-100 hover:bg-slate-200 rounded-lg transition-all text-slate-700 font-semibold text-sm">
+                            <span>📋 Ver Dados Completos da Consulta</span>
+                            <svg id="iconCollapse" class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div id="contentDadosCompletos" class="hidden mt-2 bg-slate-50 rounded-lg p-4 max-h-96 overflow-y-auto">
+                            <div class="grid grid-cols-2 gap-3 text-sm">
+                                <div class="bg-white p-3 rounded-lg shadow-sm">
+                                    <span class="font-semibold text-slate-600">CNPJ:</span>
+                                    <p id="cnpjNumeroCompleto" class="text-slate-900 font-medium">-</p>
+                                </div>
+                                <div class="bg-white p-3 rounded-lg shadow-sm">
+                                    <span class="font-semibold text-slate-600">Razão Social:</span>
+                                    <p id="cnpjRazaoSocial" class="text-slate-900 font-medium">-</p>
+                                </div>
+                                <div class="bg-white p-3 rounded-lg shadow-sm">
+                                    <span class="font-semibold text-slate-600">Nome Fantasia:</span>
+                                    <p id="cnpjNomeFantasia" class="text-slate-900 font-medium">-</p>
+                                </div>
+                                <div class="bg-white p-3 rounded-lg shadow-sm">
+                                    <span class="font-semibold text-slate-600">Situação:</span>
+                                    <p id="cnpjSituacao" class="text-slate-900 font-medium">-</p>
+                                </div>
+                                <div class="bg-white p-3 rounded-lg shadow-sm">
+                                    <span class="font-semibold text-slate-600">Data Situação:</span>
+                                    <p id="cnpjDataSituacao" class="text-slate-900 font-medium">-</p>
+                                </div>
+                                <div class="bg-white p-3 rounded-lg shadow-sm">
+                                    <span class="font-semibold text-slate-600">Data de Abertura:</span>
+                                    <p id="cnpjDataAbertura" class="text-slate-900 font-medium">-</p>
+                                </div>
+                                <div class="bg-white p-3 rounded-lg shadow-sm">
+                                    <span class="font-semibold text-slate-600">Tipo:</span>
+                                    <p id="cnpjTipo" class="text-slate-900 font-medium">-</p>
+                                </div>
+                                <div class="bg-white p-3 rounded-lg shadow-sm">
+                                    <span class="font-semibold text-slate-600">Porte:</span>
+                                    <p id="cnpjPorte" class="text-slate-900 font-medium">-</p>
+                                </div>
+                                <div class="bg-white p-3 rounded-lg shadow-sm col-span-2">
+                                    <span class="font-semibold text-slate-600">Natureza Jurídica:</span>
+                                    <p id="cnpjNaturezaJuridica" class="text-slate-900 font-medium">-</p>
+                                </div>
+                                <div class="bg-white p-3 rounded-lg shadow-sm">
+                                    <span class="font-semibold text-slate-600">Capital Social:</span>
+                                    <p id="cnpjCapitalSocial" class="text-slate-900 font-medium">-</p>
+                                </div>
+                                <div class="bg-white p-3 rounded-lg shadow-sm">
+                                    <span class="font-semibold text-slate-600">CEP:</span>
+                                    <p id="cnpjCEP" class="text-slate-900 font-medium">-</p>
+                                </div>
+                                <div class="bg-white p-3 rounded-lg shadow-sm col-span-2">
+                                    <span class="font-semibold text-slate-600">Logradouro:</span>
+                                    <p id="cnpjLogradouro" class="text-slate-900 font-medium">-</p>
+                                </div>
+                                <div class="bg-white p-3 rounded-lg shadow-sm">
+                                    <span class="font-semibold text-slate-600">Número:</span>
+                                    <p id="cnpjNumeroEnd" class="text-slate-900 font-medium">-</p>
+                                </div>
+                                <div class="bg-white p-3 rounded-lg shadow-sm">
+                                    <span class="font-semibold text-slate-600">Complemento:</span>
+                                    <p id="cnpjComplemento" class="text-slate-900 font-medium">-</p>
+                                </div>
+                                <div class="bg-white p-3 rounded-lg shadow-sm">
+                                    <span class="font-semibold text-slate-600">Bairro:</span>
+                                    <p id="cnpjBairro" class="text-slate-900 font-medium">-</p>
+                                </div>
+                                <div class="bg-white p-3 rounded-lg shadow-sm">
+                                    <span class="font-semibold text-slate-600">Município:</span>
+                                    <p id="cnpjMunicipio" class="text-slate-900 font-medium">-</p>
+                                </div>
+                                <div class="bg-white p-3 rounded-lg shadow-sm">
+                                    <span class="font-semibold text-slate-600">UF:</span>
+                                    <p id="cnpjUF" class="text-slate-900 font-medium">-</p>
+                                </div>
+                                <div class="bg-white p-3 rounded-lg shadow-sm">
+                                    <span class="font-semibold text-slate-600">Telefone 1:</span>
+                                    <p id="cnpjTelefone1" class="text-slate-900 font-medium">-</p>
+                                </div>
+                                <div class="bg-white p-3 rounded-lg shadow-sm">
+                                    <span class="font-semibold text-slate-600">Telefone 2:</span>
+                                    <p id="cnpjTelefone2" class="text-slate-900 font-medium">-</p>
+                                </div>
+                                <div class="bg-white p-3 rounded-lg shadow-sm col-span-2">
+                                    <span class="font-semibold text-slate-600">Email:</span>
+                                    <p id="cnpjEmail" class="text-slate-900 font-medium">-</p>
+                                </div>
+                                <div class="bg-white p-3 rounded-lg shadow-sm col-span-2">
+                                    <span class="font-semibold text-slate-600">Atividade Principal:</span>
+                                    <p id="cnpjAtividadePrincipal" class="text-slate-900 font-medium text-xs">-</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">Nome *</label>
+                        <input type="text" id="fnome" required class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">CNPJ *</label>
+                        <input type="text" id="fcnpj" required class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">Email *</label>
+                        <input type="email" id="femail" required class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">Telefone *</label>
+                        <input type="text" id="ftelefone" required class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Endereço *</label>
+                    <input type="text" id="fendereco" required class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+
+                <div class="grid grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">Banco *</label>
+                        <input type="text" id="fbanco" required class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">Agência *</label>
+                        <input type="text" id="fagencia" required class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">Conta *</label>
+                        <input type="text" id="fconta" required class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                </div>
+
+                <div id="mensagemFornecedor" class="hidden p-4 rounded-lg"></div>
+
+                <div class="flex gap-3 justify-end mt-6 pt-4 border-t border-slate-200">
+                    <button type="button" id="btnCancelarFornecedor" class="px-6 py-2 rounded-lg border border-slate-300 text-slate-900 hover:bg-slate-50 font-semibold transition-all">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 font-semibold transition-all">
+                        Salvar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/crypto.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/fornecedores.js"></script>
+    <script>
+        let fornecedorEditId = null;
+
+        // Check authentication
+        window.addEventListener('load', () => {
+            if (!estaAutenticado()) {
+                window.location.href = '/login.html';
+                return;
+            }
+
+            // Usuário será exibido via dropdown pelo ui-enhanced.js
+
+            renderFornecedoresTable();
+        });
+
+        // Logout
+        document.getElementById('btnLogout').addEventListener('click', () => {
+            logout();
+            window.location.href = '/index.html';
+        });
+
+        // Novo Fornecedor
+        document.getElementById('btnNovoFornecedor').addEventListener('click', () => {
+            fornecedorEditId = null;
+            document.getElementById('modalTitulo').textContent = 'Novo Fornecedor';
+            document.getElementById('formFornecedor').reset();
+            document.getElementById('mensagemFornecedor').classList.add('hidden');
+            document.getElementById('modalFornecedor').classList.remove('hidden');
+        });
+
+        // Fechar Modal
+        document.getElementById('btnCancelarFornecedor').addEventListener('click', () => {
+            document.getElementById('modalFornecedor').classList.add('hidden');
+        });
+
+        // Form Submit
+        document.getElementById('formFornecedor').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            if (!temPermissao('criar')) {
+                showMensagem('Você não tem permissão para criar fornecedores', false);
+                return;
+            }
+
+            const dados = {
+                nome: document.getElementById('fnome').value,
+                cnpj: document.getElementById('fcnpj').value,
+                email: document.getElementById('femail').value,
+                telefone: document.getElementById('ftelefone').value,
+                endereco: document.getElementById('fendereco').value,
+                banco: document.getElementById('fbanco').value,
+                agencia: document.getElementById('fagencia').value,
+                conta: document.getElementById('fconta').value
+            };
+
+            if (fornecedorEditId) {
+                atualizarFornecedor(fornecedorEditId, dados);
+            } else {
+                criarFornecedor(dados);
+            }
+
+            showMensagem('Fornecedor salvo com sucesso!', true);
+            setTimeout(() => {
+                document.getElementById('modalFornecedor').classList.add('hidden');
+                renderFornecedoresTable();
+            }, 1000);
+        });
+
+        // Search
+        document.getElementById('searchFornecedor').addEventListener('input', renderFornecedoresTable);
+
+        // Refresh
+        document.getElementById('btnRefreshFornecedores').addEventListener('click', renderFornecedoresTable);
+
+        function renderFornecedoresTable() {
+            const search = document.getElementById('searchFornecedor').value.toLowerCase();
+            const fornecedores = buscarFornecedores(search);
+            const tbody = document.getElementById('tbodyFornecedores');
+            tbody.innerHTML = '';
+
+            if (fornecedores.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="px-6 py-4 text-center text-slate-500">Nenhum fornecedor encontrado</td></tr>';
+                return;
+            }
+
+            fornecedores.forEach(f => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="px-6 py-4 text-sm font-semibold text-slate-900">${f.nome}</td>
+                    <td class="px-6 py-4 text-sm text-slate-600">${f.cnpj}</td>
+                    <td class="px-6 py-4 text-sm text-slate-600">${f.email}</td>
+                    <td class="px-6 py-4 text-sm text-slate-600">${f.telefone}</td>
+                    <td class="px-6 py-4">
+                        <span class="px-3 py-1 rounded-full text-xs font-semibold ${f.ativo ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                            ${f.ativo ? 'Ativo' : 'Inativo'}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        <div class="flex gap-2 justify-center">
+                            ${temPermissao('editar') ? `<button onclick="editarFornecedor(${f.id})" class="text-blue-600 hover:text-blue-800 font-semibold">Editar</button>` : ''}
+                            ${temPermissao('deletar') ? `<button onclick="deletarFornecedor(${f.id})" class="text-red-600 hover:text-red-800 font-semibold">Deletar</button>` : ''}
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function editarFornecedor(id) {
+            const fornecedor = obterFornecedor(id);
+            if (!fornecedor) return;
+
+            fornecedorEditId = id;
+            document.getElementById('modalTitulo').textContent = 'Editar Fornecedor';
+            document.getElementById('fnome').value = fornecedor.nome;
+            document.getElementById('fcnpj').value = fornecedor.cnpj;
+            document.getElementById('femail').value = fornecedor.email;
+            document.getElementById('ftelefone').value = fornecedor.telefone;
+            document.getElementById('fendereco').value = fornecedor.endereco;
+            document.getElementById('fbanco').value = fornecedor.banco;
+            document.getElementById('fagencia').value = fornecedor.agencia;
+            document.getElementById('fconta').value = fornecedor.conta;
+            document.getElementById('modalFornecedor').classList.remove('hidden');
+        }
+
+        function deletarFornecedor(id) {
+            if (confirm('Tem certeza que deseja deletar este fornecedor?')) {
+                desativarFornecedor(id);
+                renderFornecedoresTable();
+            }
+        }
+
+        function showMensagem(texto, sucesso) {
+            const div = document.getElementById('mensagemFornecedor');
+            div.textContent = texto;
+            div.className = sucesso ? 'p-4 rounded-lg bg-green-100 text-green-800' : 'p-4 rounded-lg bg-red-100 text-red-800';
+            div.classList.remove('hidden');
+        }
+    </script>
+
+    <script>
+        // ========== INTEGRAÇÃO COM API BRASILAPI ==========
+        let cnpjDataCache = null;
+
+        // Consultar CNPJ na API BrasilAPI e preencher automaticamente
+        document.getElementById('btnConsultarCNPJ').addEventListener('click', async function() {
+            const cnpjInput = document.getElementById('fcnpjConsulta').value;
+            const cnpj = cnpjInput.replace(/\D/g, ''); // Remove caracteres não numéricos
+
+            if (!cnpj || cnpj.length !== 14) {
+                alert('Por favor, digite um CNPJ válido com 14 dígitos');
+                return;
+            }
+
+            // Mostrar loading
+            document.getElementById('btnConsultarTexto').classList.add('hidden');
+            document.getElementById('btnConsultarLoading').classList.remove('hidden');
+            document.getElementById('cnpjMensagemSucesso').classList.add('hidden');
+            this.disabled = true;
+
+            try {
+                const response = await fetch(`https://brasilapi.com.br/api/cnpj/v1/${cnpj}`);
+                
+                if (!response.ok) {
+                    throw new Error('CNPJ não encontrado ou erro na consulta');
+                }
+
+                const data = await response.json();
+                cnpjDataCache = data;
+
+                // Preencher dados completos para visualização
+                preencherDadosCompletos(data);
+
+                // Preencher formulário automaticamente
+                preencherFormularioComDados(data);
+
+                // Mostrar mensagem de sucesso e área de dados completos
+                document.getElementById('cnpjMensagemSucesso').classList.remove('hidden');
+                document.getElementById('cnpjDadosConsultados').classList.remove('hidden');
+                
+                // Scroll para o formulário
+                document.getElementById('fnome').scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            } catch (error) {
+                alert('Erro ao consultar CNPJ: ' + error.message + '\n\nVerifique se o CNPJ está correto e tente novamente.');
+                console.error('Erro na consulta:', error);
+            } finally {
+                // Esconder loading
+                document.getElementById('btnConsultarTexto').classList.remove('hidden');
+                document.getElementById('btnConsultarLoading').classList.add('hidden');
+                this.disabled = false;
+            }
+        });
+
+        // Função para preencher o formulário
+        function preencherFormularioComDados(data) {
+            // Preencher campos do formulário
+            document.getElementById('fnome').value = data.nome_fantasia || data.razao_social || '';
+            document.getElementById('fcnpj').value = formatarCNPJ(data.cnpj) || '';
+            document.getElementById('femail').value = data.email || '';
+            document.getElementById('ftelefone').value = data.ddd_telefone_1 ? formatarTelefone(data.ddd_telefone_1) : '';
+            
+            const endereco = `${data.logradouro || ''}, ${data.numero || 's/n'} - ${data.bairro || ''} - ${data.municipio || ''}/${data.uf || ''}`.trim();
+            document.getElementById('fendereco').value = endereco;
+
+            // Limpar campos bancários (não vêm da API)
+            document.getElementById('fbanco').value = '';
+            document.getElementById('fagencia').value = '';
+            document.getElementById('fconta').value = '';
+            
+            // Highlight temporário dos campos preenchidos
+            [document.getElementById('fnome'), document.getElementById('fcnpj'), 
+             document.getElementById('femail'), document.getElementById('ftelefone'),
+             document.getElementById('fendereco')].forEach(el => {
+                el.classList.add('ring-2', 'ring-green-400');
+                setTimeout(() => el.classList.remove('ring-2', 'ring-green-400'), 2000);
+            });
+        }
+
+        // Função para preencher dados completos no collapse
+        function preencherDadosCompletos(data) {
+            document.getElementById('cnpjNumeroCompleto').textContent = formatarCNPJ(data.cnpj) || '-';
+            document.getElementById('cnpjRazaoSocial').textContent = data.razao_social || '-';
+            document.getElementById('cnpjNomeFantasia').textContent = data.nome_fantasia || '-';
+            document.getElementById('cnpjSituacao').textContent = data.descricao_situacao_cadastral || '-';
+            document.getElementById('cnpjDataSituacao').textContent = data.data_situacao_cadastral || '-';
+            document.getElementById('cnpjDataAbertura').textContent = data.data_inicio_atividade || '-';
+            document.getElementById('cnpjTipo').textContent = data.tipo || '-';
+            document.getElementById('cnpjPorte').textContent = data.porte || '-';
+            document.getElementById('cnpjNaturezaJuridica').textContent = data.natureza_juridica ? `${data.natureza_juridica} - ${data.descricao_natureza_juridica || ''}` : '-';
+            document.getElementById('cnpjCapitalSocial').textContent = data.capital_social ? `R$ ${parseFloat(data.capital_social).toLocaleString('pt-BR', {minimumFractionDigits: 2})}` : '-';
+            document.getElementById('cnpjCEP').textContent = data.cep || '-';
+            document.getElementById('cnpjLogradouro').textContent = data.logradouro || '-';
+            document.getElementById('cnpjNumeroEnd').textContent = data.numero || '-';
+            document.getElementById('cnpjComplemento').textContent = data.complemento || '-';
+            document.getElementById('cnpjBairro').textContent = data.bairro || '-';
+            document.getElementById('cnpjMunicipio').textContent = data.municipio || '-';
+            document.getElementById('cnpjUF').textContent = data.uf || '-';
+            document.getElementById('cnpjTelefone1').textContent = data.ddd_telefone_1 || '-';
+            document.getElementById('cnpjTelefone2').textContent = data.ddd_telefone_2 || '-';
+            document.getElementById('cnpjEmail').textContent = data.email || '-';
+            
+            // Atividade principal
+            if (data.cnae_fiscal_principal && data.cnae_fiscal_principal.codigo) {
+                document.getElementById('cnpjAtividadePrincipal').textContent = `${data.cnae_fiscal_principal.codigo} - ${data.cnae_fiscal_principal.descricao || ''}`;
+            } else {
+                document.getElementById('cnpjAtividadePrincipal').textContent = '-';
+            }
+        }
+
+        // Toggle collapse dos dados completos
+        document.getElementById('btnToggleDadosCompletos').addEventListener('click', function() {
+            const content = document.getElementById('contentDadosCompletos');
+            const icon = document.getElementById('iconCollapse');
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                content.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        });
+
+        // Função para formatar CNPJ
+        function formatarCNPJ(cnpj) {
+            if (!cnpj) return '';
+            cnpj = cnpj.replace(/\D/g, '');
+            return cnpj.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5');
+        }
+
+        // Função para formatar telefone
+        function formatarTelefone(tel) {
+            if (!tel) return '';
+            tel = tel.replace(/\D/g, '');
+            if (tel.length === 10) {
+                return tel.replace(/^(\d{2})(\d{4})(\d{4})$/, '($1) $2-$3');
+            } else if (tel.length === 11) {
+                return tel.replace(/^(\d{2})(\d{5})(\d{4})$/, '($1) $2-$3');
+            }
+            return tel;
+        }
+
+        // Limpar dados quando abrir modal para novo fornecedor
+        const originalNovoFornecedorClick = document.getElementById('btnNovoFornecedor').onclick;
+        document.getElementById('btnNovoFornecedor').addEventListener('click', function() {
+            cnpjDataCache = null;
+            document.getElementById('fcnpjConsulta').value = '';
+            document.getElementById('cnpjMensagemSucesso').classList.add('hidden');
+            document.getElementById('cnpjDadosConsultados').classList.add('hidden');
+            document.getElementById('contentDadosCompletos').classList.add('hidden');
+            document.getElementById('iconCollapse').style.transform = 'rotate(0deg)';
+        });
+    </script>
+
+    <style>
+        .submenu {
+            max-height: 0;
+            transition: max-height 0.3s ease-in-out;
+            overflow: hidden;
+        }
+    </style>
+
+    <script>
+        // Menu submenu toggle
+        document.querySelectorAll('.menu-parent').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const submenuId = this.getAttribute('data-submenu');
+                const submenu = document.getElementById(`submenu-${submenuId}`);
+                const toggle = this.querySelector('.menu-toggle');
+                
+                const isExpanded = submenu.style.maxHeight && submenu.style.maxHeight !== '0px';
+                
+                if (isExpanded) {
+                    submenu.style.maxHeight = '0px';
+                    if (toggle) toggle.textContent = '+';
+                } else {
+                    submenu.style.maxHeight = submenu.scrollHeight + 'px';
+                    if (toggle) toggle.textContent = '-';
+                }
+            });
+        });
+    </script>
+    <script src="js/ui-enhanced.js?v=13"></script>
+</body>
+</html>

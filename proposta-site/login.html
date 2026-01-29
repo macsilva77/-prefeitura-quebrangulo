@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prefeitura de Quebrangulo - Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-900 to-blue-950 min-h-screen">
+    <div class="min-h-screen flex items-center justify-center p-6">
+        <div class="w-full max-w-md">
+                <!-- Login Card -->
+                <div class="bg-white rounded-2xl shadow-2xl p-8">
+                    <!-- Logo/Title -->
+                    <div class="text-center mb-8">
+                        <div class="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 rounded-lg mb-4">
+                            <h1 class="text-2xl font-bold">Prefeitura de Quebrangulo</h1>
+                        </div>
+                        <h2 class="text-2xl font-bold text-slate-900 mb-2">Sistema de Controle</h2>
+                        <p class="text-slate-600">Faça login para continuar</p>
+                    </div>
+
+                    <!-- Login Form -->
+                    <form id="loginForm" class="space-y-5">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Email</label>
+                            <input id="loginEmail" type="email" placeholder="seu@email.com" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" required>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Senha</label>
+                            <input id="loginSenha" type="password" placeholder="••••••••" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" required>
+                        </div>
+
+                        <div id="loginError" class="hidden bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm"></div>
+
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition-colors font-semibold">
+                            Entrar
+                        </button>
+                    </form>
+
+                    <hr class="my-6">
+
+                    <!-- Links -->
+                    <div class="text-center space-y-3">
+                        <p class="text-sm text-slate-600">Primeiro acesso?</p>
+                        <button id="toggleRegistro" class="text-blue-600 hover:text-blue-700 font-semibold text-sm block w-full">Criar conta</button>
+                        <button id="toggleRecuperarSenha" class="text-sm text-slate-500 hover:text-slate-700 block w-full">Esqueceu a senha?</button>
+                    </div>
+                </div>
+
+                <!-- Demo Credentials Box -->
+                <div class="mt-6 p-4 bg-slate-600 text-white rounded-lg text-xs border border-slate-500">
+                    <div class="flex items-start gap-2 mb-2">
+                        <span class="text-lg">📋</span>
+                        <div>
+                            <p class="font-semibold">Demo - Credenciais</p>
+                            <p class="text-slate-300 mt-1">
+                                Email: <span class="font-mono">admin@prefeitura.gov.br</span><br>
+                                Senha: <span class="font-mono">Admin123</span>
+                            </p>
+                        </div>
+                    </div>
+                    <p class="text-yellow-300 text-xs mt-2">⚠️ Altere esta senha antes de usar em produção!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Register Card (Hidden by default) -->
+        <div id="registerCard" class="hidden bg-white rounded-2xl shadow-2xl p-8">
+            <h2 class="text-2xl font-bold text-slate-900 mb-2">Novo Usuário</h2>
+            <p class="text-slate-600 mb-8">Crie sua conta para acessar</p>
+
+            <form id="registerForm" class="space-y-5">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Nome Completo</label>
+                    <input id="registerNome" type="text" placeholder="Seu nome" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" required>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Email</label>
+                    <input id="registerEmail" type="email" placeholder="seu@email.com" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" required>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Senha</label>
+                    <input id="registerSenha" type="password" placeholder="••••••••" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" required>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Confirmar Senha</label>
+                    <input id="registerSenhaConfirm" type="password" placeholder="••••••••" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" required>
+                </div>
+
+                <div id="registerError" class="hidden bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm"></div>
+                <div id="registerSuccess" class="hidden bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-sm"></div>
+
+                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg transition-colors">
+                    Registrar
+                </button>
+            </form>
+
+            <hr class="my-6">
+
+            <div class="text-center">
+                <button id="toggleLogin" class="text-blue-600 hover:text-blue-700 font-semibold">Voltar ao login</button>
+            </div>
+        </div>
+
+        <!-- Demo Info -->
+        <div class="bg-slate-800/50 border border-slate-700 rounded-lg p-4 mt-6 text-sm text-slate-300">
+            <p class="font-semibold mb-2">📝 Demo - Credenciais</p>
+            <p>Email: <span class="font-mono text-blue-300">admin@prefeitura.gov.br</span></p>
+            <p>Senha: <span class="font-mono text-blue-300">Admin123</span></p>
+            <p class="text-xs text-yellow-300 mt-3">⚠️ Altere esta senha antes de usar em produção!</p>
+        </div>
+    </div>
+
+    <!-- Password Recovery Modal (Hidden by default) -->
+    <div id="recuperarSenhaModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4">
+            <h2 class="text-2xl font-bold text-slate-900 mb-2">Recuperar Senha</h2>
+            <p class="text-slate-600 mb-6 text-sm">Insira seu email para receber um link de recuperação</p>
+
+            <!-- Step 1: Request Reset -->
+            <div id="step1Recuperar" class="space-y-5">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Email</label>
+                    <input id="recuperarEmail" type="email" placeholder="seu@email.com" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" required>
+                </div>
+
+                <div id="recuperarError" class="hidden bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm"></div>
+
+                <button id="btnEnviarReset" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition-colors">
+                    Enviar Link
+                </button>
+            </div>
+
+            <!-- Step 2: Reset Password -->
+            <div id="step2Recuperar" class="hidden space-y-5">
+                <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-sm">
+                    <p class="font-semibold">✅ Email enviado!</p>
+                    <p class="text-xs mt-1">Em produção, verifique sua caixa de entrada. Para demo, copie o token abaixo.</p>
+                </div>
+
+                <div id="tokenDisplay" class="bg-slate-100 p-4 rounded-lg break-all font-mono text-xs text-slate-600">
+                    <!-- Token será exibido aqui -->
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Token</label>
+                    <input id="recuperarToken" type="text" placeholder="Cole o token do email" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" required>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Nova Senha</label>
+                    <input id="recuperarSenha" type="password" placeholder="••••••••" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" required>
+                    <p class="text-xs text-slate-500 mt-2">Min 6 caracteres, 1 maiúscula, 1 número</p>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Confirmar Senha</label>
+                    <input id="recuperarSenhaConfirm" type="password" placeholder="••••••••" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" required>
+                </div>
+
+                <div id="resetError" class="hidden bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm"></div>
+
+                <button id="btnConfirmarReset" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg transition-colors">
+                    Alterar Senha
+                </button>
+            </div>
+
+            <hr class="my-6">
+
+            <div class="text-center">
+                <button id="fecharRecuperarSenha" class="text-blue-600 hover:text-blue-700 font-semibold text-sm">Voltar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/crypto.js?v=13"></script>
+    <script src="js/auth.js?v=13"></script>
+    <script src="js/ui-enhanced.js?v=13"></script>
+    <script>
+        // Toggle entre login e registro
+        document.getElementById('toggleRegistro').addEventListener('click', () => {
+            document.querySelector('.bg-white:first-of-type').classList.add('hidden');
+            document.getElementById('registerCard').classList.remove('hidden');
+        });
+
+        document.getElementById('toggleLogin').addEventListener('click', () => {
+            document.querySelector('.bg-white:first-of-type').classList.remove('hidden');
+            document.getElementById('registerCard').classList.add('hidden');
+        });
+
+        // Toggle recuperar senha
+        document.getElementById('toggleRecuperarSenha').addEventListener('click', () => {
+            document.querySelector('.bg-white:first-of-type').classList.add('hidden');
+            document.getElementById('registerCard').classList.add('hidden');
+            document.getElementById('recuperarSenhaModal').classList.remove('hidden');
+        });
+
+        document.getElementById('fecharRecuperarSenha').addEventListener('click', () => {
+            document.querySelector('.bg-white:first-of-type').classList.remove('hidden');
+            document.getElementById('recuperarSenhaModal').classList.add('hidden');
+            document.getElementById('step1Recuperar').classList.remove('hidden');
+            document.getElementById('step2Recuperar').classList.add('hidden');
+        });
+
+        // Enviar link de recuperação
+        document.getElementById('btnEnviarReset').addEventListener('click', () => {
+            const email = document.getElementById('recuperarEmail').value;
+            const errorDiv = document.getElementById('recuperarError');
+            
+            if (!email) {
+                errorDiv.textContent = 'Insira um email válido';
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+            
+            const result = requestPasswordReset(email);
+            
+            if (result.sucesso) {
+                errorDiv.classList.add('hidden');
+                document.getElementById('step1Recuperar').classList.add('hidden');
+                document.getElementById('step2Recuperar').classList.remove('hidden');
+                document.getElementById('tokenDisplay').textContent = '📋 Token: ' + result.token;
+                document.getElementById('recuperarToken').value = result.token; // Pre-fill para demo
+            } else {
+                errorDiv.textContent = result.mensagem;
+                errorDiv.classList.remove('hidden');
+            }
+        });
+
+        // Confirmar novo password
+        document.getElementById('btnConfirmarReset').addEventListener('click', () => {
+            const email = document.getElementById('recuperarEmail').value;
+            const token = document.getElementById('recuperarToken').value;
+            const novaSenha = document.getElementById('recuperarSenha').value;
+            const confirmaSenha = document.getElementById('recuperarSenhaConfirm').value;
+            const errorDiv = document.getElementById('resetError');
+            
+            if (!token || !novaSenha || !confirmaSenha) {
+                errorDiv.textContent = 'Preencha todos os campos';
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+            
+            if (novaSenha !== confirmaSenha) {
+                errorDiv.textContent = 'As senhas não correspondem';
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+            
+            const result = resetPassword(email, token, novaSenha);
+            
+            if (result.sucesso) {
+                errorDiv.classList.add('hidden');
+                alert(result.mensagem);
+                document.getElementById('recuperarSenhaModal').classList.add('hidden');
+                document.querySelector('.bg-white:first-of-type').classList.remove('hidden');
+                document.getElementById('loginForm').reset();
+            } else {
+                errorDiv.textContent = result.mensagem;
+                errorDiv.classList.remove('hidden');
+            }
+        });
+
+        // Submeter login
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value;
+            const senha = document.getElementById('loginSenha').value;
+            const errorDiv = document.getElementById('loginError');
+            
+            const result = login(email, senha);
+            
+            if (result.sucesso) {
+                window.location.href = 'dashboard.html';
+            } else {
+                errorDiv.textContent = result.mensagem;
+                errorDiv.classList.remove('hidden');
+            }
+        });
+
+        // Submeter registro
+        document.getElementById('registerForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const nome = document.getElementById('registerNome').value;
+            const email = document.getElementById('registerEmail').value;
+            const senha = document.getElementById('registerSenha').value;
+            const senhaConfirm = document.getElementById('registerSenhaConfirm').value;
+            
+            const errorDiv = document.getElementById('registerError');
+            const successDiv = document.getElementById('registerSuccess');
+            
+            errorDiv.classList.add('hidden');
+            successDiv.classList.add('hidden');
+            
+            const result = registrarUsuario(nome, email, senha, senhaConfirm);
+            
+            if (result.sucesso) {
+                successDiv.textContent = result.mensagem + '. Fazendo login...';
+                successDiv.classList.remove('hidden');
+                
+                setTimeout(() => {
+                    login(email, senha);
+                    window.location.href = 'dashboard.html';
+                }, 2000);
+            } else {
+                errorDiv.textContent = result.mensagem;
+                errorDiv.classList.remove('hidden');
+            }
+        });
+
+        // Verificar se já está autenticado
+        if (estaAutenticado()) {
+            window.location.href = 'dashboard.html';
+        }
+    </script>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
