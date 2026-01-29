@@ -14,18 +14,18 @@ const SECRETARIAS = [
 ];
 
 let pagamentos = [
-    { data: "2026-01-05", periodo: "2026-01", secretaria: "Educação", fornecedor: "Alfa Serviços", documento: "NF 1021", valor: 185000 },
-    { data: "2026-01-07", periodo: "2026-01", secretaria: "Saúde", fornecedor: "MedSupply LTDA", documento: "Emp 881", valor: 241300 },
+    { data: "2026-01-05", periodo: "2026-01", secretaria: "Educação", fornecedor: "Alfa Serviços", documento: "NF 1021", valor: 276074 },
+    { data: "2026-01-07", periodo: "2026-01", secretaria: "Saúde", fornecedor: "MedSupply LTDA", documento: "Emp 881", valor: 118707 },
     { data: "2026-01-10", periodo: "2026-01", secretaria: "Infraestrutura e Obras", fornecedor: "Construtora Delta", documento: "NF 778", valor: 520000 },
     { data: "2026-01-11", periodo: "2026-01", secretaria: "Administração e Finanças", fornecedor: "TechGov", documento: "NF 550", valor: 98000 },
-    { data: "2026-01-13", periodo: "2026-01", secretaria: "Educação", fornecedor: "Papelaria Nordeste", documento: "NF 903", valor: 42000 },
+    { data: "2026-01-13", periodo: "2026-01", secretaria: "Educação", fornecedor: "Papelaria Nordeste", documento: "NF 903", valor: 62676 },
     { data: "2026-01-15", periodo: "2026-01", secretaria: "Assistência Social", fornecedor: "Cesta Viva", documento: "NF 221", valor: 135000 },
     { data: "2026-01-18", periodo: "2026-01", secretaria: "Turismo, Cultura e Esporte", fornecedor: "Som & Luz Produções", documento: "NF 991", valor: 76000 },
     { data: "2026-01-20", periodo: "2026-01", secretaria: "Agricultura", fornecedor: "AgroTec", documento: "NF 112", valor: 59000 },
-    { data: "2026-01-22", periodo: "2026-01", secretaria: "Saúde", fornecedor: "MedSupply LTDA", documento: "NF 1044", valor: 198000 },
+    { data: "2026-01-22", periodo: "2026-01", secretaria: "Saúde", fornecedor: "MedSupply LTDA", documento: "NF 1044", valor: 97406 },
     { data: "2026-01-25", periodo: "2026-01", secretaria: "Infraestrutura e Obras", fornecedor: "Pavimenta Brasil", documento: "NF 120", valor: 310000 },
-    { data: "2025-12-08", periodo: "2025-12", secretaria: "Educação", fornecedor: "Alfa Serviços", documento: "NF 998", valor: 120000 },
-    { data: "2025-12-18", periodo: "2025-12", secretaria: "Saúde", fornecedor: "LabVida", documento: "NF 771", valor: 87000 },
+    { data: "2025-12-08", periodo: "2025-12", secretaria: "Educação", fornecedor: "Alfa Serviços", documento: "NF 998", valor: 179075 },
+    { data: "2025-12-18", periodo: "2025-12", secretaria: "Saúde", fornecedor: "LabVida", documento: "NF 771", valor: 42800 },
 ];
 
 let verbas = [
