@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO -->
+    <title>Portfólio | Inova Consultoria - Casos de Sucesso</title>
+    <meta name="description" content="Conheça nossos projetos e casos de sucesso em diferentes setores. Soluções digitais que geraram impacto real.">
+    <meta name="keywords" content="portfólio, projetos, casos de sucesso, sistemas, desenvolvimento">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://inovaprojetosti.com.br/portfolio.html">
+    <meta property="og:title" content="Portfólio | Inova Consultoria">
+    <meta property="og:description" content="Projetos que geraram impacto real em diferentes setores">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="/institucional/" class="nav-logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <rect width="32" height="32" rx="8" fill="url(#logo-gradient)"/>
+                        <path d="M10 10h12v12H10z" fill="white" opacity="0.2"/>
+                        <path d="M12 16l4 4 8-8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <defs>
+                            <linearGradient id="logo-gradient" x1="0" y1="0" x2="32" y2="32">
+                                <stop offset="0%" stop-color="#1e3a8a"/>
+                                <stop offset="100%" stop-color="#3b82f6"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span>Inova</span>
+                </a>
+                
+                <button class="nav-toggle" id="navToggle">☰</button>
+                
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="/institucional/" class="nav-link">Home</a></li>
+                    <li><a href="/institucional/sobre.html" class="nav-link">Sobre</a></li>
+                    <li><a href="/institucional/servicos.html" class="nav-link">Serviços</a></li>
+                    <li><a href="/institucional/portfolio.html" class="nav-link active">Portfólio</a></li>
+                    <li><a href="/institucional/metodologia.html" class="nav-link">Metodologia</a></li>
+                    <li><a href="/institucional/contato.html" class="nav-link">Contato</a></li>
+                    <li><a href="/institucional/contato.html" class="btn btn-primary btn-sm">Agendar Conversa</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" style="padding: 6rem 0 4rem;">
+        <div class="container">
+            <div class="hero-content fade-in-up">
+                <span class="section-subtitle" style="color: rgba(255,255,255,0.8);">Nosso Trabalho</span>
+                <h1>Casos de Sucesso</h1>
+                <p>Soluções digitais que geraram impacto real em diferentes setores. Cada projeto é uma história de transformação, inovação e resultados mensuráveis.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filtros -->
+    <section class="section" style="padding-top: 3rem;">
+        <div class="container">
+            <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 3rem;">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="governo">Governo</button>
+                <button class="filter-btn" data-filter="enterprise">Enterprise</button>
+                <button class="filter-btn" data-filter="educacao">Educação</button>
+                <button class="filter-btn" data-filter="saude">Saúde</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projetos -->
+    <section class="section" style="padding-top: 0;">
+        <div class="container">
+            <div class="portfolio-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2rem;">
+                
+                <!-- Projeto 1: Sistema Quebrangulo -->
+                <div class="case-card" data-category="governo">
+                    <div class="case-image" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                        📊
+                    </div>
+                    <div class="case-content">
+                        <div class="case-meta">
+                            <span>Governo</span>
+                            <span>•</span>
+                            <span>2025</span>
+                        </div>
+                        <h3 class="case-title">Sistema de Controle de Despesas Municipais</h3>
+                        <p class="case-description">
+                            Dashboard executivo em tempo real para transparência e controle orçamentário da Prefeitura de Quebrangulo. Sistema completo de gestão financeira com rastreamento de despesas, fornecedores e verbas.
+                        </p>
+                        
+                        <div style="margin: 1.5rem 0;">
+                            <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--neutral-700);">Resultados:</h4>
+                            <ul style="list-style: none; padding: 0; font-size: 0.9rem; color: var(--neutral-600); line-height: 1.8;">
+                                <li>✓ 100% de transparência orçamentária</li>
+                                <li>✓ Redução de 60% no tempo de análise</li>
+                                <li>✓ Dashboard em tempo real 24/7</li>
+                                <li>✓ Conformidade com LRF e LAI</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="case-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">PostgreSQL</span>
+                            <span class="tech-tag">TypeScript</span>
+                            <span class="tech-tag">Vercel</span>
+                        </div>
+                        
+                        <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                            <a href="/demos/quebrangulo/" class="btn btn-primary btn-sm" style="flex: 1; text-align: center;">Ver Demo</a>
+                            <a href="/propostas/quebrangulo/" class="btn btn-outline btn-sm" style="flex: 1; text-align: center;">Detalhes</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Projeto 2: Arquitetura Microserviços -->
+                <div class="case-card" data-category="enterprise">
+                    <div class="case-image" style="background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                        🏗️
+                    </div>
+                    <div class="case-content">
+                        <div class="case-meta">
+                            <span>Enterprise</span>
+                            <span>•</span>
+                            <span>2024</span>
+                        </div>
+                        <h3 class="case-title">Modernização de Sistema Legado</h3>
+                        <p class="case-description">
+                            Migração de sistema monolítico para arquitetura de microserviços escalável. Modernização completa de infraestrutura com containerização e CI/CD.
+                        </p>
+                        
+                        <div style="margin: 1.5rem 0;">
+                            <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--neutral-700);">Resultados:</h4>
+                            <ul style="list-style: none; padding: 0; font-size: 0.9rem; color: var(--neutral-600); line-height: 1.8;">
+                                <li>✓ 99.9% uptime alcançado</li>
+                                <li>✓ 70% redução no tempo de deploy</li>
+                                <li>✓ Escalabilidade horizontal implementada</li>
+                                <li>✓ 50% redução em custos de infraestrutura</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="case-tech">
+                            <span class="tech-tag">Kubernetes</span>
+                            <span class="tech-tag">Docker</span>
+                            <span class="tech-tag">Azure</span>
+                            <span class="tech-tag">.NET Core</span>
+                            <span class="tech-tag">Redis</span>
+                        </div>
+                        
+                        <div style="margin-top: 1.5rem;">
+                            <a href="/institucional/contato.html" class="btn btn-outline btn-sm" style="width: 100%; text-align: center;">Solicitar Case Completo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Projeto 3: Plataforma Educacional -->
+                <div class="case-card" data-category="educacao">
+                    <div class="case-image" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                        🎓
+                    </div>
+                    <div class="case-content">
+                        <div class="case-meta">
+                            <span>Educação</span>
+                            <span>•</span>
+                            <span>2024</span>
+                        </div>
+                        <h3 class="case-title">Plataforma de Gestão Educacional</h3>
+                        <p class="case-description">
+                            Sistema completo de gestão escolar com módulos de matrícula, notas, frequência, comunicação e relatórios. Solução moderna e intuitiva para instituições de ensino.
+                        </p>
+                        
+                        <div style="margin: 1.5rem 0;">
+                            <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--neutral-700);">Resultados:</h4>
+                            <ul style="list-style: none; padding: 0; font-size: 0.9rem; color: var(--neutral-600); line-height: 1.8;">
+                                <li>✓ 2.500+ alunos gerenciados</li>
+                                <li>✓ 80% redução em processos manuais</li>
+                                <li>✓ Portal do aluno e responsável</li>
+                                <li>✓ Integração com sistemas contábeis</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="case-tech">
+                            <span class="tech-tag">Next.js</span>
+                            <span class="tech-tag">TypeScript</span>
+                            <span class="tech-tag">Prisma</span>
+                            <span class="tech-tag">PostgreSQL</span>
+                            <span class="tech-tag">Vercel</span>
+                        </div>
+                        
+                        <div style="margin-top: 1.5rem;">
+                            <a href="/institucional/contato.html" class="btn btn-outline btn-sm" style="width: 100%; text-align: center;">Solicitar Case Completo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Projeto 4: Sistema de Saúde -->
+                <div class="case-card" data-category="saude">
+                    <div class="case-image" style="background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                        🏥
+                    </div>
+                    <div class="case-content">
+                        <div class="case-meta">
+                            <span>Saúde</span>
+                            <span>•</span>
+                            <span>2024</span>
+                        </div>
+                        <h3 class="case-title">Sistema de Gestão de Clínicas</h3>
+                        <p class="case-description">
+                            Plataforma completa para gestão de clínicas médicas com agendamento online, prontuário eletrônico, controle financeiro e relatórios gerenciais.
+                        </p>
+                        
+                        <div style="margin: 1.5rem 0;">
+                            <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--neutral-700);">Resultados:</h4>
+                            <ul style="list-style: none; padding: 0; font-size: 0.9rem; color: var(--neutral-600); line-height: 1.8;">
+                                <li>✓ 5.000+ consultas/mês gerenciadas</li>
+                                <li>✓ Prontuário 100% digital e seguro</li>
+                                <li>✓ Conformidade com LGPD</li>
+                                <li>✓ Integração com convênios</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="case-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">MongoDB</span>
+                            <span class="tech-tag">AWS</span>
+                            <span class="tech-tag">WebSocket</span>
+                        </div>
+                        
+                        <div style="margin-top: 1.5rem;">
+                            <a href="/institucional/contato.html" class="btn btn-outline btn-sm" style="width: 100%; text-align: center;">Solicitar Case Completo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Projeto 5: E-commerce Enterprise -->
+                <div class="case-card" data-category="enterprise">
+                    <div class="case-image" style="background: linear-gradient(135deg, #ea580c 0%, #fb923c 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                        🛒
+                    </div>
+                    <div class="case-content">
+                        <div class="case-meta">
+                            <span>E-commerce</span>
+                            <span>•</span>
+                            <span>2023</span>
+                        </div>
+                        <h3 class="case-title">Plataforma E-commerce B2B</h3>
+                        <p class="case-description">
+                            Marketplace corporativo com catálogo de 50.000+ produtos, integrações com ERPs, gateway de pagamento e sistema de logística integrado.
+                        </p>
+                        
+                        <div style="margin: 1.5rem 0;">
+                            <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--neutral-700);">Resultados:</h4>
+                            <ul style="list-style: none; padding: 0; font-size: 0.9rem; color: var(--neutral-600); line-height: 1.8;">
+                                <li>✓ R$ 2M+ em vendas mensais</li>
+                                <li>✓ 300+ empresas cadastradas</li>
+                                <li>✓ Processamento de 10.000 pedidos/mês</li>
+                                <li>✓ Tempo de carregamento < 2s</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="case-tech">
+                            <span class="tech-tag">Next.js</span>
+                            <span class="tech-tag">Stripe</span>
+                            <span class="tech-tag">PostgreSQL</span>
+                            <span class="tech-tag">Redis</span>
+                            <span class="tech-tag">AWS S3</span>
+                        </div>
+                        
+                        <div style="margin-top: 1.5rem;">
+                            <a href="/institucional/contato.html" class="btn btn-outline btn-sm" style="width: 100%; text-align: center;">Solicitar Case Completo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Projeto 6: App Mobile -->
+                <div class="case-card" data-category="enterprise">
+                    <div class="case-image" style="background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                        📱
+                    </div>
+                    <div class="case-content">
+                        <div class="case-meta">
+                            <span>Mobile</span>
+                            <span>•</span>
+                            <span>2023</span>
+                        </div>
+                        <h3 class="case-title">Aplicativo de Gestão de Campo</h3>
+                        <p class="case-description">
+                            App mobile para equipes de campo com funcionalidades offline-first, geolocalização, coleta de dados e sincronização automática.
+                        </p>
+                        
+                        <div style="margin: 1.5rem 0;">
+                            <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--neutral-700);">Resultados:</h4>
+                            <ul style="list-style: none; padding: 0; font-size: 0.9rem; color: var(--neutral-600); line-height: 1.8;">
+                                <li>✓ 500+ usuários ativos</li>
+                                <li>✓ Funciona 100% offline</li>
+                                <li>✓ 4.8⭐ avaliação nas lojas</li>
+                                <li>✓ 90% redução em papelada</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="case-tech">
+                            <span class="tech-tag">React Native</span>
+                            <span class="tech-tag">SQLite</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">Firebase</span>
+                            <span class="tech-tag">Maps API</span>
+                        </div>
+                        
+                        <div style="margin-top: 1.5rem;">
+                            <a href="/institucional/contato.html" class="btn btn-outline btn-sm" style="width: 100%; text-align: center;">Solicitar Case Completo</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Final -->
+    <section class="section bg-gray">
+        <div class="container">
+            <div class="cta-section">
+                <h2>Seu Projeto Pode Ser o Próximo Case de Sucesso</h2>
+                <p>
+                    Vamos transformar seus desafios em soluções digitais que geram resultados reais. Agende uma conversa estratégica e descubra como podemos ajudar.
+                </p>
+                <a href="/institucional/contato.html" class="btn btn-primary btn-lg">
+                    📅 Agendar Conversa Gratuita
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Inova Consultoria</h3>
+                    <p>
+                        Liderança técnica com visão de negócio. Transformamos desafios complexos 
+                        em produtos digitais de alto impacto.
+                    </p>
+                    <div class="social-links">
+                        <a href="https://linkedin.com/in/michaelalessander" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
+                            in
+                        </a>
+                        <a href="https://github.com/macsilva77" target="_blank" rel="noopener" class="social-link" aria-label="GitHub">
+                            gh
+                        </a>
+                        <a href="mailto:michael.alessander@gmail.com" class="social-link" aria-label="Email">
+                            @
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Serviços</h3>
+                    <ul class="footer-links">
+                        <li><a href="/institucional/servicos.html#product-leadership">Liderança de Produto</a></li>
+                        <li><a href="/institucional/servicos.html#architecture">Arquitetura de Software</a></li>
+                        <li><a href="/institucional/servicos.html#mvp">Desenvolvimento de MVPs</a></li>
+                        <li><a href="/institucional/servicos.html#transformation">Transformação Digital</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Empresa</h3>
+                    <ul class="footer-links">
+                        <li><a href="/institucional/sobre.html">Sobre</a></li>
+                        <li><a href="/institucional/portfolio.html">Portfólio</a></li>
+                        <li><a href="/institucional/metodologia.html">Metodologia</a></li>
+                        <li><a href="/institucional/contato.html">Contato</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contato</h3>
+                    <ul class="footer-links">
+                        <li>
+                            <strong>Email:</strong><br>
+                            <a href="mailto:michael.alessander@gmail.com">michael.alessander@gmail.com</a>
+                        </li>
+                        <li>
+                            <strong>Telefone:</strong><br>
+                            <a href="tel:+5582993165015">(82) 99316-5015</a>
+                        </li>
+                        <li>
+                            <strong>Localização:</strong><br>
+                            Maceió - Alagoas
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Inova Consultoria e Projetos em TI. Todos os direitos reservados.</p>
+                <p>CNPJ: 40.685.252/0001-16</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/5582993165015?text=Olá! Vim pelo site e gostaria de agendar uma conversa." 
+       class="whatsapp-float" 
+       target="_blank" 
+       rel="noopener"
+       aria-label="WhatsApp">
+        💬
+    </a>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script>
+        // Sistema de filtros
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const projectCards = document.querySelectorAll('.case-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Atualizar botão ativo
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Filtrar projetos
+                    projectCards.forEach(card => {
+                        if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                            card.style.display = 'flex';
+                            card.style.animation = 'fadeInUp 0.5s ease-out';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+    
+    <style>
+        .filter-btn {
+            padding: 0.5rem 1.5rem;
+            background: white;
+            border: 2px solid var(--neutral-300);
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--neutral-700);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .filter-btn:hover {
+            border-color: var(--primary-500);
+            color: var(--primary-600);
+        }
+        
+        .filter-btn.active {
+            background: var(--primary-600);
+            border-color: var(--primary-600);
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .portfolio-grid {
+                grid-template-columns: 1fr !important;
+            }
+        }
+    </style>
+</body>
+</html>
