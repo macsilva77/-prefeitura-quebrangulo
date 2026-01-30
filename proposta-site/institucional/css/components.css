@@ -186,6 +186,24 @@
   gap: var(--space-8);
 }
 
+.card-hover {
+  transition: all var(--transition-base);
+  cursor: pointer;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+}
+
+.card-hover ul {
+  margin-top: 1rem;
+}
+
+.card-hover ul li {
+  padding: 0.25rem 0;
+}
+
 /* Portfolio/Case Card */
 .case-card {
   background: white;
